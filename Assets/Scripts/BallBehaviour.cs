@@ -5,7 +5,8 @@ public class BallBehaviour : MonoBehaviour
 {
 	public float acceleration = 0.1f;
 	public float maxSpeed     = 50f;
-	public float boardLimit   = 26f;
+	public float gravity      = 20f;
+	public float fallLimit    = 30f;
 	public int   maxScore     = 3;
 
 	private int playerScore;
@@ -23,44 +24,54 @@ public class BallBehaviour : MonoBehaviour
 	// Update is called once per frame
 	void Update()
 	{
-		rigidbody.velocity=rigidbody.velocity*(1+acceleration*Time.deltaTime);
+		float factor=(1+acceleration*Time.deltaTime);
 
+		rigidbody.velocity=new Vector3(rigidbody.velocity.x*factor,
+		                               rigidbody.velocity.y*factor,
+		                               (rigidbody.velocity.z+gravity*Time.deltaTime)*factor);
+	
 		if (rigidbody.velocity.magnitude>maxSpeed)
 		{
 			rigidbody.velocity=rigidbody.velocity.normalized*maxSpeed;
 		}
 
-		if (transform.position.x>boardLimit)
-		{
-			playerScore++;
 
-			if (playerScore>=maxScore)
+		if (transform.position.z>fallLimit)
+		{
+			if (transform.position.x>0)
 			{
-				stop();
+				playerScore++;
+				
+				if (playerScore>=maxScore)
+				{
+					stop();
+				}
+				else
+				{
+					resetPositionAndSpeed(false);
+				}
 			}
 			else
 			{
-				resetPositionAndSpeed(false);
-			}
-		}
-		else
-		if (transform.position.x<-boardLimit)
-		{
-			enemyScore++;
-
-			if (enemyScore>=maxScore)
-			{
-				stop();
-			}
-			else
-			{
-				resetPositionAndSpeed(true);
+				enemyScore++;
+				
+				if (enemyScore>=maxScore)
+				{
+					stop();
+				}
+				else
+				{
+					resetPositionAndSpeed(true);
+				}
 			}
 		}
 	}
 
 	void OnGUI()
 	{
+		GUI.Label(new Rect(20,              20, 10, 20), playerScore.ToString());
+		GUI.Label(new Rect(Screen.width-30, 20, 10, 20), enemyScore.ToString());
+
 		if (playerScore>=maxScore || enemyScore>=maxScore)
 		{
 			if (GUI.Button(new Rect(Screen.width/2-100, Screen.height/2-100, 200, 60), "New game"))
@@ -68,7 +79,7 @@ public class BallBehaviour : MonoBehaviour
 				Start();
 			}
 			
-			if (GUI.Button(new Rect(Screen.width/2-100, Screen.height/2+100, 200, 60), "Quit"))
+			if (GUI.Button(new Rect(Screen.width/2-100, Screen.height/2+40, 200, 60), "Quit"))
 			{
 				Application.Quit();
 			}

@@ -5,7 +5,7 @@ public class EnemyAI : MonoBehaviour
 {
 	public  Transform           ball;
 	private CharacterController controller;
-	public  int                 maxSpeed = 10;
+	public  int                 maxSpeed = 20;
 
 	// Use this for initialization
 	void Start()
@@ -16,19 +16,22 @@ public class EnemyAI : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
 	{
-		float offsetY   = ball.transform.position.y-transform.position.y;
-		float maxOffset = maxSpeed*Time.deltaTime;
-
-		if (offsetY>maxOffset)
+		if (ball.transform.position.z<=1)
 		{
-			offsetY=maxOffset;
+			float offsetY   = ball.transform.position.y-transform.position.y;
+			float maxOffset = maxSpeed*Time.deltaTime;
+			
+			if (offsetY>maxOffset)
+			{
+				offsetY=maxOffset;
+			}
+			else
+				if (offsetY<-maxOffset)
+			{
+				offsetY=-maxOffset;
+			}
+			
+			controller.Move(new Vector3(0, offsetY, 0));
 		}
-		else
-		if (offsetY<-maxOffset)
-		{
-			offsetY=-maxOffset;
-		}
-
-		controller.Move(new Vector3(0, offsetY, 0));
 	}
 }
