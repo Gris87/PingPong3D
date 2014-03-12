@@ -32,22 +32,36 @@ public class BallBehaviour : MonoBehaviour
 
 		if (transform.position.x>boardLimit)
 		{
-			resetPositionAndSpeed(false);
-
 			playerScore++;
+
+			if (playerScore>=maxScore)
+			{
+				stop();
+			}
+			else
+			{
+				resetPositionAndSpeed(false);
+			}
 		}
 		else
 		if (transform.position.x<-boardLimit)
 		{
-			resetPositionAndSpeed(true);
-			
 			enemyScore++;
+
+			if (enemyScore>=maxScore)
+			{
+				stop();
+			}
+			else
+			{
+				resetPositionAndSpeed(true);
+			}
 		}
 	}
 
-	void OnGui()
+	void OnGUI()
 	{
-		if (playerScore==maxScore || enemyScore==maxScore)
+		if (playerScore>=maxScore || enemyScore>=maxScore)
 		{
 			if (GUI.Button(new Rect(Screen.width/2-100, Screen.height/2-100, 200, 60), "New game"))
 			{
@@ -61,9 +75,15 @@ public class BallBehaviour : MonoBehaviour
 		}
 	}
 
+	private void stop()
+	{
+		transform.position=new Vector3(0, 0, 0);
+		rigidbody.velocity=new Vector3(0, 0, 0);
+	}
+
 	private void resetPositionAndSpeed(bool moveToRight)
 	{
-		transform.position.Set(0, 0, 0);
+		transform.position=new Vector3(0, 0, 0);
 
 		if (moveToRight)
 		{
