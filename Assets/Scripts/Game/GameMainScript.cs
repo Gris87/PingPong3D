@@ -61,6 +61,8 @@ public class GameMainScript : MonoBehaviour
 
 	void Init()
 	{
+		Debug.Log("Game started (difficulty="+difficulty.ToString()+")");
+
 		resetPositionAndSpeed(true);
 		
 		playerScore = 0;
@@ -119,27 +121,41 @@ public class GameMainScript : MonoBehaviour
 
 	void OnGUI()
 	{
+		bool gameIsOver = (playerScore>=maxScore || enemyScore>=maxScore);
+
 		GUI.Label(new Rect(20,              20, 10, 20), playerScore.ToString());
 		GUI.Label(new Rect(Screen.width-30, 20, 10, 20), enemyScore.ToString());
 
-		if (GUI.Button(new Rect(Screen.width/2-100, 20, 200, 30), "Restart"))
+		if (difficulty>=0 || gameIsOver)
 		{
-			Init();
+			if (GUI.Button(new Rect(Screen.width/2-100, 20, 200, 30), "Restart"))
+			{
+				Init();
+			}
+			
+			if (GUI.Button(new Rect(Screen.width/2-100, 60, 200, 30), "Game menu"))
+			{
+				goToGameMenu();
+			}
 		}
-		
-		if (GUI.Button(new Rect(Screen.width/2-100, 60, 200, 30), "Game menu"))
-		{
-			SceneManager.LoadScene("GameMenu");
+		else
+		{			
+			if (GUI.Button(new Rect(Screen.width/2-100, 20, 200, 30), "Game menu"))
+			{
+				goToGameMenu();
+			}
 		}
 
-		if (playerScore>=maxScore || enemyScore>=maxScore)
+		if (gameIsOver)
 		{
-			GUI.Label(new Rect(Screen.width/2-40, Screen.width/2-30, 80, 20), "GAME OVER");
+			GUI.Label(new Rect(Screen.width/2-40, Screen.height/2-30, 80, 20), "GAME OVER");
 		}
 	}
 
 	private void stop()
 	{
+		Debug.Log("Game over");
+
 		player.position = new Vector3(player.position.x, 0, 0);
 		enemy.position  = new Vector3(enemy.position.x,  0, 0);
 
@@ -163,5 +179,12 @@ public class GameMainScript : MonoBehaviour
 		{
 			rigidbody.velocity=new Vector3((float)(-10-Random.value*10), (float)((Random.value-0.5)*20), 0);
 		}
+	}
+
+	private void goToGameMenu()
+	{
+		Debug.Log("Go to game menu");
+
+		SceneManager.LoadScene("GameMenu");
 	}
 }
