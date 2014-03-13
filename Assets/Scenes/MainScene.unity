@@ -483,7 +483,7 @@ GameObject:
   - 4: {fileID: 1018115582}
   - 108: {fileID: 1018115581}
   m_Layer: 0
-  m_Name: Point light
+  m_Name: Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -711,7 +711,7 @@ GameObject:
   - 4: {fileID: 1696839730}
   - 65: {fileID: 1696839731}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: TopLimit
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -753,7 +753,7 @@ GameObject:
   - 124: {fileID: 1761482932}
   - 81: {fileID: 1761482931}
   m_Layer: 0
-  m_Name: Main Camera
+  m_Name: MainCamera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
