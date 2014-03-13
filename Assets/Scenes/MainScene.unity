@@ -240,6 +240,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e522d52f88da1a4b8e60554d9f58527, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: {fileID: 757628216}
+  enemy: {fileID: 924050850}
   acceleration: .100000001
   maxSpeed: 50
   gravity: 20
@@ -816,7 +818,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1761482930}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: -50}
+  m_LocalPosition: {x: 0, y: 0, z: -50}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}

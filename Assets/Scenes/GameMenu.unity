@@ -543,7 +543,6 @@ GameObject:
   - 4: {fileID: 605301139}
   - 23: {fileID: 605301141}
   - 102: {fileID: 605301140}
-  - 114: {fileID: 605301142}
   m_Layer: 0
   m_Name: NewGameText
   m_TagString: Untagged
@@ -604,20 +603,6 @@ Renderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_SortingLayerID: 0
---- !u!114 &605301142
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 605301138}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4dd09c0d4af48ad47b8a360f1325f587, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  items: {fileID: 465712480}
-  animationDelay: .5
-  hideDelay: 1
 --- !u!1 &767494135
 GameObject:
   m_ObjectHideFlags: 0
@@ -935,6 +920,7 @@ MonoBehaviour:
   items: {fileID: 902260997}
   animationDelay: .200000003
   hideDelay: .600000024
+  showDelay: .600000024
 --- !u!1 &938270007
 GameObject:
   m_ObjectHideFlags: 0
@@ -1217,6 +1203,7 @@ MonoBehaviour:
   items: {fileID: 465712481}
   animationDelay: .200000003
   hideDelay: .600000024
+  showDelay: .600000024
 --- !u!1 &1280012280
 GameObject:
   m_ObjectHideFlags: 0
@@ -1586,7 +1573,6 @@ GameObject:
   - 4: {fileID: 1518199455}
   - 23: {fileID: 1518199457}
   - 102: {fileID: 1518199456}
-  - 114: {fileID: 1518199458}
   m_Layer: 0
   m_Name: MultiplayerText
   m_TagString: Untagged
@@ -1647,20 +1633,6 @@ Renderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_SortingLayerID: 0
---- !u!114 &1518199458
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1518199454}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4dd09c0d4af48ad47b8a360f1325f587, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  items: {fileID: 0}
-  animationDelay: .5
-  hideDelay: 1
 --- !u!1 &1671561907
 GameObject:
   m_ObjectHideFlags: 0

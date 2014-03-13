@@ -1,24 +1,58 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class BallBehaviour : MonoBehaviour 
+public class GameMainScript : MonoBehaviour 
 {
+	public Transform player;
+	public Transform enemy;
+
 	public float acceleration = 0.1f;
 	public float maxSpeed     = 50f;
 	public float gravity      = 20f;
 	public float fallLimit    = 30f;
 	public int   maxScore     = 3;
 
+	private PlayerLogic playerLogic;
+	private EnemyAI     enemyAI;
+
+	private int difficulty;
 	private int playerScore;
 	private int enemyScore;
 
 	// Use this for initialization
 	void Start()
 	{
-		resetPositionAndSpeed(true);
+		playerLogic = player.GetComponent<PlayerLogic>();
+		enemyAI     = enemy.GetComponent<EnemyAI>();
 
+		Init();
+
+		Hashtable arguments=SceneManager.GetSceneArguments();
+
+		if (arguments.ContainsKey("difficulty"))
+		{
+			difficulty=(int)arguments["difficulty"];
+			
+			if (difficulty>=0)
+			{
+				enemyAI.maxSpeed=10+difficulty*10;
+			}
+		}
+		else
+		{
+			difficulty=0;
+		}
+	}
+
+	void Init()
+	{
+		resetPositionAndSpeed(true);
+		
 		playerScore = 0;
 		enemyScore  = 0;
+		
+		playerLogic.enabled = true;
+		enemyAI.enabled     = true;
 	}
 	
 	// Update is called once per frame
@@ -76,7 +110,7 @@ public class BallBehaviour : MonoBehaviour
 		{
 			if (GUI.Button(new Rect(Screen.width/2-100, Screen.height/2-100, 200, 60), "New game"))
 			{
-				Start();
+				Init();
 			}
 			
 			if (GUI.Button(new Rect(Screen.width/2-100, Screen.height/2+40, 200, 60), "Quit"))
@@ -88,8 +122,14 @@ public class BallBehaviour : MonoBehaviour
 
 	private void stop()
 	{
-		transform.position=new Vector3(0, 0, 0);
-		rigidbody.velocity=new Vector3(0, 0, 0);
+		player.position = new Vector3(player.position.x, 0, 0);
+		enemy.position  = new Vector3(enemy.position.x,  0, 0);
+
+		transform.position = new Vector3(0, 0, 0);
+		rigidbody.velocity = new Vector3(0, 0, 0);
+
+		playerLogic.enabled = false;
+		enemyAI.enabled     = false;
 	}
 
 	private void resetPositionAndSpeed(bool moveToRight)
