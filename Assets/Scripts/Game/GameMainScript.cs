@@ -106,17 +106,19 @@ public class GameMainScript : MonoBehaviour
 		GUI.Label(new Rect(20,              20, 10, 20), playerScore.ToString());
 		GUI.Label(new Rect(Screen.width-30, 20, 10, 20), enemyScore.ToString());
 
+		if (GUI.Button(new Rect(Screen.width/2-100, 20, 200, 30), "Restart"))
+		{
+			Init();
+		}
+		
+		if (GUI.Button(new Rect(Screen.width/2-100, 60, 200, 30), "Game menu"))
+		{
+			SceneManager.LoadScene("GameMenu");
+		}
+
 		if (playerScore>=maxScore || enemyScore>=maxScore)
 		{
-			if (GUI.Button(new Rect(Screen.width/2-100, Screen.height/2-100, 200, 60), "New game"))
-			{
-				Init();
-			}
-			
-			if (GUI.Button(new Rect(Screen.width/2-100, Screen.height/2+40, 200, 60), "Quit"))
-			{
-				Application.Quit();
-			}
+			GUI.Label(new Rect(Screen.width/2-40, Screen.width/2-30, 80, 20), "GAME OVER");
 		}
 	}
 
