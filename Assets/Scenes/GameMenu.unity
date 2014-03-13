@@ -87,7 +87,7 @@ GameObject:
   - 23: {fileID: 28087824}
   - 114: {fileID: 28087823}
   m_Layer: 0
-  m_Name: Hard
+  m_Name: 2_Hard
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -169,7 +169,7 @@ GameObject:
   - 23: {fileID: 122071478}
   - 114: {fileID: 122071477}
   m_Layer: 0
-  m_Name: Normal
+  m_Name: 1_Normal
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -251,7 +251,7 @@ GameObject:
   - 23: {fileID: 233215840}
   - 114: {fileID: 233215839}
   m_Layer: 0
-  m_Name: Server
+  m_Name: 1_Server
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -502,7 +502,7 @@ GameObject:
   - 23: {fileID: 767494138}
   - 114: {fileID: 767494137}
   m_Layer: 0
-  m_Name: Easy
+  m_Name: 0_Easy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -584,7 +584,7 @@ GameObject:
   - 23: {fileID: 848620358}
   - 114: {fileID: 848620357}
   m_Layer: 0
-  m_Name: 2Players
+  m_Name: 0_2Players
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -695,7 +695,7 @@ GameObject:
   - 23: {fileID: 910650398}
   - 114: {fileID: 910650397}
   m_Layer: 0
-  m_Name: Multiplayer
+  m_Name: 1_Multiplayer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -918,7 +918,7 @@ GameObject:
   - 23: {fileID: 1212460732}
   - 114: {fileID: 1212460736}
   m_Layer: 0
-  m_Name: NewGame
+  m_Name: 0_NewGame
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1342,7 +1342,7 @@ GameObject:
   - 23: {fileID: 1671561910}
   - 114: {fileID: 1671561909}
   m_Layer: 0
-  m_Name: Client
+  m_Name: 2_Client
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1495,7 +1495,7 @@ GameObject:
   - 114: {fileID: 1967801582}
   - 114: {fileID: 1967801587}
   m_Layer: 0
-  m_Name: Exit
+  m_Name: 2_Exit
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
