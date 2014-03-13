@@ -130,6 +130,7 @@ GameObject:
   - 65: {fileID: 28087825}
   - 23: {fileID: 28087824}
   - 114: {fileID: 28087823}
+  - 114: {fileID: 28087827}
   m_Layer: 0
   m_Name: 2_Hard
   m_TagString: Untagged
@@ -200,6 +201,18 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 28087821}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &28087827
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 28087821}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9711fcbee9f79ac4d8480e8313319f16, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  difficulty: 2
 --- !u!1 &122071475
 GameObject:
   m_ObjectHideFlags: 0
@@ -212,6 +225,7 @@ GameObject:
   - 65: {fileID: 122071479}
   - 23: {fileID: 122071478}
   - 114: {fileID: 122071477}
+  - 114: {fileID: 122071481}
   m_Layer: 0
   m_Name: 1_Normal
   m_TagString: Untagged
@@ -282,6 +296,18 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 122071475}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &122071481
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 122071475}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9711fcbee9f79ac4d8480e8313319f16, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  difficulty: 1
 --- !u!1 &192795268
 GameObject:
   m_ObjectHideFlags: 0
@@ -604,6 +630,7 @@ GameObject:
   - 65: {fileID: 767494139}
   - 23: {fileID: 767494138}
   - 114: {fileID: 767494137}
+  - 114: {fileID: 767494141}
   m_Layer: 0
   m_Name: 0_Easy
   m_TagString: Untagged
@@ -674,6 +701,18 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 767494135}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &767494141
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 767494135}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9711fcbee9f79ac4d8480e8313319f16, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  difficulty: 0
 --- !u!1 &848620355
 GameObject:
   m_ObjectHideFlags: 0
@@ -686,6 +725,7 @@ GameObject:
   - 65: {fileID: 848620359}
   - 23: {fileID: 848620358}
   - 114: {fileID: 848620357}
+  - 114: {fileID: 848620361}
   m_Layer: 0
   m_Name: 0_2Players
   m_TagString: Untagged
@@ -756,6 +796,18 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 848620355}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &848620361
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 848620355}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9711fcbee9f79ac4d8480e8313319f16, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  difficulty: -1
 --- !u!1 &902260996
 GameObject:
   m_ObjectHideFlags: 0
