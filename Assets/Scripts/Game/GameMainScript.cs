@@ -13,23 +13,28 @@ public class GameMainScript : MonoBehaviour
 	public int   maxScore     = 3;
 
 	private PlayerLogic playerLogic;
+	private PlayerLogic player2Logic;
 	private EnemyAI     enemyAI;
 
-	private int difficulty;
-	private int playerScore;
-	private int enemyScore;
+	private int  difficulty;
+	private int  playerScore;
+	private int  enemyScore;
+	private bool player2Mode;
+	private bool enemyAIMode;
 
 	// Use this for initialization
 	void Start()
 	{
-		playerLogic = player.GetComponent<PlayerLogic>();
-		enemyAI     = enemy.GetComponent<EnemyAI>();
+		playerLogic  = player.GetComponent<PlayerLogic>();
+		player2Logic = enemy.GetComponent<PlayerLogic>();
+		enemyAI      = enemy.GetComponent<EnemyAI>();
 
-		Init();
+		player2Mode=false;
+		enemyAIMode=true;
 
 		Hashtable arguments=SceneManager.GetSceneArguments();
 
-		if (arguments.ContainsKey("difficulty"))
+		if (arguments!=null && arguments.ContainsKey("difficulty"))
 		{
 			difficulty=(int)arguments["difficulty"];
 			
@@ -37,11 +42,21 @@ public class GameMainScript : MonoBehaviour
 			{
 				enemyAI.maxSpeed=10+difficulty*10;
 			}
+			else
+			if (difficulty==-1)
+			{
+				playerLogic.playerMode=PlayerLogic.Mode.LeftPlayer;
+
+				player2Mode=true;
+				enemyAIMode=false;
+			}
 		}
 		else
 		{
 			difficulty=0;
 		}
+
+		Init();
 	}
 
 	void Init()
@@ -51,8 +66,9 @@ public class GameMainScript : MonoBehaviour
 		playerScore = 0;
 		enemyScore  = 0;
 		
-		playerLogic.enabled = true;
-		enemyAI.enabled     = true;
+		playerLogic.enabled  = true;
+		player2Logic.enabled = player2Mode;
+		enemyAI.enabled      = enemyAIMode;
 	}
 	
 	// Update is called once per frame
@@ -130,8 +146,9 @@ public class GameMainScript : MonoBehaviour
 		transform.position = new Vector3(0, 0, 0);
 		rigidbody.velocity = new Vector3(0, 0, 0);
 
-		playerLogic.enabled = false;
-		enemyAI.enabled     = false;
+		playerLogic.enabled  = false;
+		player2Logic.enabled = false;
+		enemyAI.enabled      = false;
 	}
 
 	private void resetPositionAndSpeed(bool moveToRight)

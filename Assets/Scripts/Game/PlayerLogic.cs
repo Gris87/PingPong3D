@@ -3,8 +3,16 @@ using System.Collections;
 
 public class PlayerLogic : MonoBehaviour
 {	
+	public enum Mode
+	{
+		LeftPlayer,
+		RightPlayer,
+		BothPlayers
+	}
+
 	private CharacterController controller;
-	public  int                 speed = 30;
+	public  int                 speed      = 30;
+	public  Mode                playerMode = Mode.BothPlayers;
 
 	// Use this for initialization
 	void Start()
@@ -15,16 +23,42 @@ public class PlayerLogic : MonoBehaviour
 	// Update is called once per frame
 	void Update()
 	{
-		float verticalMovement=Input.GetAxis("Vertical");
+		float verticalMovement;
 
-		if (verticalMovement>0)
+		if (playerMode==Mode.BothPlayers)
 		{
-			controller.Move(new Vector3(0, speed*Time.deltaTime, 0));
+			verticalMovement=Input.GetAxis("Vertical");
+
+			if (verticalMovement==0)
+			{
+				verticalMovement=Input.GetAxis("Vertical 2");
+			}
 		}
 		else
-		if (verticalMovement<0)
 		{
-			controller.Move(new Vector3(0, -speed*Time.deltaTime, 0));
+			string axis;
+			
+			if (playerMode==Mode.LeftPlayer)
+			{
+				axis="Vertical";
+			}
+			else
+			if (playerMode==Mode.RightPlayer)
+			{
+				axis="Vertical 2";
+			}
+			else
+			{
+				Debug.LogError("Unknown axis");
+				axis="Vertical";
+			}
+
+			verticalMovement=Input.GetAxis(axis);
+		}
+
+		if (verticalMovement!=0)
+		{
+			controller.Move(new Vector3(0, verticalMovement*speed*Time.deltaTime, 0));
 		}
 	}
 }
