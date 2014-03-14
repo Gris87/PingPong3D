@@ -364,6 +364,7 @@ GameObject:
   - 65: {fileID: 233215841}
   - 23: {fileID: 233215840}
   - 114: {fileID: 233215839}
+  - 114: {fileID: 233215844}
   m_Layer: 0
   m_Name: 1_Server
   m_TagString: Untagged
@@ -434,6 +435,18 @@ Transform:
   m_Children:
   - {fileID: 1330708984}
   m_Father: {fileID: 1317078571}
+--- !u!114 &233215844
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 233215838}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b2efd4e28878524469d4b6f233e61764, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isServerMode: 1
 --- !u!1 &465712480
 GameObject:
   m_ObjectHideFlags: 0
@@ -1645,6 +1658,7 @@ GameObject:
   - 65: {fileID: 1671561911}
   - 23: {fileID: 1671561910}
   - 114: {fileID: 1671561909}
+  - 114: {fileID: 1671561913}
   m_Layer: 0
   m_Name: 2_Client
   m_TagString: Untagged
@@ -1715,6 +1729,18 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1671561907}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1671561913
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1671561907}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b2efd4e28878524469d4b6f233e61764, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isServerMode: 0
 --- !u!1 &1850899000
 GameObject:
   m_ObjectHideFlags: 0
