@@ -7,6 +7,7 @@ public class NetworkManager : MonoBehaviour
 	private enum ServerState
 	{
 		ServerInit,
+		ServerRegister,
 		ServerStarted,
 		ServerError
 	}
@@ -14,8 +15,8 @@ public class NetworkManager : MonoBehaviour
 	private const string typeName = "GrisPingPong3D";
 	private const int    port     = 46115;
 
-	private GUIStyle   centerTextStyle;
-	private HostData[] hostList = null;
+	private GUIStyle centerTextStyle;
+	private Vector2  hostsScrollPosition = Vector2.zero;
 
 	private bool        isServerMode;
 	private ServerState serverState;
@@ -55,13 +56,13 @@ public class NetworkManager : MonoBehaviour
 	
 	private void StartServer()
 	{
-		serverState=ServerState.ServerInit;
-
 		string roomName;
-		roomName = Environment.UserName;
+		roomName=Environment.UserName;
 
+		serverState=ServerState.ServerInit;
 		if (Network.InitializeServer(2, port, !Network.HavePublicAddress())==NetworkConnectionError.NoError)
 		{
+			serverState=ServerState.ServerRegister;
 			MasterServer.RegisterHost(typeName, roomName);
 		}
 		else
@@ -77,14 +78,13 @@ public class NetworkManager : MonoBehaviour
 
 	private void JoinServer(HostData hostData)
 	{
+		Debug.Log("Joining to server: "+hostData.gameName+" | "+hostData.ip[0]+":"+hostData.port.ToString());
 		Network.Connect(hostData);
 	}
 
 	void OnServerInitialized()
 	{
 		Debug.Log("Server initializied");
-
-		serverState=ServerState.ServerStarted;
 	}
 	
 	void OnConnectedToServer()
@@ -97,12 +97,18 @@ public class NetworkManager : MonoBehaviour
 		switch (aEvent)
 		{
 			case MasterServerEvent.HostListReceived:
-				hostList=MasterServer.PollHostList();
+				Debug.Log("Servers searching finished");
+			break;
+			case MasterServerEvent.RegistrationSucceeded:
+				serverState=ServerState.ServerStarted;
 			break;
 			case MasterServerEvent.RegistrationFailedGameName:
 			case MasterServerEvent.RegistrationFailedGameType:
 			case MasterServerEvent.RegistrationFailedNoServer:
 				serverState=ServerState.ServerError;
+			break;
+			default:
+				Debug.LogError("Unknown event");
 			break;
 		}
 	}
@@ -121,6 +127,9 @@ public class NetworkManager : MonoBehaviour
 				case ServerState.ServerInit:
 					GUI.Label(new Rect(Screen.width/2, Screen.height/2, 1, 1), "Initializing server", centerTextStyle);
 				break;
+				case ServerState.ServerRegister:
+					GUI.Label(new Rect(Screen.width/2, Screen.height/2, 1, 1), "Registering server", centerTextStyle);
+				break;
 				case ServerState.ServerStarted:
 					GUI.Label(new Rect(Screen.width/2, Screen.height/2, 1, 1), "Waiting for opponent...", centerTextStyle);
 				break;
@@ -134,12 +143,33 @@ public class NetworkManager : MonoBehaviour
 		}
 		else
 		{
+			HostData[] hostsList=MasterServer.PollHostList();
 
+			if (hostsList!=null)
+			{
+				hostsScrollPosition=GUI.BeginScrollView(new Rect(20, 60, Screen.width-40, Screen.height-80), hostsScrollPosition, new Rect(0, 0, Screen.width-60, 40+(hostsList.Length-1)*50));
+
+				for (int i=0; i<hostsList.Length; ++i)
+				{
+					if (GUI.Button(new Rect(0, 50*i, 300, 40), hostsList[i].gameName))
+					{
+						JoinServer(hostsList[i]);
+					}
+				}
+
+				GUI.EndScrollView();
+			}
 		}
 	}
 
 	void cancel()
 	{
+		if (isServerMode)
+		{
+			Network.Disconnect();
+			MasterServer.UnregisterHost();
+		}
+
 		SceneManager.LoadScene("GameMenu");
 	}
 }
