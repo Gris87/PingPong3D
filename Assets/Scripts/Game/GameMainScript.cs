@@ -176,6 +176,22 @@ public class GameMainScript : MonoBehaviour
 		}
 	}
 
+	void OnPlayerDisconnected()
+	{
+		if (!Application.isLoadingLevel)
+		{
+			goToGameMenu();
+		}
+	}
+
+	void OnDisconnectedFromServer()
+	{
+		if (!Application.isLoadingLevel)
+		{
+			goToGameMenu();
+		}
+	}
+
 	private void stop()
 	{
 		Debug.Log("Game over");
@@ -210,5 +226,8 @@ public class GameMainScript : MonoBehaviour
 		Debug.Log("Go to game menu");
 
 		SceneManager.LoadScene("GameMenu");
+
+		Network.Disconnect();
+		MasterServer.UnregisterHost();
 	}
 }

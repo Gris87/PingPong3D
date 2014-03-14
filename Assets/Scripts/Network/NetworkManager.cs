@@ -110,11 +110,15 @@ public class NetworkManager : MonoBehaviour
 	void OnConnectedToServer()
 	{
 		Debug.Log("Joined to server");
+
+		startGame();
 	}
 
 	void OnPlayerConnected()
 	{
 		Debug.Log("Player connected");
+
+		startGame();
 	}
 	
 	void OnMasterServerEvent(MasterServerEvent aEvent)
@@ -240,25 +244,30 @@ public class NetworkManager : MonoBehaviour
 		}
 	}
 
-	void goBack()
+	private void goBack()
 	{
 		Debug.Log("Go to game menu");
-
-		Network.Disconnect();
-
-		if (isServerMode)
-		{
-			MasterServer.UnregisterHost();
-		}
-
+		
 		SceneManager.LoadScene("GameMenu");
+		
+		Network.Disconnect();
+		MasterServer.UnregisterHost();
 	}
 
-	void cancelJoining()
+	private void cancelJoining()
 	{
 		Debug.Log("Cancel joining");
 
 		clientState=ClientState.ClientSearch;
 		Network.Disconnect();
+	}
+
+	private void startGame()
+	{
+		Hashtable arguments=new Hashtable();
+		
+		arguments.Add("difficulty", -1);
+		
+		SceneManager.LoadScene("MainScene", arguments);
 	}
 }

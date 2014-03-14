@@ -1,17 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PolicySet name="My style">
   <CSharpFormattingPolicy inheritsSet="Mono" inheritsScope="text/x-csharp" scope="text/x-csharp">
+    <IndentClassBody>False</IndentClassBody>
+    <IndentInterfaceBody>False</IndentInterfaceBody>
+    <IndentStructBody>False</IndentStructBody>
     <IndentSwitchBody>True</IndentSwitchBody>
-    <StatementBraceStyle>NextLineShifted2</StatementBraceStyle>
+    <IndentBreakStatements>False</IndentBreakStatements>
+    <AnonymousMethodBraceStyle>NextLine</AnonymousMethodBraceStyle>
+    <PropertyBraceStyle>NextLine</PropertyBraceStyle>
+    <PropertyGetBraceStyle>NextLine</PropertyGetBraceStyle>
+    <PropertySetBraceStyle>NextLine</PropertySetBraceStyle>
+    <EventBraceStyle>NextLine</EventBraceStyle>
+    <EventAddBraceStyle>NextLine</EventAddBraceStyle>
+    <EventRemoveBraceStyle>NextLine</EventRemoveBraceStyle>
+    <StatementBraceStyle>NextLine</StatementBraceStyle>
+    <ElseNewLinePlacement>NewLine</ElseNewLinePlacement>
+    <ElseIfNewLinePlacement>NewLine</ElseIfNewLinePlacement>
+    <CatchNewLinePlacement>NewLine</CatchNewLinePlacement>
+    <FinallyNewLinePlacement>NewLine</FinallyNewLinePlacement>
+    <ArrayInitializerWrapping>DoNotChange</ArrayInitializerWrapping>
     <BeforeMethodDeclarationParentheses>False</BeforeMethodDeclarationParentheses>
     <BeforeMethodCallParentheses>False</BeforeMethodCallParentheses>
     <BeforeConstructorDeclarationParentheses>False</BeforeConstructorDeclarationParentheses>
+    <BeforeIndexerDeclarationBracket>False</BeforeIndexerDeclarationBracket>
     <BeforeDelegateDeclarationParentheses>False</BeforeDelegateDeclarationParentheses>
+    <AfterDelegateDeclarationParameterComma>True</AfterDelegateDeclarationParameterComma>
     <NewParentheses>False</NewParentheses>
+    <AroundAssignmentParentheses>False</AroundAssignmentParentheses>
+    <AroundEqualityOperatorParentheses>False</AroundEqualityOperatorParentheses>
+    <AroundRelationalOperatorParentheses>False</AroundRelationalOperatorParentheses>
+    <AroundAdditiveOperatorParentheses>False</AroundAdditiveOperatorParentheses>
+    <AroundMultiplicativeOperatorParentheses>False</AroundMultiplicativeOperatorParentheses>
+    <SpacesBeforeBrackets>False</SpacesBeforeBrackets>
   </CSharpFormattingPolicy>
-  <TextStylePolicy inheritsSet="VisualStudio" inheritsScope="text/plain" scope="text/x-csharp">
+  <TextStylePolicy inheritsSet="null" scope="text/x-csharp" />
+  <TextStylePolicy inheritsSet="null" scope="application/xml" />
+  <XmlFormattingPolicy inheritsSet="Mono" inheritsScope="application/xml" scope="application/xml" />
+  <TextStylePolicy inheritsSet="VisualStudio" inheritsScope="text/plain" scope="text/plain">
     <FileWidth>120</FileWidth>
-    <IndentWidth>2</IndentWidth>
+    <NoTabsAfterNonTabs>True</NoTabsAfterNonTabs>
     <EolMarker>Unix</EolMarker>
   </TextStylePolicy>
 </PolicySet>
