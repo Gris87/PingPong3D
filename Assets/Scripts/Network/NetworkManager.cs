@@ -20,6 +20,7 @@ public class NetworkManager : MonoBehaviour
 
 	private bool        isServerMode;
 	private ServerState serverState;
+	private bool        isJoining;
 
 	// Use this for initialization
 	void Start()
@@ -45,6 +46,7 @@ public class NetworkManager : MonoBehaviour
 			}
 			else
 			{
+				isJoining=false;
 				RefreshHostList();
 			}
 		}
@@ -60,7 +62,7 @@ public class NetworkManager : MonoBehaviour
 		roomName=Environment.UserName;
 
 		serverState=ServerState.ServerInit;
-		if (Network.InitializeServer(2, port, !Network.HavePublicAddress())==NetworkConnectionError.NoError)
+		if (Network.InitializeServer(1, port, !Network.HavePublicAddress())==NetworkConnectionError.NoError)
 		{
 			serverState=ServerState.ServerRegister;
 			MasterServer.RegisterHost(typeName, roomName);
@@ -79,9 +81,16 @@ public class NetworkManager : MonoBehaviour
 	private void JoinServer(HostData hostData)
 	{
 		Debug.Log("Joining to server: "+hostData.gameName+" | "+hostData.ip[0]+":"+hostData.port.ToString());
-		Network.Connect(hostData);
-	}
 
+		isJoining=true;
+
+		if (Network.Connect(hostData)!=NetworkConnectionError.NoError)
+		{
+			Debug.LogError("Impossible to connect");
+			cancelJoining();
+		}
+	}
+	
 	void OnServerInitialized()
 	{
 		Debug.Log("Server initializied");
@@ -117,7 +126,7 @@ public class NetworkManager : MonoBehaviour
 	{
 		if (GUI.Button(new Rect(20, 20, 80, 30), "Back"))
 		{
-			cancel();
+			goBack();
 		}
 
 		if (isServerMode)
@@ -143,33 +152,79 @@ public class NetworkManager : MonoBehaviour
 		}
 		else
 		{
-			HostData[] hostsList=MasterServer.PollHostList();
-
-			if (hostsList!=null)
+			if (isJoining)
 			{
-				hostsScrollPosition=GUI.BeginScrollView(new Rect(20, 60, Screen.width-40, Screen.height-80), hostsScrollPosition, new Rect(0, 0, Screen.width-60, 40+(hostsList.Length-1)*50));
-
-				for (int i=0; i<hostsList.Length; ++i)
+				if (GUI.Button(new Rect(120, 20, 80, 30), "Cancel"))
 				{
-					if (GUI.Button(new Rect(0, 50*i, 300, 40), hostsList[i].gameName))
-					{
-						JoinServer(hostsList[i]);
-					}
+					cancelJoining();
 				}
 
-				GUI.EndScrollView();
+				GUI.Label(new Rect(Screen.width/2, Screen.height/2, 1, 1), "Joining...", centerTextStyle);
+			}
+			else
+			{
+				if (GUI.Button(new Rect(120, 20, 80, 30), "Refresh"))
+				{
+					RefreshHostList();
+				}
+				
+				int panelWidth  = Screen.width-40;
+				int panelHeight = Screen.height-90;
+				
+				GUI.BeginGroup(new Rect(20, 70, panelWidth, panelHeight));
+				GUI.Box(new Rect(0, 0, panelWidth, panelHeight), "");
+				
+				HostData[] hostsList=MasterServer.PollHostList();
+				
+				if (hostsList!=null && hostsList.Length>0)
+				{
+					hostsScrollPosition=GUI.BeginScrollView(new Rect(4, 4, panelWidth-8, panelHeight-8), hostsScrollPosition, new Rect(0, 0, panelWidth-25, 20+(hostsList.Length-1)*30));
+					
+					for (int i=0; i<hostsList.Length; ++i)
+					{
+						GUI.Label(new Rect(0, 30*i, panelWidth-190, 20), hostsList[i].gameName);
+						GUI.Label(new Rect(panelWidth-170, 30*i, 20, 20), hostsList[i].connectedPlayers.ToString()+"/"+hostsList[i].playerLimit.ToString());
+						
+						if (GUI.Button(new Rect(panelWidth-130, 30*i, 100, 20), "Connect"))
+						{
+							if (hostsList[i].connectedPlayers<hostsList[i].playerLimit)
+							{
+								JoinServer(hostsList[i]);
+							}
+						}
+					}
+					
+					GUI.EndScrollView();
+				}
+				else
+				{
+					GUI.Label(new Rect(panelWidth/2, panelHeight/2, 1, 1), "Nothing found", centerTextStyle);
+				}
+				
+				GUI.EndGroup();
 			}
 		}
 	}
 
-	void cancel()
+	void goBack()
 	{
+		Debug.Log("Go to game menu");
+
+		Network.Disconnect();
+
 		if (isServerMode)
 		{
-			Network.Disconnect();
 			MasterServer.UnregisterHost();
 		}
 
 		SceneManager.LoadScene("GameMenu");
+	}
+
+	void cancelJoining()
+	{
+		Debug.Log("Cancel joining");
+
+		isJoining=false;
+		Network.Disconnect();
 	}
 }
