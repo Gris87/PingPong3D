@@ -22,6 +22,7 @@ public class GameMainScript : MonoBehaviour
 	private int  difficulty;
 	private int  playerScore;
 	private int  enemyScore;
+	private bool playerMode;
 	private bool player2Mode;
 	private bool enemyAIMode;
 
@@ -53,36 +54,56 @@ public class GameMainScript : MonoBehaviour
 		player2Logic = enemy.GetComponent<PlayerLogic>();
 		enemyAI      = enemy.GetComponent<EnemyAI>();
 
-		player2Mode=false;
-		enemyAIMode=true;
-
 		Hashtable arguments=SceneManager.GetSceneArguments();
 
 		if (arguments!=null && arguments.ContainsKey("difficulty"))
 		{
 			difficulty=(int)arguments["difficulty"];
-			
-			if (difficulty>=0)
-			{
-				enemyAI.maxSpeed=10+difficulty*10;
-			}
-			else
-			if (difficulty==-1)
-			{
-				playerLogic.playerMode=PlayerLogic.Mode.LeftPlayer;
-
-				player2Mode=true;
-				enemyAIMode=false;
-			}
 		}
 		else
 		{
 			difficulty=0;
 		}
 
+		if (difficulty>=0)
+		{
+			enemyAI.maxSpeed=10+difficulty*10;
+			
+			playerMode  = true;
+			player2Mode = false;
+			enemyAIMode = true;
+		}
+		else
+		if (difficulty==-1)
+		{
+			if (Network.isServer)
+			{
+				playerMode  = true;
+				player2Mode = false;
+				enemyAIMode = false;
+			}
+			else
+			if (Network.isClient)
+			{
+				player2Logic.playerMode=PlayerLogic.Mode.BothPlayers;
+				
+				playerMode  = false;
+				player2Mode = true;
+				enemyAIMode = false;
+			}
+			else
+			{
+				playerLogic.playerMode=PlayerLogic.Mode.LeftPlayer;
+				
+				playerMode  = true;
+				player2Mode = true;
+				enemyAIMode = false;
+			}
+		}
+		
 		Init();
 	}
-
+	
 	void Init()
 	{
 		Debug.Log("Game started (difficulty="+difficulty.ToString()+")");
@@ -92,7 +113,7 @@ public class GameMainScript : MonoBehaviour
 		playerScore = 0;
 		enemyScore  = 0;
 		
-		playerLogic.enabled  = true;
+		playerLogic.enabled  = playerMode;
 		player2Logic.enabled = player2Mode;
 		enemyAI.enabled      = enemyAIMode;
 	}
@@ -100,44 +121,47 @@ public class GameMainScript : MonoBehaviour
 	// Update is called once per frame
 	void Update()
 	{
-		float factor=(1+acceleration*Time.deltaTime);
-
-		rigidbody.velocity=new Vector3(rigidbody.velocity.x*factor,
-		                               rigidbody.velocity.y*factor,
-		                               (rigidbody.velocity.z+gravity*Time.deltaTime)*factor);
-	
-		if (rigidbody.velocity.magnitude>maxSpeed)
+		if (!Network.isClient)
 		{
-			rigidbody.velocity=rigidbody.velocity.normalized*maxSpeed;
-		}
-
-
-		if (transform.position.z>fallLimit)
-		{
-			if (transform.position.x>0)
+			float factor=(1+acceleration*Time.deltaTime);
+			
+			rigidbody.velocity=new Vector3(rigidbody.velocity.x*factor,
+			                               rigidbody.velocity.y*factor,
+			                               (rigidbody.velocity.z+gravity*Time.deltaTime)*factor);
+			
+			if (rigidbody.velocity.magnitude>maxSpeed)
 			{
-				playerScore++;
-				
-				if (playerScore>=maxScore)
-				{
-					stop();
-				}
-				else
-				{
-					resetPositionAndSpeed(false);
-				}
+				rigidbody.velocity=rigidbody.velocity.normalized*maxSpeed;
 			}
-			else
+			
+			
+			if (transform.position.z>fallLimit)
 			{
-				enemyScore++;
-				
-				if (enemyScore>=maxScore)
+				if (transform.position.x>0)
 				{
-					stop();
+					playerScore++;
+					
+					if (playerScore>=maxScore)
+					{
+						stop();
+					}
+					else
+					{
+						resetPositionAndSpeed(false);
+					}
 				}
 				else
 				{
-					resetPositionAndSpeed(true);
+					enemyScore++;
+					
+					if (enemyScore>=maxScore)
+					{
+						stop();
+					}
+					else
+					{
+						resetPositionAndSpeed(true);
+					}
 				}
 			}
 		}
@@ -150,7 +174,7 @@ public class GameMainScript : MonoBehaviour
 		GUI.Label(new Rect(20,              20, 1, 1), playerScore.ToString(), topLeftTextStyle);
 		GUI.Label(new Rect(Screen.width-20, 20, 1, 1), enemyScore.ToString(),  topRightTextStyle);
 
-		if (difficulty>=0 || gameIsOver)
+		if (difficulty>=0 || (gameIsOver && !Network.isClient))
 		{
 			if (GUI.Button(new Rect(Screen.width/2-100, 20, 200, 30), "Restart"))
 			{
@@ -211,13 +235,16 @@ public class GameMainScript : MonoBehaviour
 	{
 		transform.position=new Vector3(0, 0, 0);
 
-		if (moveToRight)
+		if (!Network.isClient)
 		{
-			rigidbody.velocity=new Vector3((float)(10+Random.value*10),  (float)((Random.value-0.5)*20), 0);
-		}
-		else
-		{
-			rigidbody.velocity=new Vector3((float)(-10-Random.value*10), (float)((Random.value-0.5)*20), 0);
+			if (moveToRight)
+			{
+				rigidbody.velocity=new Vector3((float)(10+Random.value*10),  (float)((Random.value-0.5)*20), 0);
+			}
+			else
+			{
+				rigidbody.velocity=new Vector3((float)(-10-Random.value*10), (float)((Random.value-0.5)*20), 0);
+			}
 		}
 	}
 

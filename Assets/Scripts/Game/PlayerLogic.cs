@@ -25,36 +25,13 @@ public class PlayerLogic : MonoBehaviour
 	{
 		float verticalMovement=0;
 
-		if (
-			playerMode==Mode.BothPlayers
-			||
-			Network.isServer
-			||
-			Network.isClient
-		   )
+		if (playerMode==Mode.BothPlayers)
 		{
-			if (
-				playerMode==Mode.BothPlayers
-				||
-				(
-				 Network.isServer
-				 &&
-				 playerMode==Mode.LeftPlayer
-				)
-				||
-				(
-				 Network.isClient
-				 &&
-				 playerMode==Mode.RightPlayer
-				)
-			   )
+			verticalMovement=Input.GetAxis("Vertical");
+			
+			if (verticalMovement==0)
 			{
-				verticalMovement=Input.GetAxis("Vertical");
-				
-				if (verticalMovement==0)
-				{
-					verticalMovement=Input.GetAxis("Vertical 2");
-				}
+				verticalMovement=Input.GetAxis("Vertical 2");
 			}
 		}
 		else
