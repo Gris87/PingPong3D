@@ -8,8 +8,14 @@ public class GameMenuSubMenu : MonoBehaviour
 	public         float           hideDelay        = 0.6f;
 	public         float           showDelay        = 0.6f;
 
-	private static GameMenuSubMenu lastSelectedItem = null;
-	private static bool            isAnimated       = false;
+	private static GameMenuSubMenu lastSelectedItem;
+	private static bool            isAnimated;
+
+	void Start()
+	{
+		lastSelectedItem = null;
+		isAnimated=false;
+	}
 
 	IEnumerator OnMouseUp()
 	{
