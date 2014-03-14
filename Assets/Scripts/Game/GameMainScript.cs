@@ -15,6 +15,9 @@ public class GameMainScript : MonoBehaviour
 	private PlayerLogic playerLogic;
 	private PlayerLogic player2Logic;
 	private EnemyAI     enemyAI;
+	private GUIStyle    topLeftTextStyle;
+	private GUIStyle    topRightTextStyle;
+	private GUIStyle    centerTextStyle;
 
 	private int  difficulty;
 	private int  playerScore;
@@ -25,6 +28,27 @@ public class GameMainScript : MonoBehaviour
 	// Use this for initialization
 	void Start()
 	{
+		topLeftTextStyle=new GUIStyle();
+		topRightTextStyle=new GUIStyle();
+		centerTextStyle=new GUIStyle();
+		
+		topLeftTextStyle.alignment=TextAnchor.UpperLeft;
+		topLeftTextStyle.clipping=TextClipping.Overflow;
+		topLeftTextStyle.fontSize=24;
+		topLeftTextStyle.normal.textColor=Color.white;
+		
+		topRightTextStyle.alignment=TextAnchor.UpperRight;
+		topRightTextStyle.clipping=TextClipping.Overflow;
+		topRightTextStyle.fontSize=24;
+		topRightTextStyle.normal.textColor=Color.white;
+		
+		centerTextStyle.alignment=TextAnchor.MiddleCenter;
+		centerTextStyle.clipping=TextClipping.Overflow;
+		centerTextStyle.fontSize=24;
+		centerTextStyle.normal.textColor=Color.white;
+
+		// ---------------------------------------------------------------
+
 		playerLogic  = player.GetComponent<PlayerLogic>();
 		player2Logic = enemy.GetComponent<PlayerLogic>();
 		enemyAI      = enemy.GetComponent<EnemyAI>();
@@ -123,8 +147,8 @@ public class GameMainScript : MonoBehaviour
 	{
 		bool gameIsOver = (playerScore>=maxScore || enemyScore>=maxScore);
 
-		GUI.Label(new Rect(20,              20, 10, 20), playerScore.ToString());
-		GUI.Label(new Rect(Screen.width-30, 20, 10, 20), enemyScore.ToString());
+		GUI.Label(new Rect(20,              20, 1, 1), playerScore.ToString(), topLeftTextStyle);
+		GUI.Label(new Rect(Screen.width-20, 20, 1, 1), enemyScore.ToString(),  topRightTextStyle);
 
 		if (difficulty>=0 || gameIsOver)
 		{
@@ -148,7 +172,7 @@ public class GameMainScript : MonoBehaviour
 
 		if (gameIsOver)
 		{
-			GUI.Label(new Rect(Screen.width/2-40, Screen.height/2-30, 80, 20), "GAME OVER");
+			GUI.Label(new Rect(Screen.width/2, Screen.height/2, 1, 1), "GAME OVER", centerTextStyle);
 		}
 	}
 

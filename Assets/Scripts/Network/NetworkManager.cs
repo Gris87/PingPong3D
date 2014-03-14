@@ -15,6 +15,15 @@ public class NetworkManager : MonoBehaviour
 	// Use this for initialization
 	void Start()
 	{
+		centerTextStyle=new GUIStyle();
+
+		centerTextStyle.alignment=TextAnchor.MiddleCenter;
+		centerTextStyle.clipping=TextClipping.Overflow;
+		centerTextStyle.fontSize=24;
+		centerTextStyle.normal.textColor=Color.white;
+
+		// -----------------------------------------------------------
+
 		Hashtable arguments=SceneManager.GetSceneArguments();
 		
 		if (arguments!=null && arguments.ContainsKey("serverMode"))
@@ -23,15 +32,15 @@ public class NetworkManager : MonoBehaviour
 			
 			if (isServerMode)
 			{
-				centerTextStyle=new GUIStyle();
-				
-				centerTextStyle.alignment=TextAnchor.MiddleCenter;
-				centerTextStyle.clipping=TextClipping.Overflow;
-				centerTextStyle.fontSize=24;
-				centerTextStyle.normal.textColor=Color.white;
-
 				StartServer();
 			}
+			else
+			{
+			}
+		}
+		else
+		{
+			Debug.LogError("Incorrect usage");
 		}
 	}
 	
