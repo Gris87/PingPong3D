@@ -185,7 +185,7 @@ public class NetworkManager : MonoBehaviour
 					Debug.LogError("Unknown state");
 				break;
 			}
-            #region
+            #endregion
 		}
 		else
 		{

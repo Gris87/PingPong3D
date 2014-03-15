@@ -113,7 +113,7 @@ public class GameMainScript : MonoBehaviour
 	}
 	
     [RPC]
-	void Init()
+	private void Init()
 	{
 		Debug.Log("Game started (difficulty="+difficulty.ToString()+")");
 
@@ -148,29 +148,11 @@ public class GameMainScript : MonoBehaviour
 			{
 				if (transform.position.x>0)
 				{
-					playerScore++;
-					
-					if (playerScore>=maxScore)
-					{
-						stop();
-					}
-					else
-					{
-						resetPositionAndSpeed(false);
-					}
+                    increasePlayerScore();
 				}
 				else
 				{
-					enemyScore++;
-					
-					if (enemyScore>=maxScore)
-					{
-						stop();
-					}
-					else
-					{
-						resetPositionAndSpeed(true);
-					}
+                    increaseEnemyScore();
 				}
 			}
 		}
@@ -230,6 +212,36 @@ public class GameMainScript : MonoBehaviour
 			goToGameMenu();
 		}
 	}
+
+    [RPC]
+    private void increasePlayerScore()
+    {
+        playerScore++;
+        
+        if (playerScore>=maxScore)
+        {
+            stop();
+        }
+        else
+        {
+            resetPositionAndSpeed(false);
+        }
+    }
+
+    [RPC]
+    private void increaseEnemyScore()
+    {
+        enemyScore++;
+        
+        if (enemyScore>=maxScore)
+        {
+            stop();
+        }
+        else
+        {
+            resetPositionAndSpeed(true);
+        }
+    }
 
 	private void stop()
 	{
