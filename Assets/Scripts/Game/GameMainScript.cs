@@ -110,18 +110,21 @@ public class GameMainScript : MonoBehaviour
 		}
         #endregion
 		
-		Init();
+		init();
 	}
 	
     [RPC]
-	private void Init()
+	private void init()
 	{
 		Debug.Log("Game started (difficulty="+difficulty.ToString()+")");
 
+        playerScore = 0;
+        enemyScore  = 0;
+
+        player.position = new Vector3(player.position.x, 0, 0);
+        enemy.position  = new Vector3(enemy.position.x,  0, 0);
+
 		resetPositionAndSpeed(true);
-		
-		playerScore = 0;
-		enemyScore  = 0;
 		
 		playerLogic.enabled  = playerMode;
 		player2Logic.enabled = player2Mode;
@@ -138,58 +141,71 @@ public class GameMainScript : MonoBehaviour
             float velocityY=rigidbody.velocity.y*factor;
             float velocityZ;
 
-            if (Mathf.Abs(transform.position.x)<boardLimit)
+            if (velocityX!=0 || velocityY!=0)
             {
-                velocityZ=0;
-            }
-            else
-            {
-                velocityZ=(rigidbody.velocity.z+gravity*Time.deltaTime)*factor;
-            }
-
-            if (Mathf.Abs(velocityX)<2f)
-            {
-                if (velocityX<0)
+                if (Mathf.Abs(transform.position.x)<boardLimit)
                 {
-                    velocityX=-2f;
+                    velocityZ=0;
                 }
                 else
                 {
-                    velocityX=2f;
+                    velocityZ=(rigidbody.velocity.z+gravity*Time.deltaTime)*factor;
+                }
+                
+                if (Mathf.Abs(velocityX)<2f)
+                {
+                    if (velocityX<0)
+                    {
+                        velocityX=-2f;
+                    }
+                    else
+                    {
+                        velocityX=2f;
+                    }
+                }
+                
+                if (Mathf.Abs(velocityY)<2f)
+                {
+                    if (velocityY<0)
+                    {
+                        velocityY=-2f;
+                    }
+                    else
+                    {
+                        velocityY=2f;
+                    }
+                }
+                
+                rigidbody.velocity=new Vector3(velocityX, velocityY, velocityZ);
+                
+                if (rigidbody.velocity.magnitude>maxSpeed)
+                {
+                    rigidbody.velocity=rigidbody.velocity.normalized*maxSpeed;
+                }
+                
+                
+                if (transform.position.z>fallLimit)
+                {
+                    if (transform.position.x>0)
+                    {
+                        increasePlayerScore();
+                        
+                        if (Network.isServer)
+                        {
+                            networkView.RPC("increasePlayerScore", RPCMode.Others);
+                        }
+                    }
+                    else
+                    {
+                        increaseEnemyScore();
+                        
+                        if (Network.isServer)
+                        {
+                            networkView.RPC("increaseEnemyScore", RPCMode.Others);
+                        }
+                    }
                 }
             }
-
-            if (Mathf.Abs(velocityY)<2f)
-            {
-                if (velocityY<0)
-                {
-                    velocityY=-2f;
-                }
-                else
-                {
-                    velocityY=2f;
-                }
-            }
-
-            rigidbody.velocity=new Vector3(velocityX, velocityY, velocityZ);
-			
-			if (rigidbody.velocity.magnitude>maxSpeed)
-			{
-				rigidbody.velocity=rigidbody.velocity.normalized*maxSpeed;
-			}
-			
-			
-			if (transform.position.z>fallLimit)
-			{
-				if (transform.position.x>0)
-				{
-                    increasePlayerScore();
-				}
-				else
-				{
-                    increaseEnemyScore();
-				}
-			}
 		}
 	}
 
@@ -207,7 +223,12 @@ public class GameMainScript : MonoBehaviour
 		{
 			if (GUI.Button(new Rect(Screen.width/2-100, 20, 200, 30), "Restart"))
 			{
-				Init();
+				init();
+
+                if (Network.isServer)
+                {
+                    networkView.RPC("init", RPCMode.Others);
+                }
 			}
 			
 			if (GUI.Button(new Rect(Screen.width/2-100, 60, 200, 30), "Game menu"))
