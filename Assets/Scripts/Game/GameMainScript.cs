@@ -87,7 +87,7 @@ public class GameMainScript : MonoBehaviour
 			if (Network.isServer) // Server side
 			{
 				playerMode  = true;
-				player2Mode = false;
+                player2Mode = true;
 				enemyAIMode = false;
 			}
 			else

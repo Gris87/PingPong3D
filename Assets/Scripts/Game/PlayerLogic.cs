@@ -37,30 +37,47 @@ public class PlayerLogic : MonoBehaviour
 		}
 		else
 		{
-			string axis;
-			
-			if (playerMode==Mode.LeftPlayer)
-			{
-				axis="Vertical";
-			}
-			else
-			if (playerMode==Mode.RightPlayer)
-			{
-				axis="Vertical 2";
-			}
-			else
-			{
-				Debug.LogError("Unknown axis");
-				axis="Vertical";
-			}
-
-			verticalMovement=Input.GetAxis(axis);
+            if (!Network.isServer)
+            {
+                string axis;
+                
+                if (playerMode==Mode.LeftPlayer)
+                {
+                    axis="Vertical";
+                }
+                else
+                    if (playerMode==Mode.RightPlayer)
+                {
+                    axis="Vertical 2";
+                }
+                else
+                {
+                    Debug.LogError("Unknown axis");
+                    axis="Vertical";
+                }
+                
+                verticalMovement=Input.GetAxis(axis);
+            }
 		}
         #endregion       
 
 		if (verticalMovement!=0)
 		{
 			controller.Move(new Vector3(0, verticalMovement*speed*Time.deltaTime, 0));
+
+            if (Network.isClient)
+            {
+                networkView.RPC("setPosition", RPCMode.Server, transform.position);
+            }
 		}
 	}
+
+    [RPC]
+    private void setPosition(Vector3 position)
+    {
+        if (playerMode==Mode.RightPlayer)
+        {
+            transform.position=position;
+        }
+    }
 }
