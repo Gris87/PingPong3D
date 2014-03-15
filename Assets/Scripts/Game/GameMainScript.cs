@@ -29,6 +29,7 @@ public class GameMainScript : MonoBehaviour
 	// Use this for initialization
 	void Start()
 	{
+        #region Create text styles
 		topLeftTextStyle=new GUIStyle();
 		topRightTextStyle=new GUIStyle();
 		centerTextStyle=new GUIStyle();
@@ -47,13 +48,17 @@ public class GameMainScript : MonoBehaviour
 		centerTextStyle.clipping=TextClipping.Overflow;
 		centerTextStyle.fontSize=24;
 		centerTextStyle.normal.textColor=Color.white;
+        #endregion
 
 		// ---------------------------------------------------------------
 
+        #region Get controllers
 		playerLogic  = player.GetComponent<PlayerLogic>();
 		player2Logic = enemy.GetComponent<PlayerLogic>();
 		enemyAI      = enemy.GetComponent<EnemyAI>();
+        #endregion
 
+        #region Get difficulty from arguments
 		Hashtable arguments=SceneManager.GetSceneArguments();
 
 		if (arguments!=null && arguments.ContainsKey("difficulty"))
@@ -64,8 +69,10 @@ public class GameMainScript : MonoBehaviour
 		{
 			difficulty=0;
 		}
+        #endregion
 
-		if (difficulty>=0)
+        #region Setup controllers
+        if (difficulty>=0) // Single player
 		{
 			enemyAI.maxSpeed=10+difficulty*10;
 			
@@ -74,16 +81,16 @@ public class GameMainScript : MonoBehaviour
 			enemyAIMode = true;
 		}
 		else
-		if (difficulty==-1)
+		if (difficulty==-1) // Multiplayer
 		{
-			if (Network.isServer)
+			if (Network.isServer) // Server side
 			{
 				playerMode  = true;
 				player2Mode = false;
 				enemyAIMode = false;
 			}
 			else
-			if (Network.isClient)
+			if (Network.isClient) // Client side
 			{
 				player2Logic.playerMode=PlayerLogic.Mode.BothPlayers;
 				
@@ -91,7 +98,7 @@ public class GameMainScript : MonoBehaviour
 				player2Mode = true;
 				enemyAIMode = false;
 			}
-			else
+			else // 2 players
 			{
 				playerLogic.playerMode=PlayerLogic.Mode.LeftPlayer;
 				
@@ -100,6 +107,7 @@ public class GameMainScript : MonoBehaviour
 				enemyAIMode = false;
 			}
 		}
+        #endregion
 		
 		Init();
 	}
