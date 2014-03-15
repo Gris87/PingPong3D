@@ -8,6 +8,7 @@ public class GameMainScript : MonoBehaviour
 
 	public float acceleration = 0.1f;
 	public float maxSpeed     = 50f;
+    public float boardLimit   = 25f;
 	public float gravity      = 20f;
 	public float fallLimit    = 30f;
 	public int   maxScore     = 3;
@@ -133,10 +134,44 @@ public class GameMainScript : MonoBehaviour
 		if (!Network.isClient)
 		{
 			float factor=(1+acceleration*Time.deltaTime);
-			
-			rigidbody.velocity=new Vector3(rigidbody.velocity.x*factor,
-			                               rigidbody.velocity.y*factor,
-			                               (rigidbody.velocity.z+gravity*Time.deltaTime)*factor);
+            float velocityX=rigidbody.velocity.x*factor;
+            float velocityY=rigidbody.velocity.y*factor;
+            float velocityZ;
+
+            if (Mathf.Abs(transform.position.x)<boardLimit)
+            {
+                velocityZ=0;
+            }
+            else
+            {
+                velocityZ=(rigidbody.velocity.z+gravity*Time.deltaTime)*factor;
+            }
+
+            if (Mathf.Abs(velocityX)<2f)
+            {
+                if (velocityX<0)
+                {
+                    velocityX=-2f;
+                }
+                else
+                {
+                    velocityX=2f;
+                }
+            }
+
+            if (Mathf.Abs(velocityY)<2f)
+            {
+                if (velocityY<0)
+                {
+                    velocityY=-2f;
+                }
+                else
+                {
+                    velocityY=2f;
+                }
+            }
+
+            rigidbody.velocity=new Vector3(velocityX, velocityY, velocityZ);
 			
 			if (rigidbody.velocity.magnitude>maxSpeed)
 			{

@@ -245,7 +245,8 @@ MonoBehaviour:
   enemy: {fileID: 924050850}
   acceleration: .100000001
   maxSpeed: 50
-  gravity: 20
+  boardLimit: 25
+  gravity: 200
   fallLimit: 30
   maxScore: 3
 --- !u!148 &155243122
