@@ -23,15 +23,19 @@ public class GameMenuSubMenu : MonoBehaviour
 		{
 			isAnimated=true;
 
+            #region Hide previous selected items
 			if (lastSelectedItem!=null)
 			{
 				StartCoroutine(lastSelectedItem.hideItems());
 				yield return new WaitForSeconds(hideDelay);
 			}
+            #endregion
 
+            #region Show items
 			lastSelectedItem=this;
 			StartCoroutine(showItems());
 			yield return new WaitForSeconds(showDelay);
+            #endregion
 
 			isAnimated=false;
 		}

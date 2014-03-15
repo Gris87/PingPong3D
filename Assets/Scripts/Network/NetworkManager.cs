@@ -34,6 +34,7 @@ public class NetworkManager : MonoBehaviour
 	// Use this for initialization
 	void Start()
 	{
+        #region Create text styles
 		topRightTextStyle = new GUIStyle();
 		centerTextStyle   = new GUIStyle();
 				
@@ -46,29 +47,33 @@ public class NetworkManager : MonoBehaviour
 		centerTextStyle.clipping=TextClipping.Overflow;
 		centerTextStyle.fontSize=24;
 		centerTextStyle.normal.textColor=Color.white;
+        #endregion
 
 		// -----------------------------------------------------------
 
+        #region Get mode from arguments
 		Hashtable arguments=SceneManager.GetSceneArguments();
 		
 		if (arguments!=null && arguments.ContainsKey("serverMode"))
 		{
 			isServerMode=(bool)arguments["serverMode"];
-			
-			if (isServerMode)
-			{
-				StartServer();
-			}
-			else
-			{
-				clientState=ClientState.ClientSearch;
-				RefreshHostList();
-			}
 		}
 		else
 		{
 			Debug.LogError("Incorrect usage");
+            isServerMode=true;
 		}
+        #endregion
+
+        if (isServerMode)
+        {
+            StartServer();
+        }
+        else
+        {
+            clientState=ClientState.ClientSearch;
+            RefreshHostList();
+        }
 	}
 	
 	private void StartServer()
@@ -161,6 +166,7 @@ public class NetworkManager : MonoBehaviour
 
 		if (isServerMode)
 		{
+            #region Draw server states
 			switch (serverState)
 			{
 				case ServerState.ServerInit:
@@ -179,6 +185,7 @@ public class NetworkManager : MonoBehaviour
 					Debug.LogError("Unknown state");
 				break;
 			}
+            #region
 		}
 		else
 		{
@@ -186,6 +193,7 @@ public class NetworkManager : MonoBehaviour
 			{
 				case ClientState.ClientSearch:
 				{
+                    #region Draw list of hosts
 					if (GUI.Button(new Rect(120, 20, 80, 30), "Refresh"))
 					{
 						RefreshHostList();
@@ -233,8 +241,10 @@ public class NetworkManager : MonoBehaviour
 					}
 					
 					GUI.EndGroup();
+                    #endregion
 				}
 				break;
+                #region Draw client states
 				case ClientState.ClientJoin:
 				{
 					if (GUI.Button(new Rect(120, 20, 80, 30), "Cancel"))
@@ -258,6 +268,7 @@ public class NetworkManager : MonoBehaviour
 				default:
 					Debug.LogError("Unknown state");
 				break;
+                #endregion
 			}
 		}
 	}

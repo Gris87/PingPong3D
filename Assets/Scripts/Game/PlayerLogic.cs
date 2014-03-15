@@ -25,6 +25,7 @@ public class PlayerLogic : MonoBehaviour
 	{
 		float verticalMovement=0;
 
+        #region Get vertical movement
 		if (playerMode==Mode.BothPlayers)
 		{
 			verticalMovement=Input.GetAxis("Vertical");
@@ -55,6 +56,7 @@ public class PlayerLogic : MonoBehaviour
 
 			verticalMovement=Input.GetAxis(axis);
 		}
+        #endregion       
 
 		if (verticalMovement!=0)
 		{

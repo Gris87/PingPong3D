@@ -16,6 +16,7 @@ public class EnemyAI : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
 	{
+        #region Follow ball
 		if (ball.transform.position.z<=1)
 		{
 			float offsetY   = ball.transform.position.y-transform.position.y;
@@ -33,5 +34,6 @@ public class EnemyAI : MonoBehaviour
 			
 			controller.Move(new Vector3(0, offsetY, 0));
 		}
+        #endregion
 	}
 }

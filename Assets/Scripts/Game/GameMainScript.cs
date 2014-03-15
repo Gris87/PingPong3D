@@ -112,6 +112,7 @@ public class GameMainScript : MonoBehaviour
 		Init();
 	}
 	
+    [RPC]
 	void Init()
 	{
 		Debug.Log("Game started (difficulty="+difficulty.ToString()+")");
@@ -179,9 +180,12 @@ public class GameMainScript : MonoBehaviour
 	{
 		bool gameIsOver = (playerScore>=maxScore || enemyScore>=maxScore);
 
+        #region Draw score
 		GUI.Label(new Rect(20,              20, 1, 1), playerScore.ToString(), topLeftTextStyle);
 		GUI.Label(new Rect(Screen.width-20, 20, 1, 1), enemyScore.ToString(),  topRightTextStyle);
+        #endregion
 
+        #region Draw buttons
 		if (difficulty>=0 || (gameIsOver && !Network.isClient))
 		{
 			if (GUI.Button(new Rect(Screen.width/2-100, 20, 200, 30), "Restart"))
@@ -201,11 +205,14 @@ public class GameMainScript : MonoBehaviour
 				goToGameMenu();
 			}
 		}
+        #endregion
 
+        #region Draw GAME OVER
 		if (gameIsOver)
 		{
 			GUI.Label(new Rect(Screen.width/2, Screen.height/2, 1, 1), "GAME OVER", centerTextStyle);
 		}
+        #endregion
 	}
 
 	void OnPlayerDisconnected()
@@ -239,7 +246,7 @@ public class GameMainScript : MonoBehaviour
 		enemyAI.enabled      = false;
 	}
 
-	private void resetPositionAndSpeed(bool moveToRight)
+    private void resetPositionAndSpeed(bool moveToRight)
 	{
 		transform.position=new Vector3(0, 0, 0);
 
