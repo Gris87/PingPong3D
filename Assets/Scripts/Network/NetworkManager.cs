@@ -22,17 +22,25 @@ public class NetworkManager : MonoBehaviour
 	private const string typeName = "GrisPingPong3D";
 	private const int    port     = 46115;
 
+	private GUIStyle topRightTextStyle;
 	private GUIStyle centerTextStyle;
 	private Vector2  hostsScrollPosition = Vector2.zero;
 
 	private bool        isServerMode;
 	private ServerState serverState;
 	private ClientState clientState;
+	private bool        refreshing;
 
 	// Use this for initialization
 	void Start()
 	{
-		centerTextStyle=new GUIStyle();
+		topRightTextStyle = new GUIStyle();
+		centerTextStyle   = new GUIStyle();
+				
+		topRightTextStyle.alignment=TextAnchor.UpperRight;
+		topRightTextStyle.clipping=TextClipping.Overflow;
+		topRightTextStyle.fontSize=24;
+		topRightTextStyle.normal.textColor=Color.white;
 
 		centerTextStyle.alignment=TextAnchor.MiddleCenter;
 		centerTextStyle.clipping=TextClipping.Overflow;
@@ -84,6 +92,7 @@ public class NetworkManager : MonoBehaviour
 	{
 		Debug.Log("Requesting host list");
 
+		refreshing=true;
 		MasterServer.RequestHostList(typeName);
 	}
 
@@ -127,6 +136,7 @@ public class NetworkManager : MonoBehaviour
 		{
 			case MasterServerEvent.HostListReceived:
 				Debug.Log("Servers searching finished");
+				refreshing=false;
 			break;
 			case MasterServerEvent.RegistrationSucceeded:
 				serverState=ServerState.ServerStarted;
@@ -180,6 +190,11 @@ public class NetworkManager : MonoBehaviour
 					{
 						RefreshHostList();
 					}
+
+					if (refreshing)
+					{
+						GUI.Label(new Rect(Screen.width-20, 20, 1, 1), "Refreshing...", topRightTextStyle);
+					}
 					
 					int panelWidth  = Screen.width-40;
 					int panelHeight = Screen.height-90;
@@ -211,7 +226,10 @@ public class NetworkManager : MonoBehaviour
 					}
 					else
 					{
-						GUI.Label(new Rect(panelWidth/2, panelHeight/2, 1, 1), "Nothing found", centerTextStyle);
+						if (!refreshing)
+						{
+							GUI.Label(new Rect(panelWidth/2, panelHeight/2, 1, 1), "Nothing found", centerTextStyle);
+						}						
 					}
 					
 					GUI.EndGroup();
