@@ -246,7 +246,7 @@ MonoBehaviour:
   acceleration: .100000001
   maxSpeed: 50
   boardLimit: 25
-  gravity: 200
+  gravity: 100
   fallLimit: 30
   maxScore: 3
 --- !u!148 &155243122

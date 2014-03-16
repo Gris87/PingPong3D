@@ -56,7 +56,7 @@ public class PlayerLogic : MonoBehaviour
 
                     syncTime+=Time.deltaTime;
                     
-                    verticalMovement=((syncVelocity.y*deltaTime)/syncDelay)/speed;
+                    verticalMovement=(((syncVelocity.y*deltaTime)/syncDelay)/speed)/Time.deltaTime;
                 }
             }
             else

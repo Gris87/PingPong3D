@@ -9,7 +9,7 @@ public class GameMainScript : MonoBehaviour
 	public float acceleration = 0.1f;
 	public float maxSpeed     = 50f;
     public float boardLimit   = 25f;
-	public float gravity      = 20f;
+	public float gravity      = 100f;
 	public float fallLimit    = 30f;
 	public int   maxScore     = 3;
 
