@@ -23,8 +23,6 @@ public class GameMainScript : MonoBehaviour
 	private int  difficulty;
 	private int  playerScore;
 	private int  enemyScore;
-	private bool playerMode;
-	private bool player2Mode;
 	private bool enemyAIMode;
 
 	// Use this for initialization
@@ -77,8 +75,6 @@ public class GameMainScript : MonoBehaviour
 		{
 			enemyAI.maxSpeed=10+difficulty*10;
 			
-			playerMode  = true;
-			player2Mode = false;
 			enemyAIMode = true;
 		}
 		else
@@ -86,27 +82,22 @@ public class GameMainScript : MonoBehaviour
 		{
 			if (Network.isServer) // Server side
 			{
-				playerMode  = true;
-                player2Mode = true;
-				enemyAIMode = false;
+                playerLogic.playerMode  = PlayerLogic.Mode.BothPlayers;
+                player2Logic.playerMode = PlayerLogic.Mode.RightPlayer;
 			}
 			else
 			if (Network.isClient) // Client side
 			{
-				player2Logic.playerMode=PlayerLogic.Mode.BothPlayers;
-				
-				playerMode  = false;
-				player2Mode = true;
-				enemyAIMode = false;
+                playerLogic.playerMode  = PlayerLogic.Mode.LeftPlayer;
+				player2Logic.playerMode = PlayerLogic.Mode.BothPlayers;
 			}
 			else // 2 players
 			{
-				playerLogic.playerMode=PlayerLogic.Mode.LeftPlayer;
-				
-				playerMode  = true;
-				player2Mode = true;
-				enemyAIMode = false;
+                playerLogic.playerMode  = PlayerLogic.Mode.LeftPlayer;
+                player2Logic.playerMode = PlayerLogic.Mode.RightPlayer;				
 			}
+
+            enemyAIMode = false;
 		}
         #endregion
 		
@@ -126,8 +117,8 @@ public class GameMainScript : MonoBehaviour
 
 		resetPositionAndSpeed(true);
 		
-		playerLogic.enabled  = playerMode;
-		player2Logic.enabled = player2Mode;
+		playerLogic.enabled  = true;
+        player2Logic.enabled = !enemyAIMode;
 		enemyAI.enabled      = enemyAIMode;
 	}
 	
@@ -252,6 +243,29 @@ public class GameMainScript : MonoBehaviour
 		}
         #endregion
 	}
+
+    void OnSerializeNetworkView(BitStream stream, NetworkMessageInfo info)
+    {
+        Vector3 syncPosition = Vector3.zero;
+        Vector3 syncVelocity = Vector3.zero;
+
+        if (stream.isWriting)
+        {
+            syncPosition = rigidbody.position;
+            stream.Serialize(ref syncPosition);
+            
+            syncVelocity = rigidbody.velocity;
+            stream.Serialize(ref syncVelocity);
+        }
+        else
+        {
+            stream.Serialize(ref syncPosition);
+            stream.Serialize(ref syncVelocity);
+
+            rigidbody.position=syncPosition;
+            rigidbody.velocity=syncVelocity;
+        }
+    }
 
 	void OnPlayerDisconnected()
 	{

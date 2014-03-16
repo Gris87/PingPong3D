@@ -257,7 +257,7 @@ NetworkView:
   m_GameObject: {fileID: 155243115}
   m_Enabled: 1
   m_StateSynchronization: 1
-  m_Observed: {fileID: 155243120}
+  m_Observed: {fileID: 155243121}
   m_ViewID:
     m_ID: 2
     m_Type: 1
@@ -400,7 +400,7 @@ NetworkView:
   m_GameObject: {fileID: 757628212}
   m_Enabled: 1
   m_StateSynchronization: 1
-  m_Observed: {fileID: 757628216}
+  m_Observed: {fileID: 757628217}
   m_ViewID:
     m_ID: 1
     m_Type: 1
@@ -525,8 +525,8 @@ NetworkView:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 924050849}
   m_Enabled: 1
-  m_StateSynchronization: 1
-  m_Observed: {fileID: 924050850}
+  m_StateSynchronization: 0
+  m_Observed: {fileID: 0}
   m_ViewID:
     m_ID: 3
     m_Type: 1
