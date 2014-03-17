@@ -79,7 +79,16 @@ public class NetworkManager : MonoBehaviour
 	private void StartServer()
 	{
 		string roomName;
-		roomName=Environment.UserName;
+
+        if (Application.platform==RuntimePlatform.Android)
+        {
+            roomName=SystemInfo.deviceModel+"_"+SystemInfo.deviceName+"_"+SystemInfo.deviceUniqueIdentifier;
+        }
+        else
+        {
+            roomName=Environment.UserName;
+        }
+		
 
 		serverState=ServerState.ServerInit;
 		if (Network.InitializeServer(1, port, !Network.HavePublicAddress())==NetworkConnectionError.NoError)

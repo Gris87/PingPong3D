@@ -34,11 +34,39 @@ public class PlayerLogic : MonoBehaviour
         #region Get vertical movement
 		if (playerMode==Mode.BothPlayers)
 		{
-			verticalMovement=Input.GetAxis("Vertical");
-			
-			if (verticalMovement==0)
+			if (Input.GetMouseButton(0))
 			{
-				verticalMovement=Input.GetAxis("Vertical 2");
+                Plane plane=new Plane(Vector3.forward, 0);                
+                float distance;
+                Ray ray=Camera.main.ScreenPointToRay(Input.mousePosition);
+
+                if (plane.Raycast(ray, out distance))
+                {
+                    Vector3 mousePos = ray.GetPoint(distance);
+                    verticalMovement = mousePos.y-transform.position.y;
+                    float maxOffset  = speed*Time.deltaTime;
+
+                    if (verticalMovement>maxOffset)
+                    {
+                        verticalMovement=maxOffset;
+                    }
+                    else
+                    if (verticalMovement<-maxOffset)
+                    {
+                        verticalMovement=-maxOffset;
+                    }
+
+                    verticalMovement=verticalMovement/speed/Time.deltaTime;
+                }
+			}
+			else
+			{
+				verticalMovement=Input.GetAxis("Vertical");
+				
+				if (verticalMovement==0)
+				{
+					verticalMovement=Input.GetAxis("Vertical 2");
+				}
 			}
 		}
 		else

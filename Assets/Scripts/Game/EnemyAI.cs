@@ -27,7 +27,7 @@ public class EnemyAI : MonoBehaviour
 				offsetY=maxOffset;
 			}
 			else
-				if (offsetY<-maxOffset)
+			if (offsetY<-maxOffset)
 			{
 				offsetY=-maxOffset;
 			}
