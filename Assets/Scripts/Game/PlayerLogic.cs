@@ -36,7 +36,7 @@ public class PlayerLogic : MonoBehaviour
 		{
 			if (Input.GetMouseButton(0))
 			{
-                Vector3 mousePos = getMousePos();
+                Vector3 mousePos = getClickPosition(Input.mousePosition);
                 verticalMovement = mousePos.y-transform.position.y;
                 float maxOffset  = speed*Time.deltaTime;
                 
@@ -82,17 +82,11 @@ public class PlayerLogic : MonoBehaviour
             }
             else
             {
-                if (
-                    Application.platform==RuntimePlatform.Android
-                    ||
-                    Application.platform==RuntimePlatform.BB10Player
-                    ||
-                    Application.platform==RuntimePlatform.IPhonePlayer
-                   )
+                if (Input.touchCount>0)
                 {
-                    if (Input.GetMouseButton(0))
+                    foreach (Touch touch in Input.touches)
                     {
-                        Vector3 mousePos = getMousePos();
+                        Vector3 mousePos = getClickPosition(touch.position);
                         
                         if (
                             (mousePos.x<0 && playerMode==Mode.LeftPlayer)
@@ -114,6 +108,8 @@ public class PlayerLogic : MonoBehaviour
                             }
                             
                             verticalMovement=verticalMovement/speed/Time.deltaTime;
+
+                            break;
                         }
                     }
                 }
@@ -190,11 +186,11 @@ public class PlayerLogic : MonoBehaviour
         }
     }
 
-    private Vector3 getMousePos()
+    private Vector3 getClickPosition(Vector3 screenPosition)
     {
         Plane plane=new Plane(Vector3.forward, 0);                
         float distance;
-        Ray ray=Camera.main.ScreenPointToRay(Input.mousePosition);
+        Ray ray=Camera.main.ScreenPointToRay(screenPosition);
         
         if (plane.Raycast(ray, out distance))
         {
