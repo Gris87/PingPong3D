@@ -212,7 +212,7 @@ public class GameMainScript : MonoBehaviour
         #region Draw buttons
 		if (difficulty>=0 || (gameIsOver && !Network.isClient))
 		{
-			if (GUI.Button(new Rect(Screen.width/2-100, 20, 200, 40), "Restart"))
+			if (GUI.Button(new Rect(Screen.width/2-210, 20, 200, 40), "Restart"))
 			{
 				init();
 
@@ -222,7 +222,7 @@ public class GameMainScript : MonoBehaviour
                 }
 			}
 			
-			if (GUI.Button(new Rect(Screen.width/2-100, 70, 200, 40), "Game menu"))
+			if (GUI.Button(new Rect(Screen.width/2+10, 20, 200, 40), "Game menu"))
 			{
 				goToGameMenu();
 			}

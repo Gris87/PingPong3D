@@ -36,28 +36,21 @@ public class PlayerLogic : MonoBehaviour
 		{
 			if (Input.GetMouseButton(0))
 			{
-                Plane plane=new Plane(Vector3.forward, 0);                
-                float distance;
-                Ray ray=Camera.main.ScreenPointToRay(Input.mousePosition);
-
-                if (plane.Raycast(ray, out distance))
+                Vector3 mousePos = getMousePos();
+                verticalMovement = mousePos.y-transform.position.y;
+                float maxOffset  = speed*Time.deltaTime;
+                
+                if (verticalMovement>maxOffset)
                 {
-                    Vector3 mousePos = ray.GetPoint(distance);
-                    verticalMovement = mousePos.y-transform.position.y;
-                    float maxOffset  = speed*Time.deltaTime;
-
-                    if (verticalMovement>maxOffset)
-                    {
-                        verticalMovement=maxOffset;
-                    }
-                    else
-                    if (verticalMovement<-maxOffset)
-                    {
-                        verticalMovement=-maxOffset;
-                    }
-
-                    verticalMovement=verticalMovement/speed/Time.deltaTime;
+                    verticalMovement=maxOffset;
                 }
+                else
+                    if (verticalMovement<-maxOffset)
+                {
+                    verticalMovement=-maxOffset;
+                }
+                
+                verticalMovement=verticalMovement/speed/Time.deltaTime;
 			}
 			else
 			{
@@ -89,24 +82,62 @@ public class PlayerLogic : MonoBehaviour
             }
             else
             {
-                string axis;
-                
-                if (playerMode==Mode.LeftPlayer)
+                if (
+                    Application.platform==RuntimePlatform.Android
+                    ||
+                    Application.platform==RuntimePlatform.BB10Player
+                    ||
+                    Application.platform==RuntimePlatform.IPhonePlayer
+                   )
                 {
-                    axis="Vertical";
+                    if (Input.GetMouseButton(0))
+                    {
+                        Vector3 mousePos = getMousePos();
+                        
+                        if (
+                            (mousePos.x<0 && playerMode==Mode.LeftPlayer)
+                            ||
+                            (mousePos.x>=0 && playerMode==Mode.RightPlayer)
+                            )
+                        {
+                            verticalMovement = mousePos.y-transform.position.y;
+                            float maxOffset  = speed*Time.deltaTime;
+                            
+                            if (verticalMovement>maxOffset)
+                            {
+                                verticalMovement=maxOffset;
+                            }
+                            else
+                                if (verticalMovement<-maxOffset)
+                            {
+                                verticalMovement=-maxOffset;
+                            }
+                            
+                            verticalMovement=verticalMovement/speed/Time.deltaTime;
+                        }
+                    }
                 }
                 else
-                    if (playerMode==Mode.RightPlayer)
                 {
-                    axis="Vertical 2";
+                    string axis;
+                    
+                    if (playerMode==Mode.LeftPlayer)
+                    {
+                        axis="Vertical";
+                    }
+                    else
+                        if (playerMode==Mode.RightPlayer)
+                    {
+                        axis="Vertical 2";
+                    }
+                    else
+                    {
+                        Debug.LogError("Unknown axis");
+                        axis="Vertical";
+                    }
+                    
+                    verticalMovement=Input.GetAxis(axis);
                 }
-                else
-                {
-                    Debug.LogError("Unknown axis");
-                    axis="Vertical";
-                }
-                
-                verticalMovement=Input.GetAxis(axis);
             }
 		}
         #endregion       
@@ -157,5 +188,19 @@ public class PlayerLogic : MonoBehaviour
 
             transform.position=position;
         }
+    }
+
+    private Vector3 getMousePos()
+    {
+        Plane plane=new Plane(Vector3.forward, 0);                
+        float distance;
+        Ray ray=Camera.main.ScreenPointToRay(Input.mousePosition);
+        
+        if (plane.Raycast(ray, out distance))
+        {
+            return ray.GetPoint(distance);
+        }
+
+        return Vector3.zero;
     }
 }
