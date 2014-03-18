@@ -174,6 +174,15 @@ public class NetworkManager : MonoBehaviour
         }
     }
 
+    // Update is called once per frame
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            goBack();
+        }
+    }
+
     void OnGUI()
     {
         if (GUI.Button(new Rect(20, 20, 120, 40), "Back"))

@@ -125,6 +125,11 @@ public class GameMainScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            goBack();
+        }
+
         if (!Network.isClient)
         {
             float factor=(1+acceleration*Time.deltaTime);
@@ -224,14 +229,14 @@ public class GameMainScript : MonoBehaviour
 
             if (GUI.Button(new Rect(Screen.width/2+10, 20, 200, 40), "Game menu"))
             {
-                goToGameMenu();
+                goBack();
             }
         }
         else
         {
             if (GUI.Button(new Rect(Screen.width/2-100, 20, 200, 40), "Game menu"))
             {
-                goToGameMenu();
+                goBack();
             }
         }
         #endregion
@@ -271,7 +276,7 @@ public class GameMainScript : MonoBehaviour
     {
         if (!Application.isLoadingLevel)
         {
-            goToGameMenu();
+            goBack();
         }
     }
 
@@ -279,7 +284,7 @@ public class GameMainScript : MonoBehaviour
     {
         if (!Application.isLoadingLevel)
         {
-            goToGameMenu();
+            goBack();
         }
     }
 
@@ -345,7 +350,7 @@ public class GameMainScript : MonoBehaviour
         }
     }
 
-    private void goToGameMenu()
+    private void goBack()
     {
         Debug.Log("Go to game menu");
 
