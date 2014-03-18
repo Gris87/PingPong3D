@@ -4,7 +4,7 @@ using System.Collections;
 public class GameDemo : MonoBehaviour
 {
     public float acceleration = 0.1f;
-    public float maxSpeed     = 50f;
+    public float maxSpeed     = 20f;
 
 	// Use this for initialization
 	void Start ()
