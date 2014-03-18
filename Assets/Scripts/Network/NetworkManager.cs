@@ -42,18 +42,18 @@ public class NetworkManager : MonoBehaviour
 
         topRightTextStyle.alignment=TextAnchor.UpperRight;
         topRightTextStyle.clipping=TextClipping.Overflow;
-        topRightTextStyle.fontSize=24;
+        topRightTextStyle.fontSize=(int)(Screen.height*0.075);
         topRightTextStyle.normal.textColor=Color.white;
 
         centerTextStyle.alignment=TextAnchor.MiddleCenter;
         centerTextStyle.clipping=TextClipping.Overflow;
-        centerTextStyle.fontSize=24;
+        centerTextStyle.fontSize=(int)(Screen.height*0.075);
         centerTextStyle.normal.textColor=Color.white;
 
         hostTextStyle.alignment=TextAnchor.MiddleLeft;
         hostTextStyle.wordWrap=false;
         hostTextStyle.clipping=TextClipping.Clip;
-        hostTextStyle.fontSize=14;
+        hostTextStyle.fontSize=(int)(Screen.height*0.03);
         hostTextStyle.normal.textColor=Color.white;
         #endregion
 
@@ -185,7 +185,7 @@ public class NetworkManager : MonoBehaviour
 
     void OnGUI()
     {
-        if (GUI.Button(new Rect(20, 20, 120, 40), "Back"))
+        if (GUI.Button(new Rect(Screen.width*0.05f, Screen.height*0.05f, Screen.width*0.2f, Screen.height*0.1f), "Back"))
         {
             goBack();
         }
@@ -196,16 +196,16 @@ public class NetworkManager : MonoBehaviour
             switch (serverState)
             {
                 case ServerState.ServerInit:
-                    GUI.Label(new Rect(Screen.width/2, Screen.height/2, 1, 1), "Initializing server", centerTextStyle);
+                    GUI.Label(new Rect(Screen.width*0.5f, Screen.height*0.5f, 1, 1), "Initializing server", centerTextStyle);
                 break;
                 case ServerState.ServerRegister:
-                    GUI.Label(new Rect(Screen.width/2, Screen.height/2, 1, 1), "Registering server", centerTextStyle);
+                    GUI.Label(new Rect(Screen.width*0.5f, Screen.height*0.5f, 1, 1), "Registering server", centerTextStyle);
                 break;
                 case ServerState.ServerStarted:
-                    GUI.Label(new Rect(Screen.width/2, Screen.height/2, 1, 1), "Waiting for opponent...", centerTextStyle);
+                    GUI.Label(new Rect(Screen.width*0.5f, Screen.height*0.5f, 1, 1), "Waiting for opponent...", centerTextStyle);
                 break;
                 case ServerState.ServerError:
-                    GUI.Label(new Rect(Screen.width/2, Screen.height/2, 1, 1), "Impossible to start server", centerTextStyle);
+                    GUI.Label(new Rect(Screen.width*0.5f, Screen.height*0.5f, 1, 1), "Impossible to start server", centerTextStyle);
                 break;
                 default:
                     Debug.LogError("Unknown state");
@@ -220,34 +220,37 @@ public class NetworkManager : MonoBehaviour
                 case ClientState.ClientSearch:
                 {
                     #region Draw list of hosts
-                    if (GUI.Button(new Rect(160, 20, 120, 40), "Refresh"))
+                    if (GUI.Button(new Rect(Screen.width*0.3f, Screen.height*0.05f, Screen.width*0.2f, Screen.height*0.1f), "Refresh"))
                     {
                         RefreshHostList();
                     }
 
                     if (refreshing)
                     {
-                        GUI.Label(new Rect(Screen.width-20, 20, 1, 1), "Refreshing...", topRightTextStyle);
+                        GUI.Label(new Rect(Screen.width*0.95f, Screen.height*0.05f, 1, 1), "Refreshing...", topRightTextStyle);
                     }
 
-                    int panelWidth  = Screen.width-40;
-                    int panelHeight = Screen.height-100;
+                    float panelWidth  = Screen.width*0.9f;
+                    float panelHeight = Screen.height*0.75f;
 
-                    GUI.BeginGroup(new Rect(20, 80, panelWidth, panelHeight));
+                    GUI.BeginGroup(new Rect(Screen.width*0.05f, Screen.height*0.2f, panelWidth, panelHeight));
                     GUI.Box(new Rect(0, 0, panelWidth, panelHeight), "");
 
                     HostData[] hostsList=MasterServer.PollHostList();
 
                     if (hostsList!=null && hostsList.Length>0)
                     {
-                        hostsScrollPosition=GUI.BeginScrollView(new Rect(4, 4, panelWidth-8, panelHeight-8), hostsScrollPosition, new Rect(0, 0, panelWidth-25, 40+(hostsList.Length-1)*50));
+                        float rowHeight=Screen.height*0.1f;
+                        float rowOffset=rowHeight+Screen.height*0.025f;
+
+                        hostsScrollPosition=GUI.BeginScrollView(new Rect(panelWidth*0.01f, panelHeight*0.01f, panelWidth*0.98f, panelHeight*0.98f), hostsScrollPosition, new Rect(0, 0, panelWidth*0.95f, rowHeight+(hostsList.Length-1)*rowOffset));
 
                         for (int i=0; i<hostsList.Length; ++i)
                         {
-                            GUI.Label(new Rect(0, 50*i, panelWidth-190, 40), hostsList[i].gameName, hostTextStyle);
-                            GUI.Label(new Rect(panelWidth-170, 50*i, 20, 40), hostsList[i].connectedPlayers.ToString()+"/"+hostsList[i].playerLimit.ToString(), hostTextStyle);
+                            GUI.Label(new Rect(0,               rowOffset*i, panelWidth*0.65f,  rowHeight), hostsList[i].gameName, hostTextStyle);
+                            GUI.Label(new Rect(panelWidth*0.7f, rowOffset*i, panelWidth*0.05f, rowHeight), hostsList[i].connectedPlayers.ToString()+"/"+hostsList[i].playerLimit.ToString(), hostTextStyle);
 
-                            if (GUI.Button(new Rect(panelWidth-130, 50*i, 100, 40), "Connect"))
+                            if (GUI.Button(new Rect(panelWidth*0.75f, rowOffset*i, panelWidth*0.2f, rowHeight), "Connect"))
                             {
                                 if (hostsList[i].connectedPlayers<hostsList[i].playerLimit)
                                 {
@@ -262,7 +265,7 @@ public class NetworkManager : MonoBehaviour
                     {
                         if (!refreshing)
                         {
-                            GUI.Label(new Rect(panelWidth/2, panelHeight/2, 1, 1), "Nothing found", centerTextStyle);
+                            GUI.Label(new Rect(panelWidth*0.5f, panelHeight*0.5f, 1, 1), "Nothing found", centerTextStyle);
                         }
                     }
 
@@ -273,22 +276,22 @@ public class NetworkManager : MonoBehaviour
                 #region Draw client states
                 case ClientState.ClientJoin:
                 {
-                    if (GUI.Button(new Rect(160, 20, 120, 40), "Cancel"))
+                    if (GUI.Button(new Rect(Screen.width*0.3f, Screen.height*0.05f, Screen.width*0.2f, Screen.height*0.1f), "Cancel"))
                     {
                         cancelJoining();
                     }
 
-                    GUI.Label(new Rect(Screen.width/2, Screen.height/2, 1, 1), "Joining...", centerTextStyle);
+                    GUI.Label(new Rect(Screen.width*0.5f, Screen.height*0.5f, 1, 1), "Joining...", centerTextStyle);
                 }
                 break;
                 case ClientState.ClientError:
                 {
-                    if (GUI.Button(new Rect(160, 20, 120, 40), "Cancel"))
+                    if (GUI.Button(new Rect(Screen.width*0.3f, Screen.height*0.05f, Screen.width*0.2f, Screen.height*0.1f), "Cancel"))
                     {
                         cancelJoining();
                     }
 
-                    GUI.Label(new Rect(Screen.width/2, Screen.height/2, 1, 1), "Failed to join", centerTextStyle);
+                    GUI.Label(new Rect(Screen.width*0.5f, Screen.height*0.5f, 1, 1), "Failed to join", centerTextStyle);
                 }
                 break;
                 default:

@@ -35,17 +35,17 @@ public class GameMainScript : MonoBehaviour
 
         topLeftTextStyle.alignment=TextAnchor.UpperLeft;
         topLeftTextStyle.clipping=TextClipping.Overflow;
-        topLeftTextStyle.fontSize=24;
+        topLeftTextStyle.fontSize=(int)(Screen.height*0.075);
         topLeftTextStyle.normal.textColor=Color.white;
 
         topRightTextStyle.alignment=TextAnchor.UpperRight;
         topRightTextStyle.clipping=TextClipping.Overflow;
-        topRightTextStyle.fontSize=24;
+        topRightTextStyle.fontSize=(int)(Screen.height*0.075);
         topRightTextStyle.normal.textColor=Color.white;
 
         centerTextStyle.alignment=TextAnchor.MiddleCenter;
         centerTextStyle.clipping=TextClipping.Overflow;
-        centerTextStyle.fontSize=24;
+        centerTextStyle.fontSize=(int)(Screen.height*0.075);
         centerTextStyle.normal.textColor=Color.white;
         #endregion
 
@@ -210,14 +210,14 @@ public class GameMainScript : MonoBehaviour
         bool gameIsOver = (playerScore>=maxScore || enemyScore>=maxScore);
 
         #region Draw score
-        GUI.Label(new Rect(20,              20, 1, 1), playerScore.ToString(), topLeftTextStyle);
-        GUI.Label(new Rect(Screen.width-20, 20, 1, 1), enemyScore.ToString(),  topRightTextStyle);
+        GUI.Label(new Rect(Screen.width*0.05f, Screen.height*0.05f, 1, 1), playerScore.ToString(), topLeftTextStyle);
+        GUI.Label(new Rect(Screen.width*0.95f, Screen.height*0.05f, 1, 1), enemyScore.ToString(),  topRightTextStyle);
         #endregion
 
         #region Draw buttons
         if (difficulty>=0 || (gameIsOver && !Network.isClient))
         {
-            if (GUI.Button(new Rect(Screen.width/2-210, 20, 200, 40), "Restart"))
+            if (GUI.Button(new Rect(Screen.width*0.15f, Screen.height*0.05f, Screen.width*0.3f, Screen.height*0.1f), "Restart"))
             {
                 init();
 
@@ -227,14 +227,14 @@ public class GameMainScript : MonoBehaviour
                 }
             }
 
-            if (GUI.Button(new Rect(Screen.width/2+10, 20, 200, 40), "Game menu"))
+            if (GUI.Button(new Rect(Screen.width*0.55f, Screen.height*0.05f, Screen.width*0.3f, Screen.height*0.1f), "Game menu"))
             {
                 goBack();
             }
         }
         else
         {
-            if (GUI.Button(new Rect(Screen.width/2-100, 20, 200, 40), "Game menu"))
+            if (GUI.Button(new Rect(Screen.width*0.35f, Screen.height*0.05f, Screen.width*0.3f, Screen.height*0.1f), "Game menu"))
             {
                 goBack();
             }
@@ -244,7 +244,7 @@ public class GameMainScript : MonoBehaviour
         #region Draw GAME OVER
         if (gameIsOver)
         {
-            GUI.Label(new Rect(Screen.width/2, Screen.height/2, 1, 1), "GAME OVER", centerTextStyle);
+            GUI.Label(new Rect(Screen.width*0.5f, Screen.height*0.5f, 1, 1), "GAME OVER", centerTextStyle);
         }
         #endregion
     }
