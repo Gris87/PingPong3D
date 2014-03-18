@@ -1,45 +1,45 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 public class PlayerLogic : MonoBehaviour
-{	
-	public enum Mode
-	{
-		LeftPlayer,
-		RightPlayer,
-		BothPlayers
-	}
+{
+    public enum Mode
+    {
+        LeftPlayer,
+        RightPlayer,
+        BothPlayers
+    }
 
-	private CharacterController controller;
+    private CharacterController controller;
 
-	public  int                 speed      = 30;
-	public  Mode                playerMode = Mode.BothPlayers;
+    public  int                 speed      = 30;
+    public  Mode                playerMode = Mode.BothPlayers;
 
     private Vector3             syncVelocity = Vector3.zero;
     private float               syncTime     = 0f;
     private float               syncDelay    = 0f;
     private float               lastSyncTime = 0f;
 
-	// Use this for initialization
-	void Start()
-	{
-		controller=gameObject.GetComponent<CharacterController>();
-	}
+    // Use this for initialization
+    void Start()
+    {
+        controller=gameObject.GetComponent<CharacterController>();
+    }
 
-	// Update is called once per frame
-	void Update()
-	{
-		float verticalMovement=0;
+    // Update is called once per frame
+    void Update()
+    {
+        float verticalMovement=0;
 
         #region Get vertical movement
-		if (playerMode==Mode.BothPlayers)
-		{
-			if (Input.GetMouseButton(0))
-			{
+        if (playerMode==Mode.BothPlayers)
+        {
+            if (Input.GetMouseButton(0))
+            {
                 Vector3 mousePos = getClickPosition(Input.mousePosition);
                 verticalMovement = mousePos.y-transform.position.y;
                 float maxOffset  = speed*Time.deltaTime;
-                
+
                 if (verticalMovement>maxOffset)
                 {
                     verticalMovement=maxOffset;
@@ -49,21 +49,21 @@ public class PlayerLogic : MonoBehaviour
                 {
                     verticalMovement=-maxOffset;
                 }
-                
+
                 verticalMovement=verticalMovement/speed/Time.deltaTime;
-			}
-			else
-			{
-				verticalMovement=Input.GetAxis("Vertical");
-				
-				if (verticalMovement==0)
-				{
-					verticalMovement=Input.GetAxis("Vertical 2");
-				}
-			}
-		}
-		else
-		{
+            }
+            else
+            {
+                verticalMovement=Input.GetAxis("Vertical");
+
+                if (verticalMovement==0)
+                {
+                    verticalMovement=Input.GetAxis("Vertical 2");
+                }
+            }
+        }
+        else
+        {
             if (Network.isServer || Network.isClient)
             {
                 if (syncTime<syncDelay)
@@ -76,7 +76,7 @@ public class PlayerLogic : MonoBehaviour
                     }
 
                     syncTime+=Time.deltaTime;
-                    
+
                     verticalMovement=(((syncVelocity.y*deltaTime)/syncDelay)/speed)/Time.deltaTime;
                 }
             }
@@ -87,7 +87,7 @@ public class PlayerLogic : MonoBehaviour
                     foreach (Touch touch in Input.touches)
                     {
                         Vector3 mousePos = getClickPosition(touch.position);
-                        
+
                         if (
                             (mousePos.x<0 && playerMode==Mode.LeftPlayer)
                             ||
@@ -96,7 +96,7 @@ public class PlayerLogic : MonoBehaviour
                         {
                             verticalMovement = mousePos.y-transform.position.y;
                             float maxOffset  = speed*Time.deltaTime;
-                            
+
                             if (verticalMovement>maxOffset)
                             {
                                 verticalMovement=maxOffset;
@@ -106,7 +106,7 @@ public class PlayerLogic : MonoBehaviour
                             {
                                 verticalMovement=-maxOffset;
                             }
-                            
+
                             verticalMovement=verticalMovement/speed/Time.deltaTime;
 
                             break;
@@ -116,7 +116,7 @@ public class PlayerLogic : MonoBehaviour
                 else
                 {
                     string axis;
-                    
+
                     if (playerMode==Mode.LeftPlayer)
                     {
                         axis="Vertical";
@@ -131,28 +131,28 @@ public class PlayerLogic : MonoBehaviour
                         Debug.LogError("Unknown axis");
                         axis="Vertical";
                     }
-                    
+
                     verticalMovement=Input.GetAxis(axis);
                 }
             }
-		}
-        #endregion       
+        }
+        #endregion
 
-		if (verticalMovement!=0)
-		{
-			controller.Move(new Vector3(0, verticalMovement*speed*Time.deltaTime, 0));
+        if (verticalMovement!=0)
+        {
+            controller.Move(new Vector3(0, verticalMovement*speed*Time.deltaTime, 0));
 
             if (Network.isClient)
             {
                 networkView.RPC("setPosition", RPCMode.Server, transform.position);
             }
-		}
-	}
+        }
+    }
 
     void OnSerializeNetworkView(BitStream stream, NetworkMessageInfo info)
     {
         Vector3 syncPosition = Vector3.zero;
-        
+
         if (stream.isWriting)
         {
             syncPosition = transform.position;
@@ -161,7 +161,7 @@ public class PlayerLogic : MonoBehaviour
         else
         {
             stream.Serialize(ref syncPosition);
-            
+
             setPosition(syncPosition);
         }
     }
@@ -188,10 +188,10 @@ public class PlayerLogic : MonoBehaviour
 
     private Vector3 getClickPosition(Vector3 screenPosition)
     {
-        Plane plane=new Plane(Vector3.forward, 0);                
+        Plane plane=new Plane(Vector3.forward, 0);
         float distance;
         Ray ray=Camera.main.ScreenPointToRay(screenPosition);
-        
+
         if (plane.Raycast(ray, out distance))
         {
             return ray.GetPoint(distance);

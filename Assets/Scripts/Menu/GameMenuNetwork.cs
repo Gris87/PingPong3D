@@ -1,16 +1,16 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 public class GameMenuNetwork : MonoBehaviour
 {
-	public bool isServerMode;
+    public bool isServerMode;
 
-	void OnMouseUp()
-	{
-		Hashtable arguments=new Hashtable();
-		
-		arguments.Add("serverMode", isServerMode);
-		
-		SceneManager.LoadScene("NetworkScene", arguments);
-	}
+    void OnMouseUp()
+    {
+        Hashtable arguments=new Hashtable();
+
+        arguments.Add("serverMode", isServerMode);
+
+        SceneManager.LoadScene("NetworkScene", arguments);
+    }
 }
