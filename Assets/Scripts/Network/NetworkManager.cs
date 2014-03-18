@@ -185,7 +185,10 @@ public class NetworkManager : MonoBehaviour
 
     void OnGUI()
     {
-        if (GUI.Button(new Rect(Screen.width*0.05f, Screen.height*0.05f, Screen.width*0.2f, Screen.height*0.1f), "Back"))
+        GUIStyle buttonStyle=new GUIStyle(GUI.skin.button);
+        buttonStyle.fontSize=(int)(Screen.height*0.03);
+
+        if (GUI.Button(new Rect(Screen.width*0.05f, Screen.height*0.05f, Screen.width*0.2f, Screen.height*0.1f), "Back", buttonStyle))
         {
             goBack();
         }
@@ -220,7 +223,7 @@ public class NetworkManager : MonoBehaviour
                 case ClientState.ClientSearch:
                 {
                     #region Draw list of hosts
-                    if (GUI.Button(new Rect(Screen.width*0.3f, Screen.height*0.05f, Screen.width*0.2f, Screen.height*0.1f), "Refresh"))
+                    if (GUI.Button(new Rect(Screen.width*0.3f, Screen.height*0.05f, Screen.width*0.2f, Screen.height*0.1f), "Refresh", buttonStyle))
                     {
                         RefreshHostList();
                     }
@@ -250,7 +253,7 @@ public class NetworkManager : MonoBehaviour
                             GUI.Label(new Rect(0,               rowOffset*i, panelWidth*0.65f,  rowHeight), hostsList[i].gameName, hostTextStyle);
                             GUI.Label(new Rect(panelWidth*0.7f, rowOffset*i, panelWidth*0.05f, rowHeight), hostsList[i].connectedPlayers.ToString()+"/"+hostsList[i].playerLimit.ToString(), hostTextStyle);
 
-                            if (GUI.Button(new Rect(panelWidth*0.75f, rowOffset*i, panelWidth*0.2f, rowHeight), "Connect"))
+                            if (GUI.Button(new Rect(panelWidth*0.75f, rowOffset*i, panelWidth*0.2f, rowHeight), "Connect", buttonStyle))
                             {
                                 if (hostsList[i].connectedPlayers<hostsList[i].playerLimit)
                                 {
@@ -276,7 +279,7 @@ public class NetworkManager : MonoBehaviour
                 #region Draw client states
                 case ClientState.ClientJoin:
                 {
-                    if (GUI.Button(new Rect(Screen.width*0.3f, Screen.height*0.05f, Screen.width*0.2f, Screen.height*0.1f), "Cancel"))
+                    if (GUI.Button(new Rect(Screen.width*0.3f, Screen.height*0.05f, Screen.width*0.2f, Screen.height*0.1f), "Cancel", buttonStyle))
                     {
                         cancelJoining();
                     }
@@ -286,7 +289,7 @@ public class NetworkManager : MonoBehaviour
                 break;
                 case ClientState.ClientError:
                 {
-                    if (GUI.Button(new Rect(Screen.width*0.3f, Screen.height*0.05f, Screen.width*0.2f, Screen.height*0.1f), "Cancel"))
+                    if (GUI.Button(new Rect(Screen.width*0.3f, Screen.height*0.05f, Screen.width*0.2f, Screen.height*0.1f), "Cancel", buttonStyle))
                     {
                         cancelJoining();
                     }

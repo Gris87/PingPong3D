@@ -29,9 +29,9 @@ public class GameMainScript : MonoBehaviour
     void Start()
     {
         #region Create text styles
-        topLeftTextStyle=new GUIStyle();
-        topRightTextStyle=new GUIStyle();
-        centerTextStyle=new GUIStyle();
+        topLeftTextStyle  = new GUIStyle();
+        topRightTextStyle = new GUIStyle();
+        centerTextStyle   = new GUIStyle();
 
         topLeftTextStyle.alignment=TextAnchor.UpperLeft;
         topLeftTextStyle.clipping=TextClipping.Overflow;
@@ -209,6 +209,9 @@ public class GameMainScript : MonoBehaviour
     {
         bool gameIsOver = (playerScore>=maxScore || enemyScore>=maxScore);
 
+        GUIStyle buttonStyle=new GUIStyle(GUI.skin.button);
+        buttonStyle.fontSize=(int)(Screen.height*0.03);
+
         #region Draw score
         GUI.Label(new Rect(Screen.width*0.05f, Screen.height*0.05f, 1, 1), playerScore.ToString(), topLeftTextStyle);
         GUI.Label(new Rect(Screen.width*0.95f, Screen.height*0.05f, 1, 1), enemyScore.ToString(),  topRightTextStyle);
@@ -217,7 +220,7 @@ public class GameMainScript : MonoBehaviour
         #region Draw buttons
         if (difficulty>=0 || (gameIsOver && !Network.isClient))
         {
-            if (GUI.Button(new Rect(Screen.width*0.15f, Screen.height*0.05f, Screen.width*0.3f, Screen.height*0.1f), "Restart"))
+            if (GUI.Button(new Rect(Screen.width*0.15f, Screen.height*0.05f, Screen.width*0.3f, Screen.height*0.1f), "Restart", buttonStyle))
             {
                 init();
 
@@ -227,14 +230,14 @@ public class GameMainScript : MonoBehaviour
                 }
             }
 
-            if (GUI.Button(new Rect(Screen.width*0.55f, Screen.height*0.05f, Screen.width*0.3f, Screen.height*0.1f), "Game menu"))
+            if (GUI.Button(new Rect(Screen.width*0.55f, Screen.height*0.05f, Screen.width*0.3f, Screen.height*0.1f), "Game menu", buttonStyle))
             {
                 goBack();
             }
         }
         else
         {
-            if (GUI.Button(new Rect(Screen.width*0.35f, Screen.height*0.05f, Screen.width*0.3f, Screen.height*0.1f), "Game menu"))
+            if (GUI.Button(new Rect(Screen.width*0.35f, Screen.height*0.05f, Screen.width*0.3f, Screen.height*0.1f), "Game menu", buttonStyle))
             {
                 goBack();
             }
