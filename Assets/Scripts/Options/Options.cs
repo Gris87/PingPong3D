@@ -44,6 +44,9 @@ public class Options : MonoBehaviour
         {
             goBack();
         }
+        else
+        {
+        }
     }
     
     void OnGUI()
