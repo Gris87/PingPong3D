@@ -12,7 +12,14 @@ public class Options : MonoBehaviour
         InControlsOptions
     }
 
-    private State currentState=State.InOptionsList;
+    public GUIStyle menuItemStyle;
+    public GUIStyle menuSelectedItemStyle;
+
+    private Vector2 scrollPosition;
+
+    private State currentState;
+    private int   currentItem;
+    private int   itemsCount;
 
     #region Localization
     private string localizationBack;
@@ -26,6 +33,8 @@ public class Options : MonoBehaviour
         
         localizationBack = languageManager.GetTextValue("OptionsScene.Back");
         #endregion
+
+        goToOptionsList();
     }
 
     // Update is called once per frame
@@ -39,53 +48,114 @@ public class Options : MonoBehaviour
     
     void OnGUI()
     {
-        GUIStyle buttonStyle=new GUIStyle(GUI.skin.button);
-        buttonStyle.fontSize=(int)(Screen.height*0.03);
-        
-        if (GUI.Button(new Rect(Screen.width*0.05f, Screen.height*0.05f, Screen.width*0.2f, Screen.height*0.1f), localizationBack, buttonStyle))
-        {
-            goBack();
-        }
+        menuItemStyle.fontSize=(int)(Screen.height*0.05);
+        menuSelectedItemStyle.fontSize=(int)(Screen.height*0.05);
 
         float panelWidth  = Screen.width*0.9f;
-        float panelHeight = Screen.height*0.75f;
+        float panelHeight = Screen.height*0.9f;
+        float rowHeight=Screen.height*0.1f;
+        float rowOffset=rowHeight+Screen.height*0.025f;
+
+
         
-        GUI.BeginGroup(new Rect(Screen.width*0.05f, Screen.height*0.2f, panelWidth, panelHeight));
+        GUI.BeginGroup(new Rect(Screen.width*0.05f, Screen.height*0.05f, panelWidth, panelHeight));
         GUI.Box(new Rect(0, 0, panelWidth-1, panelHeight-1), "");
+
+        scrollPosition=GUI.BeginScrollView(new Rect(panelWidth*0.01f, panelHeight*0.01f, panelWidth*0.98f, panelHeight*0.98f), scrollPosition, new Rect(0, 0, panelWidth*0.95f, rowHeight+(itemsCount-1)*rowOffset));
 
         switch(currentState)
         {
-            case State.InOptionsList:     drawOptionsList    (panelWidth, panelHeight); break;
-            case State.InGameOptions:     drawGameOptions    (panelWidth, panelHeight); break;
-            case State.InSoundOptions:    drawSoundOptions   (panelWidth, panelHeight); break;
-            case State.InVideoOptions:    drawVideoOptions   (panelWidth, panelHeight); break;
-            case State.InControlsOptions: drawControlsOptions(panelWidth, panelHeight); break;
+            case State.InOptionsList:     drawOptionsList    (panelWidth, panelHeight, rowHeight, rowOffset); break;
+            case State.InGameOptions:     drawGameOptions    (panelWidth, panelHeight, rowHeight, rowOffset); break;
+            case State.InSoundOptions:    drawSoundOptions   (panelWidth, panelHeight, rowHeight, rowOffset); break;
+            case State.InVideoOptions:    drawVideoOptions   (panelWidth, panelHeight, rowHeight, rowOffset); break;
+            case State.InControlsOptions: drawControlsOptions(panelWidth, panelHeight, rowHeight, rowOffset); break;
             default:
                 Debug.LogError("Unknown state");
             break;
         }
 
+        GUI.EndScrollView();
+
         GUI.EndGroup();
     }
 
-    private void drawOptionsList(float panelWidth, float panelHeight)
+    private void drawOptionsList(float panelWidth, float panelHeight, float rowHeight, float rowOffset)
     {
+        int cur=0;
+        
+        if (GUI.Button(new Rect(0, rowOffset*cur, panelWidth*0.95f, rowHeight), "Game",     currentItem==cur ? menuSelectedItemStyle : menuItemStyle))
+        {
+            goToGameOptions();
+        }
+
+        ++cur;
+
+        if (GUI.Button(new Rect(0, rowOffset*cur, panelWidth*0.95f, rowHeight), "Sound",    currentItem==cur ? menuSelectedItemStyle : menuItemStyle))
+        {
+            goToSoundOptions();
+        }
+
+        ++cur;
+
+        if (GUI.Button(new Rect(0, rowOffset*cur, panelWidth*0.95f, rowHeight), "Video",    currentItem==cur ? menuSelectedItemStyle : menuItemStyle))
+        {
+            goToVideoOptions();
+        }
+
+        ++cur;
+
+        if (GUI.Button(new Rect(0, rowOffset*cur, panelWidth*0.95f, rowHeight), "Controls", currentItem==cur ? menuSelectedItemStyle : menuItemStyle))
+        {
+            goToControlsOptions();
+        }
+
+        ++cur;
+
+        if (GUI.Button(new Rect(0, rowOffset*cur, panelWidth*0.95f, rowHeight), "Back",     currentItem==cur ? menuSelectedItemStyle : menuItemStyle))
+        {
+            goBack();
+        }
     }
 
-    private void drawGameOptions(float panelWidth, float panelHeight)
+    private void drawGameOptions(float panelWidth, float panelHeight, float rowHeight, float rowOffset)
     {
+        int cur=0;
+        
+        if (GUI.Button(new Rect(0, rowOffset*cur, panelWidth*0.95f, rowHeight), "Back",     currentItem==cur ? menuSelectedItemStyle : menuItemStyle))
+        {
+            goBack();
+        }
     }
 
-    private void drawSoundOptions(float panelWidth, float panelHeight)
+    private void drawSoundOptions(float panelWidth, float panelHeight, float rowHeight, float rowOffset)
     {
+        int cur=0;
+        
+        if (GUI.Button(new Rect(0, rowOffset*cur, panelWidth*0.95f, rowHeight), "Back",     currentItem==cur ? menuSelectedItemStyle : menuItemStyle))
+        {
+            goBack();
+        }
     }
 
-    private void drawVideoOptions(float panelWidth, float panelHeight)
+    private void drawVideoOptions(float panelWidth, float panelHeight, float rowHeight, float rowOffset)
     {
+        int cur=0;
+        
+        if (GUI.Button(new Rect(0, rowOffset*cur, panelWidth*0.95f, rowHeight), "Back",     currentItem==cur ? menuSelectedItemStyle : menuItemStyle))
+        {
+            goBack();
+        }
     }
 
-    private void drawControlsOptions(float panelWidth, float panelHeight)
+    private void drawControlsOptions(float panelWidth, float panelHeight, float rowHeight, float rowOffset)
     {
+        int cur=0;
+        
+        if (GUI.Button(new Rect(0, rowOffset*cur, panelWidth*0.95f, rowHeight), "Back",     currentItem==cur ? menuSelectedItemStyle : menuItemStyle))
+        {
+            goBack();
+        }
     }
 
     private void goBack()
@@ -98,9 +168,57 @@ public class Options : MonoBehaviour
         }
         else
         {
-            Debug.Log("Go to options list");
-            
-            currentState=State.InOptionsList;
+            goToOptionsList();
         }
+    }
+
+    private void goToOptionsList()
+    {
+        Debug.Log("Go to options list");
+        
+        scrollPosition = Vector2.zero;
+        currentState   = State.InOptionsList;
+        currentItem    = 0;
+        itemsCount     = 5;
+    }
+
+    private void goToGameOptions()
+    {
+        Debug.Log("Go to game options");
+        
+        scrollPosition = Vector2.zero;
+        currentState   = State.InGameOptions;
+        currentItem    = 0;
+        itemsCount     = 0;
+    }
+
+    private void goToSoundOptions()
+    {
+        Debug.Log("Go to sound options");
+        
+        scrollPosition = Vector2.zero;
+        currentState   = State.InSoundOptions;
+        currentItem    = 0;
+        itemsCount     = 0;
+    }
+
+    private void goToVideoOptions()
+    {
+        Debug.Log("Go to video options");
+        
+        scrollPosition = Vector2.zero;
+        currentState   = State.InVideoOptions;
+        currentItem    = 0;
+        itemsCount     = 0;
+    }
+
+    private void goToControlsOptions()
+    {
+        Debug.Log("Go to controls options");
+        
+        scrollPosition = Vector2.zero;
+        currentState   = State.InControlsOptions;
+        currentItem    = 0;
+        itemsCount     = 0;
     }
 }

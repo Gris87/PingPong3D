@@ -25,7 +25,7 @@ public class NetworkManager : MonoBehaviour
     private GUIStyle topRightTextStyle;
     private GUIStyle centerTextStyle;
     private GUIStyle hostTextStyle;
-    private Vector2  hostsScrollPosition = Vector2.zero;
+    private Vector2  hostsScrollPosition;
 
     private bool        isServerMode;
     private ServerState serverState;
@@ -88,6 +88,8 @@ public class NetworkManager : MonoBehaviour
         hostTextStyle.fontSize=(int)(Screen.height*0.03);
         hostTextStyle.normal.textColor=Color.white;
         #endregion
+
+        hostsScrollPosition=Vector2.zero;
 
         // -----------------------------------------------------------
 
