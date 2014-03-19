@@ -269,7 +269,7 @@ public class NetworkManager : MonoBehaviour
                     float panelHeight = Screen.height*0.75f;
 
                     GUI.BeginGroup(new Rect(Screen.width*0.05f, Screen.height*0.2f, panelWidth, panelHeight));
-                    GUI.Box(new Rect(0, 0, panelWidth, panelHeight), "");
+                    GUI.Box(new Rect(0, 0, panelWidth-1, panelHeight-1), "");
 
                     HostData[] hostsList=MasterServer.PollHostList();
 
