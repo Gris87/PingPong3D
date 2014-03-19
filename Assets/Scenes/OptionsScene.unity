@@ -284,3 +284,6 @@ MonoBehaviour:
     m_FixedHeight: 0
     m_StretchWidth: 1
     m_StretchHeight: 0
+  scrollerLeftTexture: {fileID: 2800000, guid: 31ee8adecd6e38c46a1d5b3a640e18af, type: 3}
+  scrollerRightTexture: {fileID: 2800000, guid: 4863ce4750915024390ec89ab49d08ec,
+    type: 3}

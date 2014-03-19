@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
+using System.Globalization;
 
 public class Options : MonoBehaviour
 {
@@ -14,12 +16,19 @@ public class Options : MonoBehaviour
 
     public GUIStyle menuItemStyle;
     public GUIStyle menuSelectedItemStyle;
+    public Texture  scrollerLeftTexture;
+    public Texture  scrollerRightTexture;
 
-    private Vector2 scrollPosition;
+    private Vector2           scrollPosition;
+    private SelectionScroller languageScroller;
 
     private State currentState;
     private int   currentItem;
     private int   itemsCount;
+
+    #region Options
+    private string language;
+    #endregion
 
     #region Localization
     private string localizationGame;
@@ -27,10 +36,11 @@ public class Options : MonoBehaviour
     private string localizationVideo;
     private string localizationControls;
     private string localizationBack;
+    private string localizationLanguage;
     #endregion
     
     // Use this for initialization
-    void Start ()
+    void Start()
     {
         #region Localization
         LanguageManager languageManager=LanguageManager.Instance;
@@ -40,7 +50,22 @@ public class Options : MonoBehaviour
         localizationVideo    = languageManager.GetTextValue("OptionsScene.Video");
         localizationControls = languageManager.GetTextValue("OptionsScene.Controls");
         localizationBack     = languageManager.GetTextValue("OptionsScene.Back");
+        localizationLanguage = languageManager.GetTextValue("OptionsScene.Language");
         #endregion
+
+
+
+        List<CultureInfo> availableLanguages=languageManager.AvailableLanguagesCultureInfo;
+        string[] languages=new string[availableLanguages.Count];
+
+        for (int i=0; i<availableLanguages.Count; ++i)
+        {
+            languages[i]=availableLanguages[i].EnglishName;
+        }
+
+        languageScroller=new SelectionScroller(languages, language, scrollerLeftTexture, scrollerRightTexture);
+
+
 
         goToOptionsList(0);
     }
@@ -154,6 +179,11 @@ public class Options : MonoBehaviour
     private void drawGameOptions(float panelWidth, float panelHeight, float rowHeight, float rowOffset)
     {
         int cur=0;
+
+        GUI.Label(new Rect(0, rowOffset*cur, panelWidth*0.35f, rowHeight), localizationLanguage,  currentItem==cur ? menuSelectedItemStyle : menuItemStyle);
+        languageScroller.draw(new Rect(panelWidth*0.4f, rowOffset*cur, panelWidth*0.55f, rowHeight));
+
+        ++cur;
         
         if (GUI.Button(new Rect(0, rowOffset*cur, panelWidth*0.95f, rowHeight), localizationBack, currentItem==cur ? menuSelectedItemStyle : menuItemStyle))
         {
@@ -279,7 +309,7 @@ public class Options : MonoBehaviour
         scrollPosition = Vector2.zero;
         currentState   = State.InGameOptions;
         currentItem    = 0;
-        itemsCount     = 0;
+        itemsCount     = 2;
     }
 
     private void goToSoundOptions()
