@@ -17,20 +17,34 @@ public class GameMenuSubMenu : MonoBehaviour
         isAnimated=false;
     }
 
-    IEnumerator OnMouseUp()
+    IEnumerator OnMouseDown()
     {
         if (lastSelectedItem!=this && !isAnimated)
         {
             isAnimated=true;
 
-            #region Hide previous selected items
             if (lastSelectedItem!=null)
             {
+                #region Remove highlight for touch devices
+                if (Utils.isTouchDevice)
+                {
+                    lastSelectedItem.renderer.material.color=Color.white;
+                }
+                #endregion
+
+                #region Hide previous selected items
                 StartCoroutine(lastSelectedItem.hideItems());
                 yield return new WaitForSeconds(hideDelay);
+                #endregion
+            }
+
+            #region Highlight button for touch devices
+            if (Utils.isTouchDevice)
+            {
+                renderer.material.color=Color.green;
             }
             #endregion
-
+            
             #region Show items
             lastSelectedItem=this;
             StartCoroutine(showItems());

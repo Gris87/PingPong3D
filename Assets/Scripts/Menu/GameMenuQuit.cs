@@ -6,7 +6,7 @@ public class GameMenuQuit : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        if (Application.platform==RuntimePlatform.OSXWebPlayer || Application.platform==RuntimePlatform.WindowsWebPlayer)
+        if (Utils.isWebPlayer)
         {
             Destroy(gameObject);
         }
@@ -17,11 +17,11 @@ public class GameMenuQuit : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            OnMouseUp();
+            OnMouseDown();
         }
     }
 
-    void OnMouseUp()
+    void OnMouseDown()
     {
         Debug.Log("Application finished");
         Application.Quit();

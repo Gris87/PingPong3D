@@ -5,11 +5,17 @@ public class GameMenuHighlight : MonoBehaviour
 {
     void OnMouseEnter()
     {
-        renderer.material.color=Color.green;
+        if (!Utils.isTouchDevice)
+        {
+            renderer.material.color=Color.green;
+        }
     }
 
     void OnMouseExit()
     {
-        renderer.material.color=Color.white;
+        if (!Utils.isTouchDevice)
+        {
+            renderer.material.color=Color.white;
+        }
     }
 }

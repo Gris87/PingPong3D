@@ -126,7 +126,7 @@ public class NetworkManager : MonoBehaviour
         }
         else
         {
-            roomName=Environment.UserName;
+            roomName=Environment.UserName+" / "+Environment.MachineName;
         }
 
 
