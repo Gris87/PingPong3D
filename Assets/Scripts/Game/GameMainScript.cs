@@ -25,9 +25,23 @@ public class GameMainScript : MonoBehaviour
     private int  enemyScore;
     private bool enemyAIMode;
 
+    #region Localization
+    private string localizationRestart;
+    private string localizationGameMenu;
+    private string localizationGameOver;
+    #endregion
+
     // Use this for initialization
     void Start()
     {
+        #region Localization
+        LanguageManager languageManager=LanguageManager.Instance;
+
+        localizationRestart  = languageManager.GetTextValue("MainScene.Restart");
+        localizationGameMenu = languageManager.GetTextValue("MainScene.GameMenu");
+        localizationGameOver = languageManager.GetTextValue("MainScene.GameOver");
+        #endregion
+
         #region Create text styles
         topLeftTextStyle  = new GUIStyle();
         topRightTextStyle = new GUIStyle();
@@ -220,7 +234,7 @@ public class GameMainScript : MonoBehaviour
         #region Draw buttons
         if (difficulty>=0 || (gameIsOver && !Network.isClient))
         {
-            if (GUI.Button(new Rect(Screen.width*0.15f, Screen.height*0.05f, Screen.width*0.3f, Screen.height*0.1f), "Restart", buttonStyle))
+            if (GUI.Button(new Rect(Screen.width*0.15f, Screen.height*0.05f, Screen.width*0.3f, Screen.height*0.1f), localizationRestart, buttonStyle))
             {
                 init();
 
@@ -230,14 +244,14 @@ public class GameMainScript : MonoBehaviour
                 }
             }
 
-            if (GUI.Button(new Rect(Screen.width*0.55f, Screen.height*0.05f, Screen.width*0.3f, Screen.height*0.1f), "Game menu", buttonStyle))
+            if (GUI.Button(new Rect(Screen.width*0.55f, Screen.height*0.05f, Screen.width*0.3f, Screen.height*0.1f), localizationGameMenu, buttonStyle))
             {
                 goBack();
             }
         }
         else
         {
-            if (GUI.Button(new Rect(Screen.width*0.35f, Screen.height*0.05f, Screen.width*0.3f, Screen.height*0.1f), "Game menu", buttonStyle))
+            if (GUI.Button(new Rect(Screen.width*0.35f, Screen.height*0.05f, Screen.width*0.3f, Screen.height*0.1f), localizationGameMenu, buttonStyle))
             {
                 goBack();
             }
@@ -247,7 +261,7 @@ public class GameMainScript : MonoBehaviour
         #region Draw GAME OVER
         if (gameIsOver)
         {
-            GUI.Label(new Rect(Screen.width*0.5f, Screen.height*0.5f, 1, 1), "GAME OVER", centerTextStyle);
+            GUI.Label(new Rect(Screen.width*0.5f, Screen.height*0.5f, 1, 1), localizationGameOver, centerTextStyle);
         }
         #endregion
     }

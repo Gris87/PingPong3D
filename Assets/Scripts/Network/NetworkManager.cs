@@ -32,9 +32,41 @@ public class NetworkManager : MonoBehaviour
     private ClientState clientState;
     private bool        refreshing;
 
+    #region Localization
+    private string localizationBack;
+    private string localizationInitializingServer;
+    private string localizationRegisteringServer;
+    private string localizationWaitingForOpponent;
+    private string localizationImpossibleToStartServer;
+    private string localizationRefresh;
+    private string localizationRefreshing;
+    private string localizationConnect;
+    private string localizationNothingFound;
+    private string localizationCancel;
+    private string localizationJoining;
+    private string localizationFailedToJoin;
+    #endregion
+
     // Use this for initialization
     void Start()
     {
+        #region Localization
+        LanguageManager languageManager=LanguageManager.Instance;
+
+        localizationBack                    = languageManager.GetTextValue("NetworkScene.Back");
+        localizationInitializingServer      = languageManager.GetTextValue("NetworkScene.InitializingServer");
+        localizationRegisteringServer       = languageManager.GetTextValue("NetworkScene.RegisteringServer");
+        localizationWaitingForOpponent      = languageManager.GetTextValue("NetworkScene.WaitingForOpponent");
+        localizationImpossibleToStartServer = languageManager.GetTextValue("NetworkScene.ImpossibleToStartServer");
+        localizationRefresh                 = languageManager.GetTextValue("NetworkScene.Refresh");
+        localizationRefreshing              = languageManager.GetTextValue("NetworkScene.Refreshing");
+        localizationConnect                 = languageManager.GetTextValue("NetworkScene.Connect");
+        localizationNothingFound            = languageManager.GetTextValue("NetworkScene.NothingFound");
+        localizationCancel                  = languageManager.GetTextValue("NetworkScene.Cancel");
+        localizationJoining                 = languageManager.GetTextValue("NetworkScene.Joining");
+        localizationFailedToJoin            = languageManager.GetTextValue("NetworkScene.FailedToJoin");
+        #endregion
+
         #region Create text styles
         topRightTextStyle = new GUIStyle();
         centerTextStyle   = new GUIStyle();
@@ -188,7 +220,7 @@ public class NetworkManager : MonoBehaviour
         GUIStyle buttonStyle=new GUIStyle(GUI.skin.button);
         buttonStyle.fontSize=(int)(Screen.height*0.03);
 
-        if (GUI.Button(new Rect(Screen.width*0.05f, Screen.height*0.05f, Screen.width*0.2f, Screen.height*0.1f), "Back", buttonStyle))
+        if (GUI.Button(new Rect(Screen.width*0.05f, Screen.height*0.05f, Screen.width*0.2f, Screen.height*0.1f), localizationBack, buttonStyle))
         {
             goBack();
         }
@@ -199,16 +231,16 @@ public class NetworkManager : MonoBehaviour
             switch (serverState)
             {
                 case ServerState.ServerInit:
-                    GUI.Label(new Rect(Screen.width*0.5f, Screen.height*0.5f, 1, 1), "Initializing server", centerTextStyle);
+                    GUI.Label(new Rect(Screen.width*0.5f, Screen.height*0.5f, 1, 1), localizationInitializingServer,      centerTextStyle);
                 break;
                 case ServerState.ServerRegister:
-                    GUI.Label(new Rect(Screen.width*0.5f, Screen.height*0.5f, 1, 1), "Registering server", centerTextStyle);
+                    GUI.Label(new Rect(Screen.width*0.5f, Screen.height*0.5f, 1, 1), localizationRegisteringServer,       centerTextStyle);
                 break;
                 case ServerState.ServerStarted:
-                    GUI.Label(new Rect(Screen.width*0.5f, Screen.height*0.5f, 1, 1), "Waiting for opponent...", centerTextStyle);
+                    GUI.Label(new Rect(Screen.width*0.5f, Screen.height*0.5f, 1, 1), localizationWaitingForOpponent,      centerTextStyle);
                 break;
                 case ServerState.ServerError:
-                    GUI.Label(new Rect(Screen.width*0.5f, Screen.height*0.5f, 1, 1), "Impossible to start server", centerTextStyle);
+                    GUI.Label(new Rect(Screen.width*0.5f, Screen.height*0.5f, 1, 1), localizationImpossibleToStartServer, centerTextStyle);
                 break;
                 default:
                     Debug.LogError("Unknown state");
@@ -223,14 +255,14 @@ public class NetworkManager : MonoBehaviour
                 case ClientState.ClientSearch:
                 {
                     #region Draw list of hosts
-                    if (GUI.Button(new Rect(Screen.width*0.3f, Screen.height*0.05f, Screen.width*0.2f, Screen.height*0.1f), "Refresh", buttonStyle))
+                    if (GUI.Button(new Rect(Screen.width*0.3f, Screen.height*0.05f, Screen.width*0.2f, Screen.height*0.1f), localizationRefresh, buttonStyle))
                     {
                         RefreshHostList();
                     }
 
                     if (refreshing)
                     {
-                        GUI.Label(new Rect(Screen.width*0.95f, Screen.height*0.05f, 1, 1), "Refreshing...", topRightTextStyle);
+                        GUI.Label(new Rect(Screen.width*0.95f, Screen.height*0.05f, 1, 1), localizationRefreshing, topRightTextStyle);
                     }
 
                     float panelWidth  = Screen.width*0.9f;
@@ -253,7 +285,7 @@ public class NetworkManager : MonoBehaviour
                             GUI.Label(new Rect(0,               rowOffset*i, panelWidth*0.65f,  rowHeight), hostsList[i].gameName, hostTextStyle);
                             GUI.Label(new Rect(panelWidth*0.7f, rowOffset*i, panelWidth*0.05f, rowHeight), hostsList[i].connectedPlayers.ToString()+"/"+hostsList[i].playerLimit.ToString(), hostTextStyle);
 
-                            if (GUI.Button(new Rect(panelWidth*0.75f, rowOffset*i, panelWidth*0.2f, rowHeight), "Connect", buttonStyle))
+                            if (GUI.Button(new Rect(panelWidth*0.75f, rowOffset*i, panelWidth*0.2f, rowHeight), localizationConnect, buttonStyle))
                             {
                                 if (hostsList[i].connectedPlayers<hostsList[i].playerLimit)
                                 {
@@ -268,7 +300,7 @@ public class NetworkManager : MonoBehaviour
                     {
                         if (!refreshing)
                         {
-                            GUI.Label(new Rect(panelWidth*0.5f, panelHeight*0.5f, 1, 1), "Nothing found", centerTextStyle);
+                            GUI.Label(new Rect(panelWidth*0.5f, panelHeight*0.5f, 1, 1), localizationNothingFound, centerTextStyle);
                         }
                     }
 
@@ -279,22 +311,22 @@ public class NetworkManager : MonoBehaviour
                 #region Draw client states
                 case ClientState.ClientJoin:
                 {
-                    if (GUI.Button(new Rect(Screen.width*0.3f, Screen.height*0.05f, Screen.width*0.2f, Screen.height*0.1f), "Cancel", buttonStyle))
+                    if (GUI.Button(new Rect(Screen.width*0.3f, Screen.height*0.05f, Screen.width*0.2f, Screen.height*0.1f), localizationCancel, buttonStyle))
                     {
                         cancelJoining();
                     }
 
-                    GUI.Label(new Rect(Screen.width*0.5f, Screen.height*0.5f, 1, 1), "Joining...", centerTextStyle);
+                    GUI.Label(new Rect(Screen.width*0.5f, Screen.height*0.5f, 1, 1), localizationJoining, centerTextStyle);
                 }
                 break;
                 case ClientState.ClientError:
                 {
-                    if (GUI.Button(new Rect(Screen.width*0.3f, Screen.height*0.05f, Screen.width*0.2f, Screen.height*0.1f), "Cancel", buttonStyle))
+                    if (GUI.Button(new Rect(Screen.width*0.3f, Screen.height*0.05f, Screen.width*0.2f, Screen.height*0.1f), localizationCancel, buttonStyle))
                     {
                         cancelJoining();
                     }
 
-                    GUI.Label(new Rect(Screen.width*0.5f, Screen.height*0.5f, 1, 1), "Failed to join", centerTextStyle);
+                    GUI.Label(new Rect(Screen.width*0.5f, Screen.height*0.5f, 1, 1), localizationFailedToJoin, centerTextStyle);
                 }
                 break;
                 default:
