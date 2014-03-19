@@ -22,6 +22,10 @@ public class Options : MonoBehaviour
     private int   itemsCount;
 
     #region Localization
+    private string localizationGame;
+    private string localizationSound;
+    private string localizationVideo;
+    private string localizationControls;
     private string localizationBack;
     #endregion
     
@@ -30,11 +34,15 @@ public class Options : MonoBehaviour
     {
         #region Localization
         LanguageManager languageManager=LanguageManager.Instance;
-        
-        localizationBack = languageManager.GetTextValue("OptionsScene.Back");
+
+        localizationGame     = languageManager.GetTextValue("OptionsScene.Game");
+        localizationSound    = languageManager.GetTextValue("OptionsScene.Sound");
+        localizationVideo    = languageManager.GetTextValue("OptionsScene.Video");
+        localizationControls = languageManager.GetTextValue("OptionsScene.Controls");
+        localizationBack     = languageManager.GetTextValue("OptionsScene.Back");
         #endregion
 
-        goToOptionsList();
+        goToOptionsList(0);
     }
 
     // Update is called once per frame
@@ -45,7 +53,29 @@ public class Options : MonoBehaviour
             goBack();
         }
         else
+        if (Input.GetKeyDown(KeyCode.UpArrow))
         {
+            if (currentItem>0)
+            {
+                --currentItem;
+            }
+        }
+        else
+        if (Input.GetKeyDown(KeyCode.DownArrow))
+        {
+            if (currentItem<itemsCount-1)
+            {
+                ++currentItem;
+            }
+        }
+        else
+        if (
+            Input.GetKeyDown(KeyCode.Return)
+            ||
+            Input.GetKeyDown(KeyCode.KeypadEnter)
+           )
+        {
+            selectItem(currentItem);
         }
     }
     
@@ -87,37 +117,37 @@ public class Options : MonoBehaviour
     {
         int cur=0;
         
-        if (GUI.Button(new Rect(0, rowOffset*cur, panelWidth*0.95f, rowHeight), "Game",     currentItem==cur ? menuSelectedItemStyle : menuItemStyle))
+        if (GUI.Button(new Rect(0, rowOffset*cur, panelWidth*0.95f, rowHeight), localizationGame,     currentItem==cur ? menuSelectedItemStyle : menuItemStyle))
         {
-            goToGameOptions();
+            selectItem(cur);
         }
 
         ++cur;
 
-        if (GUI.Button(new Rect(0, rowOffset*cur, panelWidth*0.95f, rowHeight), "Sound",    currentItem==cur ? menuSelectedItemStyle : menuItemStyle))
+        if (GUI.Button(new Rect(0, rowOffset*cur, panelWidth*0.95f, rowHeight), localizationSound,    currentItem==cur ? menuSelectedItemStyle : menuItemStyle))
         {
-            goToSoundOptions();
+            selectItem(cur);
         }
 
         ++cur;
 
-        if (GUI.Button(new Rect(0, rowOffset*cur, panelWidth*0.95f, rowHeight), "Video",    currentItem==cur ? menuSelectedItemStyle : menuItemStyle))
+        if (GUI.Button(new Rect(0, rowOffset*cur, panelWidth*0.95f, rowHeight), localizationVideo,    currentItem==cur ? menuSelectedItemStyle : menuItemStyle))
         {
-            goToVideoOptions();
+            selectItem(cur);
         }
 
         ++cur;
 
-        if (GUI.Button(new Rect(0, rowOffset*cur, panelWidth*0.95f, rowHeight), "Controls", currentItem==cur ? menuSelectedItemStyle : menuItemStyle))
+        if (GUI.Button(new Rect(0, rowOffset*cur, panelWidth*0.95f, rowHeight), localizationControls, currentItem==cur ? menuSelectedItemStyle : menuItemStyle))
         {
-            goToControlsOptions();
+            selectItem(cur);
         }
 
         ++cur;
 
-        if (GUI.Button(new Rect(0, rowOffset*cur, panelWidth*0.95f, rowHeight), "Back",     currentItem==cur ? menuSelectedItemStyle : menuItemStyle))
+        if (GUI.Button(new Rect(0, rowOffset*cur, panelWidth*0.95f, rowHeight), localizationBack,     currentItem==cur ? menuSelectedItemStyle : menuItemStyle))
         {
-            goBack();
+            selectItem(cur);
         }
     }
 
@@ -125,9 +155,9 @@ public class Options : MonoBehaviour
     {
         int cur=0;
         
-        if (GUI.Button(new Rect(0, rowOffset*cur, panelWidth*0.95f, rowHeight), "Back",     currentItem==cur ? menuSelectedItemStyle : menuItemStyle))
+        if (GUI.Button(new Rect(0, rowOffset*cur, panelWidth*0.95f, rowHeight), localizationBack, currentItem==cur ? menuSelectedItemStyle : menuItemStyle))
         {
-            goBack();
+            selectItem(cur);
         }
     }
 
@@ -135,9 +165,9 @@ public class Options : MonoBehaviour
     {
         int cur=0;
         
-        if (GUI.Button(new Rect(0, rowOffset*cur, panelWidth*0.95f, rowHeight), "Back",     currentItem==cur ? menuSelectedItemStyle : menuItemStyle))
+        if (GUI.Button(new Rect(0, rowOffset*cur, panelWidth*0.95f, rowHeight), localizationBack, currentItem==cur ? menuSelectedItemStyle : menuItemStyle))
         {
-            goBack();
+            selectItem(cur);
         }
     }
 
@@ -145,9 +175,9 @@ public class Options : MonoBehaviour
     {
         int cur=0;
         
-        if (GUI.Button(new Rect(0, rowOffset*cur, panelWidth*0.95f, rowHeight), "Back",     currentItem==cur ? menuSelectedItemStyle : menuItemStyle))
+        if (GUI.Button(new Rect(0, rowOffset*cur, panelWidth*0.95f, rowHeight), localizationBack, currentItem==cur ? menuSelectedItemStyle : menuItemStyle))
         {
-            goBack();
+            selectItem(cur);
         }
     }
 
@@ -155,10 +185,58 @@ public class Options : MonoBehaviour
     {
         int cur=0;
         
-        if (GUI.Button(new Rect(0, rowOffset*cur, panelWidth*0.95f, rowHeight), "Back",     currentItem==cur ? menuSelectedItemStyle : menuItemStyle))
+        if (GUI.Button(new Rect(0, rowOffset*cur, panelWidth*0.95f, rowHeight), localizationBack, currentItem==cur ? menuSelectedItemStyle : menuItemStyle))
+        {
+            selectItem(cur);
+        }
+    }
+
+    private void selectItem(int index)
+    {
+        if (index<0 || index>=itemsCount-1)
         {
             goBack();
+            return;
         }
+
+        switch(currentState)
+        {
+            case State.InOptionsList:     selectItemInOptionsList    (index); break;
+            case State.InGameOptions:     selectItemInGameOptions    (index); break;
+            case State.InSoundOptions:    selectItemInSoundOptions   (index); break;
+            case State.InVideoOptions:    selectItemInVideoOptions   (index); break;
+            case State.InControlsOptions: selectItemInControlsOptions(index); break;
+            default:
+                Debug.LogError("Unknown state");
+                break;
+        }
+    }
+
+    private void selectItemInOptionsList(int index)
+    {
+        switch(index)
+        {
+            case 0: goToGameOptions();     break;
+            case 1: goToSoundOptions();    break;
+            case 2: goToVideoOptions();    break;
+            case 3: goToControlsOptions(); break;
+        }
+    }
+
+    private void selectItemInGameOptions(int index)
+    {
+    }
+
+    private void selectItemInSoundOptions(int index)
+    {
+    }
+
+    private void selectItemInVideoOptions(int index)
+    {
+    }
+
+    private void selectItemInControlsOptions(int index)
+    {
     }
 
     private void goBack()
@@ -171,17 +249,26 @@ public class Options : MonoBehaviour
         }
         else
         {
-            goToOptionsList();
+            switch(currentState)
+            {
+                case State.InGameOptions:     goToOptionsList(0); break;
+                case State.InSoundOptions:    goToOptionsList(1); break;
+                case State.InVideoOptions:    goToOptionsList(2); break;
+                case State.InControlsOptions: goToOptionsList(3); break;
+                default:
+                    Debug.LogError("Unknown state");
+                    break;
+            }
         }
     }
 
-    private void goToOptionsList()
+    private void goToOptionsList(int index)
     {
         Debug.Log("Go to options list");
         
         scrollPosition = Vector2.zero;
         currentState   = State.InOptionsList;
-        currentItem    = 0;
+        currentItem    = index;
         itemsCount     = 5;
     }
 
