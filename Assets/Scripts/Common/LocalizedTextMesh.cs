@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class LocalizationScript : MonoBehaviour
+public class LocalizedTextMesh : MonoBehaviour
 {
     public string token;
 
