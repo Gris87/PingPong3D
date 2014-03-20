@@ -58,7 +58,7 @@ public class SelectionScroller
 
         if (mCurrent>=0 && mCurrent<mItems.Length)
         {
-            centerTextStyle.fontSize=24;
+            centerTextStyle.fontSize=(int)(rect.height*0.5);
 
             Vector2 center=rect.center;
             GUI.Label(new Rect(center.x, center.y, 1, 1), mItems[mCurrent], centerTextStyle);
