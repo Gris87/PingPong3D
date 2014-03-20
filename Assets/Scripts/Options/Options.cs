@@ -117,7 +117,7 @@ public class Options : MonoBehaviour
             goBack();
         }
         else
-        if (!Utils.isTouchDevice && Input.GetKeyDown(KeyCode.UpArrow))
+        if (!askSaving && !Utils.isTouchDevice && Input.GetKeyDown(KeyCode.UpArrow))
         {
             if (currentItem>0)
             {
@@ -125,7 +125,7 @@ public class Options : MonoBehaviour
             }
         }
         else
-        if (!Utils.isTouchDevice && Input.GetKeyDown(KeyCode.DownArrow))
+        if (!askSaving && !Utils.isTouchDevice && Input.GetKeyDown(KeyCode.DownArrow))
         {
             if (currentItem<itemsCount-1)
             {
@@ -143,7 +143,15 @@ public class Options : MonoBehaviour
             )
            )
         {
-            selectItem(currentItem);
+            if (askSaving)
+            {
+                applyChanges();
+                goBack();
+            }
+            else
+            {
+                selectItem(currentItem);
+            }
         }
         else
         {
@@ -163,18 +171,20 @@ public class Options : MonoBehaviour
 
         menuItemStyle.fontSize=(int)(Screen.height*0.05);
         menuSelectedItemStyle.fontSize=(int)(Screen.height*0.05);
-        
-        float panelWidth  = Screen.width*0.9f;
-        float panelHeight = Screen.height*0.9f;
+
+        float boxWidth    = Screen.width*0.9f;
+        float boxHeight   = Screen.height*0.9f;
+        float panelWidth  = boxWidth*0.93f;
+        float panelHeight = boxHeight*0.98f;
         float rowHeight   = Screen.height*0.1f;
         float rowOffset   = rowHeight+Screen.height*0.025f;
         
         
         
-        GUI.BeginGroup(new Rect(Screen.width*0.05f, Screen.height*0.05f, panelWidth, panelHeight));
-        GUI.Box(new Rect(0, 0, panelWidth-1, panelHeight-1), "");
+        GUI.BeginGroup(new Rect(Screen.width*0.05f, Screen.height*0.05f, boxWidth, boxHeight));
+        GUI.Box(new Rect(0, 0, boxWidth-1, boxHeight-1), "");
         
-        scrollPosition=GUI.BeginScrollView(new Rect(panelWidth*0.01f, panelHeight*0.01f, panelWidth*0.98f, panelHeight*0.98f), scrollPosition, new Rect(0, 0, panelWidth*0.95f, rowHeight+(itemsCount-1)*rowOffset));
+        scrollPosition=GUI.BeginScrollView(new Rect(boxWidth*0.02f, boxHeight*0.01f, boxWidth*0.96f, panelHeight), scrollPosition, new Rect(0, 0, panelWidth, rowHeight+(itemsCount-1)*rowOffset));
         
         switch(currentState)
         {
@@ -257,8 +267,8 @@ public class Options : MonoBehaviour
     {
         int cur=0;
 
-        GUI.Label(new Rect(0, rowOffset*cur, panelWidth*0.35f, rowHeight), localizationLanguage,  (!Utils.isTouchDevice && currentItem==cur) ? menuSelectedItemStyle : menuItemStyle);
-        languageScroller.draw(new Rect(panelWidth*0.4f, rowOffset*cur, panelWidth*0.55f, rowHeight));
+        GUI.Label(new Rect(0, rowOffset*cur, panelWidth*0.4f, rowHeight), localizationLanguage,  (!Utils.isTouchDevice && currentItem==cur) ? menuSelectedItemStyle : menuItemStyle);
+        languageScroller.draw(new Rect(panelWidth*0.45f, rowOffset*cur, panelWidth*0.55f, rowHeight));
 
         ++cur;
 
@@ -300,7 +310,7 @@ public class Options : MonoBehaviour
 
     private bool drawButton(string text, float panelWidth, float panelHeight, float rowHeight, float rowOffset, int cur)
     {
-        return GUI.Button(new Rect(0, rowOffset*cur, panelWidth*0.95f, rowHeight), text, (!Utils.isTouchDevice && currentItem==cur) ? menuSelectedItemStyle : menuItemStyle);
+        return GUI.Button(new Rect(0, rowOffset*cur, panelWidth, rowHeight), text, (!Utils.isTouchDevice && currentItem==cur) ? menuSelectedItemStyle : menuItemStyle);
     }
 
     private void controlItem(int index)
