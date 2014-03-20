@@ -6,7 +6,7 @@ public class SelectionScroller
     public delegate void ModifiedFunction();
 
     private string[]         mItems;
-    private int              mCurrent;
+    private int              mCurrentIndex;
     private ModifiedFunction mModifiedFunction;
     private GUIStyle         mLeftArrowStyle;
     private GUIStyle         mRightArrowStyle;
@@ -14,18 +14,9 @@ public class SelectionScroller
 
     public SelectionScroller(string[] items, string selectedItem, ModifiedFunction modifiedFunction, Texture2D leftTexture, Texture2D rightTexture)
     {
-        int index=0;
+        init(items, 0, modifiedFunction, leftTexture, rightTexture);
 
-        for (int i=0; i<items.Length; ++i)
-        {
-            if (items[i]==selectedItem)
-            {
-                index=i;
-                break;
-            }
-        }
-
-        init(items, index, modifiedFunction, leftTexture, rightTexture);
+        setSelectedItem(selectedItem);
     }
 
     public SelectionScroller(string[] items, int selectedItem, ModifiedFunction modifiedFunction, Texture2D leftTexture, Texture2D rightTexture)
@@ -36,7 +27,7 @@ public class SelectionScroller
     public void init(string[] items, int selectedItem, ModifiedFunction modifiedFunction, Texture2D leftTexture, Texture2D rightTexture)
     {
         mItems            = items;
-        mCurrent          = selectedItem;
+        mCurrentIndex     = selectedItem;
         mModifiedFunction = modifiedFunction;
         mLeftArrowStyle   = new GUIStyle();
         mRightArrowStyle  = new GUIStyle();
@@ -52,28 +43,28 @@ public class SelectionScroller
 
     public void draw(Rect rect)
     {
-        if (mCurrent>0)
+        if (mCurrentIndex>0)
         {
             if (GUI.Button(new Rect(rect.x, rect.y, rect.height, rect.height), "", mLeftArrowStyle))
             {
-                --mCurrent;
+                --mCurrentIndex;
                 modificationMade();
             }
         }
 
-        if (mCurrent>=0 && mCurrent<mItems.Length)
+        if (mCurrentIndex>=0 && mCurrentIndex<mItems.Length)
         {
             centerTextStyle.fontSize=(int)(rect.height*0.5);
 
             Vector2 center=rect.center;
-            GUI.Label(new Rect(center.x, center.y, 1, 1), mItems[mCurrent], centerTextStyle);
+            GUI.Label(new Rect(center.x, center.y, 1, 1), mItems[mCurrentIndex], centerTextStyle);
         }
 
-        if (mCurrent<mItems.Length-1)
+        if (mCurrentIndex<mItems.Length-1)
         {
             if (GUI.Button(new Rect(rect.xMax-rect.height, rect.y, rect.height, rect.height), "", mRightArrowStyle))
             {
-                ++mCurrent;
+                ++mCurrentIndex;
                 modificationMade();
             }
         }
@@ -83,18 +74,18 @@ public class SelectionScroller
     {
         if (Input.GetKeyDown(KeyCode.LeftArrow))
         {
-            if (mCurrent>0)
+            if (mCurrentIndex>0)
             {
-                --mCurrent;
+                --mCurrentIndex;
                 modificationMade();
             }
         }
         else
         if (Input.GetKeyDown(KeyCode.RightArrow))
         {
-            if (mCurrent<mItems.Length-1)
+            if (mCurrentIndex<mItems.Length-1)
             {
-                ++mCurrent;
+                ++mCurrentIndex;
                 modificationMade();
             }
         }
@@ -110,15 +101,34 @@ public class SelectionScroller
 
     public string getSelectedItem()
     {
-        if (mCurrent>=0 && mCurrent<mItems.Length)
+        if (mCurrentIndex>=0 && mCurrentIndex<mItems.Length)
         {
-            return mItems[mCurrent];
+            return mItems[mCurrentIndex];
         }
 
         return "";
     }
 
-    public void setCurrentItem(int index)
+    public void setSelectedItem(string item)
+    {
+        int index=0;
+        
+        for (int i=0; i<mItems.Length; ++i)
+        {
+            if (mItems[i].Equals(item))
+            {
+                mCurrentIndex=index;
+                return;
+            }
+        }
+    }
+
+    public int getCurrentIndex()
+    {
+        return mCurrentIndex;
+    }
+
+    public void setCurrentIndex(int index)
     {
         if (index<0)
         {
@@ -130,6 +140,6 @@ public class SelectionScroller
             index=mItems.Length-1;
         }
 
-        mCurrent=index;
+        mCurrentIndex=index;
     }
 }

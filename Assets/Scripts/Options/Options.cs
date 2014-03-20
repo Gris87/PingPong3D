@@ -151,8 +151,8 @@ public class Options : MonoBehaviour
         
         float panelWidth  = Screen.width*0.9f;
         float panelHeight = Screen.height*0.9f;
-        float rowHeight=Screen.height*0.1f;
-        float rowOffset=rowHeight+Screen.height*0.025f;
+        float rowHeight   = Screen.height*0.1f;
+        float rowOffset   = rowHeight+Screen.height*0.025f;
         
         
         
@@ -480,6 +480,44 @@ public class Options : MonoBehaviour
         itemsCount     = 0;
     }
 
+    public void applyChanges()
+    {
+        modified  = false;
+        askSaving = false;
+    
+        switch(currentState)
+        {
+            case State.InOptionsList:
+                Debug.LogError("Never reach this code");
+            break;
+            case State.InGameOptions:     applyChangesInGameOptions    (); break;
+            case State.InSoundOptions:    applyChangesInSoundOptions   (); break;
+            case State.InVideoOptions:    applyChangesInVideoOptions   (); break;
+            case State.InControlsOptions: applyChangesInControlsOptions(); break;
+            default:
+                Debug.LogError("Unknown state");
+            break;
+        }
+
+        save();
+    }
+    
+    private void applyChangesInGameOptions()
+    {
+    }
+    
+    private void applyChangesInSoundOptions()
+    {
+    }
+    
+    private void applyChangesInVideoOptions()
+    {
+    }
+    
+    private void applyChangesInControlsOptions()
+    {
+    }
+
     private void updateLanguageScroller()
     {
         List<CultureInfo> availableLanguages=LanguageManager.Instance.AvailableLanguagesCultureInfo;
@@ -487,22 +525,14 @@ public class Options : MonoBehaviour
         
         for (int i=0; i<availableLanguages.Count; ++i)
         {            
-            if (availableLanguages[i].Name==language)
+            if (availableLanguages[i].Name.Equals(language))
             {
                 languageIndex=i;
                 break;
             }
         }
         
-        languageScroller.setCurrentItem(languageIndex);
-    }
-
-    public void applyChanges()
-    {
-        modified  = false;
-        askSaving = false;
-
-        save();
+        languageScroller.setCurrentIndex(languageIndex);
     }
 
     public static void load()
