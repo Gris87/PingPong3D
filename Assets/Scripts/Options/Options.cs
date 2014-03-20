@@ -31,7 +31,7 @@ public class Options : MonoBehaviour
     private bool  askSaving;
 
     #region Options
-    private static string language;
+    private static string language="en";
     #endregion
 
     #region Localization
@@ -52,17 +52,8 @@ public class Options : MonoBehaviour
     {
         #region Localization
         LanguageManager languageManager=LanguageManager.Instance;
-
-        localizationGame                   = languageManager.GetTextValue("OptionsScene.Game");
-        localizationSound                  = languageManager.GetTextValue("OptionsScene.Sound");
-        localizationVideo                  = languageManager.GetTextValue("OptionsScene.Video");
-        localizationControls               = languageManager.GetTextValue("OptionsScene.Controls");
-        localizationBack                   = languageManager.GetTextValue("OptionsScene.Back");
-        localizationLanguage               = languageManager.GetTextValue("OptionsScene.Language");
-        localizationSettingsChanged        = languageManager.GetTextValue("OptionsScene.SettingsChanged");
-        localizationDoYouWantToSaveChanges = languageManager.GetTextValue("OptionsScene.DoYouWantToSaveChanges");
-        localizationOK                     = languageManager.GetTextValue("OptionsScene.OK");
-        localizationCancel                 = languageManager.GetTextValue("OptionsScene.Cancel");
+        languageManager.OnChangeLanguage+=OnChangeLanguage;
+        OnChangeLanguage(languageManager);
         #endregion
 
         #region Create text styles
@@ -92,6 +83,20 @@ public class Options : MonoBehaviour
         askSaving = false;
 
         goToOptionsList(0);
+    }
+
+    void OnChangeLanguage(LanguageManager languageManager)
+    {
+        localizationGame                   = languageManager.GetTextValue("OptionsScene.Game");
+        localizationSound                  = languageManager.GetTextValue("OptionsScene.Sound");
+        localizationVideo                  = languageManager.GetTextValue("OptionsScene.Video");
+        localizationControls               = languageManager.GetTextValue("OptionsScene.Controls");
+        localizationBack                   = languageManager.GetTextValue("OptionsScene.Back");
+        localizationLanguage               = languageManager.GetTextValue("OptionsScene.Language");
+        localizationSettingsChanged        = languageManager.GetTextValue("OptionsScene.SettingsChanged");
+        localizationDoYouWantToSaveChanges = languageManager.GetTextValue("OptionsScene.DoYouWantToSaveChanges");
+        localizationOK                     = languageManager.GetTextValue("OptionsScene.OK");
+        localizationCancel                 = languageManager.GetTextValue("OptionsScene.Cancel");
     }
 
     // Update is called once per frame
@@ -504,6 +509,24 @@ public class Options : MonoBehaviour
     
     private void applyChangesInGameOptions()
     {
+        LanguageManager languageManager=LanguageManager.Instance;
+
+        List<CultureInfo> availableLanguages=LanguageManager.Instance.AvailableLanguagesCultureInfo;
+        int languageIndex=languageScroller.getCurrentIndex();
+
+        if (languageIndex<0 || languageIndex>=availableLanguages.Count)
+        {
+            Debug.LogError("Array index out of bounds");
+            return;
+        }
+
+        string selectedLanguage=availableLanguages[languageIndex].Name;
+
+        if (!language.Equals(selectedLanguage))
+        {
+            language=selectedLanguage;
+            languageManager.ChangeLanguage(language);
+        }
     }
     
     private void applyChangesInSoundOptions()
@@ -525,7 +548,7 @@ public class Options : MonoBehaviour
         
         for (int i=0; i<availableLanguages.Count; ++i)
         {            
-            if (availableLanguages[i].Name.Equals(language))
+            if (language.Equals(availableLanguages[i].Name))
             {
                 languageIndex=i;
                 break;

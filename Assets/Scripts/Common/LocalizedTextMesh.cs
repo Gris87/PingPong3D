@@ -15,17 +15,17 @@ public class LocalizedTextMesh : MonoBehaviour
         if (textMesh!=null)
         {
             //Subscribe to the change language event
-            LanguageManager thisLanguageManager = LanguageManager.Instance;
-            thisLanguageManager.OnChangeLanguage += OnChangeLanguage;
+            LanguageManager languageManager = LanguageManager.Instance;
+            languageManager.OnChangeLanguage += OnChangeLanguage;
 
             //Run the method one first time
-            OnChangeLanguage(thisLanguageManager);
+            OnChangeLanguage(languageManager);
         }
     }
 
-    void OnChangeLanguage(LanguageManager thisLanguageManager)
+    void OnChangeLanguage(LanguageManager languageManager)
     {
         //Initialize all your language specific variables here
-        textMesh.text=LanguageManager.Instance.GetTextValue(token);
+        textMesh.text=languageManager.GetTextValue(token);
     }
 }
