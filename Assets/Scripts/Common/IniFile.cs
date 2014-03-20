@@ -1,4 +1,5 @@
 using UnityEngine;
+using System;
 using System.Collections;
 using System.IO;
 
@@ -44,6 +45,69 @@ public class IniFile
     /// </summary>
     /// <param name="key">Name of property</param>
     /// <param name="value">New value</param>
+    public void Set(string key, int value)
+    {
+        Set(key, value, "");
+    }
+    
+    /// <summary>
+    /// Set value of property and add comment. It will create new property if absent.
+    /// </summary>
+    /// <param name="key">Name of property</param>
+    /// <param name="value">New value</param>
+    /// <param name="comment">Comment for property</param>
+    public void Set(string key, int value, string comment)
+    {
+        Set(key, value.ToString(), comment);
+    }
+
+    /// <summary>
+    /// Set value of property. It will create new property if absent.
+    /// </summary>
+    /// <param name="key">Name of property</param>
+    /// <param name="value">New value</param>
+    public void Set(string key, float value)
+    {
+        Set(key, value, "");
+    }
+    
+    /// <summary>
+    /// Set value of property and add comment. It will create new property if absent.
+    /// </summary>
+    /// <param name="key">Name of property</param>
+    /// <param name="value">New value</param>
+    /// <param name="comment">Comment for property</param>
+    public void Set(string key, float value, string comment)
+    {
+        Set(key, value.ToString(), comment);
+    }
+
+    /// <summary>
+    /// Set value of property. It will create new property if absent.
+    /// </summary>
+    /// <param name="key">Name of property</param>
+    /// <param name="value">New value</param>
+    public void Set(string key, double value)
+    {
+        Set(key, value, "");
+    }
+    
+    /// <summary>
+    /// Set value of property and add comment. It will create new property if absent.
+    /// </summary>
+    /// <param name="key">Name of property</param>
+    /// <param name="value">New value</param>
+    /// <param name="comment">Comment for property</param>
+    public void Set(string key, double value, string comment)
+    {
+        Set(key, value.ToString(), comment);
+    }
+
+    /// <summary>
+    /// Set value of property. It will create new property if absent.
+    /// </summary>
+    /// <param name="key">Name of property</param>
+    /// <param name="value">New value</param>
     public void Set(string key, string value)
     {
         Set(key, value, "");
@@ -71,6 +135,63 @@ public class IniFile
         mKeys.Add    (key);
         mValues.Add  (value);
         mComments.Add(comment);
+    }
+    
+    /// <summary>
+    /// Returns the value of property.
+    /// </summary>
+    /// <param name="key">Name of property</param>
+    /// <param name="defaultValue">Default value if property absent</param>
+    public int Get(string key, int defaultValue)
+    {
+        string value=Get(key);
+
+        try
+        {
+            return Convert.ToInt32(value);
+        }
+        catch(Exception)
+        {
+            return defaultValue;
+        }
+    }
+    
+    /// <summary>
+    /// Returns the value of property.
+    /// </summary>
+    /// <param name="key">Name of property</param>
+    /// <param name="defaultValue">Default value if property absent</param>
+    public float Get(string key, float defaultValue)
+    {
+        string value=Get(key);
+        
+        try
+        {
+            return Convert.ToSingle(value);
+        }
+        catch(Exception)
+        {
+            return defaultValue;
+        }
+    }
+    
+    /// <summary>
+    /// Returns the value of property.
+    /// </summary>
+    /// <param name="key">Name of property</param>
+    /// <param name="defaultValue">Default value if property absent</param>
+    public double Get(string key, double defaultValue)
+    {
+        string value=Get(key);
+        
+        try
+        {
+            return Convert.ToDouble(value);
+        }
+        catch(Exception)
+        {
+            return defaultValue;
+        }
     }
 
     /// <summary>

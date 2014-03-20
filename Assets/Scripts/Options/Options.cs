@@ -29,6 +29,9 @@ public class Options : MonoBehaviour
     private int   itemsCount;
     private bool  modified;
     private bool  askSaving;
+    private float masterVolumeCur;
+    private float musicVolumeCur;
+    private float effectsVolumeCur;
 
     #region Options
     #region Language
@@ -41,6 +44,39 @@ public class Options : MonoBehaviour
         }
     }
     #endregion
+
+    #region Master volume
+    private static float mMasterVolume=1;
+    public static float masterVolume
+    {
+        get
+        {
+            return mMasterVolume;
+        }
+    }
+    #endregion
+
+    #region Music volume
+    private static float mMusicVolume=1;
+    public static float musicVolume
+    {
+        get
+        {
+            return mMusicVolume;
+        }
+    }
+    #endregion
+
+    #region Effects volume
+    private static float mEffectsVolume=1;
+    public static float effectsVolume
+    {
+        get
+        {
+            return mEffectsVolume;
+        }
+    }
+    #endregion
     #endregion
 
     #region Localization
@@ -50,6 +86,9 @@ public class Options : MonoBehaviour
     private string localizationControls;
     private string localizationBack;
     private string localizationLanguage;
+    private string localizationMasterVolume;
+    private string localizationMusicVolume;
+    private string localizationEffectsVolume;
     private string localizationSettingsChanged;
     private string localizationDoYouWantToSaveChanges;
     private string localizationOK;
@@ -103,6 +142,9 @@ public class Options : MonoBehaviour
         localizationControls               = languageManager.GetTextValue("OptionsScene.Controls");
         localizationBack                   = languageManager.GetTextValue("OptionsScene.Back");
         localizationLanguage               = languageManager.GetTextValue("OptionsScene.Language");
+        localizationMasterVolume           = languageManager.GetTextValue("OptionsScene.MasterVolume");
+        localizationMusicVolume            = languageManager.GetTextValue("OptionsScene.MusicVolume");
+        localizationEffectsVolume          = languageManager.GetTextValue("OptionsScene.EffectsVolume");
         localizationSettingsChanged        = languageManager.GetTextValue("OptionsScene.SettingsChanged");
         localizationDoYouWantToSaveChanges = languageManager.GetTextValue("OptionsScene.DoYouWantToSaveChanges");
         localizationOK                     = languageManager.GetTextValue("OptionsScene.OK");
@@ -281,6 +323,41 @@ public class Options : MonoBehaviour
     private void drawSoundOptions(float panelWidth, float panelHeight, float rowHeight, float rowOffset)
     {
         int cur=0;
+
+        float temp;
+
+        GUI.Label(new Rect(0, rowOffset*cur, panelWidth*0.4f, rowHeight), localizationMasterVolume,  (!Utils.isTouchDevice && currentItem==cur) ? menuSelectedItemStyle : menuItemStyle);
+        temp=GUI.HorizontalSlider(new Rect(panelWidth*0.45f, rowOffset*cur, panelWidth*0.55f, rowHeight), masterVolumeCur, 0, 1);
+
+        if (masterVolumeCur!=temp)
+        {
+            modified=true;
+            masterVolumeCur=temp;
+        }
+
+        ++cur;
+
+        GUI.Label(new Rect(0, rowOffset*cur, panelWidth*0.4f, rowHeight), localizationMusicVolume,  (!Utils.isTouchDevice && currentItem==cur) ? menuSelectedItemStyle : menuItemStyle);
+        temp=GUI.HorizontalSlider(new Rect(panelWidth*0.45f, rowOffset*cur, panelWidth*0.55f, rowHeight), musicVolumeCur, 0, 1);
+        
+        if (musicVolumeCur!=temp)
+        {
+            modified=true;
+            musicVolumeCur=temp;
+        }
+        
+        ++cur;
+
+        GUI.Label(new Rect(0, rowOffset*cur, panelWidth*0.4f, rowHeight), localizationEffectsVolume,  (!Utils.isTouchDevice && currentItem==cur) ? menuSelectedItemStyle : menuItemStyle);
+        temp=GUI.HorizontalSlider(new Rect(panelWidth*0.45f, rowOffset*cur, panelWidth*0.55f, rowHeight), effectsVolumeCur, 0, 1);
+        
+        if (effectsVolumeCur!=temp)
+        {
+            modified=true;
+            effectsVolumeCur=temp;
+        }
+        
+        ++cur;
 
         if (drawButton(localizationBack, panelWidth, panelHeight, rowHeight, rowOffset, cur))
         {
@@ -483,6 +560,10 @@ public class Options : MonoBehaviour
         currentState   = State.InSoundOptions;
         currentItem    = 0;
         itemsCount     = 0;
+
+        masterVolumeCur  = mMasterVolume;
+        musicVolumeCur   = mMusicVolume;
+        effectsVolumeCur = mEffectsVolume;
     }
 
     private void goToVideoOptions()
@@ -583,6 +664,9 @@ public class Options : MonoBehaviour
         Debug.Log("Loading settings");
         IniFile iniFile=new IniFile("Settings");
 
+
+
+        // Game
         LanguageManager languageManager=LanguageManager.Instance;
         mLanguage=iniFile.Get("Language", languageManager.GetSystemLanguage());
 
@@ -593,13 +677,26 @@ public class Options : MonoBehaviour
 
         Debug.Log("Application language: "+mLanguage);
         languageManager.ChangeLanguage(mLanguage);
+
+
+
+        // Sound
+        mMasterVolume  = iniFile.Get("MasterVolume",  1);
+        mMusicVolume   = iniFile.Get("MusicVolume",   1);
+        mEffectsVolume = iniFile.Get("EffectsVolume", 1);
     }
 
     public static void save()
     {
         IniFile iniFile=new IniFile("Settings");
-        
+
+        // Game
         iniFile.Set("Language", mLanguage, "Application language");
+
+        // Sound
+        iniFile.Set("MasterVolume",  mMasterVolume,  "Master volume");
+        iniFile.Set("MusicVolume",   mMusicVolume,   "Music volume");
+        iniFile.Set("EffectsVolume", mEffectsVolume, "Effects volume");
 
         iniFile.save("Settings");
     }
