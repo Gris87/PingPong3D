@@ -3,13 +3,16 @@ using System.Collections;
 
 public class SelectionScroller
 {
-    private string[] mItems;
-    private int      mCurrent;
-    private GUIStyle mLeftArrowStyle;
-    private GUIStyle mRightArrowStyle;
-    private GUIStyle centerTextStyle;
+    public delegate void ModifiedFunction();
 
-    public SelectionScroller(string[] items, string selectedItem, Texture2D leftTexture, Texture2D rightTexture)
+    private string[]         mItems;
+    private int              mCurrent;
+    private ModifiedFunction mModifiedFunction;
+    private GUIStyle         mLeftArrowStyle;
+    private GUIStyle         mRightArrowStyle;
+    private GUIStyle         centerTextStyle;
+
+    public SelectionScroller(string[] items, string selectedItem, ModifiedFunction modifiedFunction, Texture2D leftTexture, Texture2D rightTexture)
     {
         int index=0;
 
@@ -22,21 +25,22 @@ public class SelectionScroller
             }
         }
 
-        init(items, index, leftTexture, rightTexture);
+        init(items, index, modifiedFunction, leftTexture, rightTexture);
     }
 
-    public SelectionScroller(string[] items, int selectedItem, Texture2D leftTexture, Texture2D rightTexture)
+    public SelectionScroller(string[] items, int selectedItem, ModifiedFunction modifiedFunction, Texture2D leftTexture, Texture2D rightTexture)
     {
-        init(items, selectedItem, leftTexture, rightTexture);
+        init(items, selectedItem, modifiedFunction, leftTexture, rightTexture);
     }
 
-    public void init(string[] items, int selectedItem, Texture2D leftTexture, Texture2D rightTexture)
+    public void init(string[] items, int selectedItem, ModifiedFunction modifiedFunction, Texture2D leftTexture, Texture2D rightTexture)
     {
-        mItems           = items;
-        mCurrent         = selectedItem;
-        mLeftArrowStyle  = new GUIStyle();
-        mRightArrowStyle = new GUIStyle();
-        centerTextStyle  = new GUIStyle();
+        mItems            = items;
+        mCurrent          = selectedItem;
+        mModifiedFunction = modifiedFunction;
+        mLeftArrowStyle   = new GUIStyle();
+        mRightArrowStyle  = new GUIStyle();
+        centerTextStyle   = new GUIStyle();
 
         mLeftArrowStyle.normal.background  = leftTexture;
         mRightArrowStyle.normal.background = rightTexture;
@@ -53,6 +57,7 @@ public class SelectionScroller
             if (GUI.Button(new Rect(rect.x, rect.y, rect.height, rect.height), "", mLeftArrowStyle))
             {
                 --mCurrent;
+                modificationMade();
             }
         }
 
@@ -69,6 +74,7 @@ public class SelectionScroller
             if (GUI.Button(new Rect(rect.xMax-rect.height, rect.y, rect.height, rect.height), "", mRightArrowStyle))
             {
                 ++mCurrent;
+                modificationMade();
             }
         }
     }
@@ -80,6 +86,7 @@ public class SelectionScroller
             if (mCurrent>0)
             {
                 --mCurrent;
+                modificationMade();
             }
         }
         else
@@ -88,7 +95,41 @@ public class SelectionScroller
             if (mCurrent<mItems.Length-1)
             {
                 ++mCurrent;
+                modificationMade();
             }
         }
+    }
+
+    private void modificationMade()
+    {        
+        if (mModifiedFunction!=null)
+        {
+            mModifiedFunction();
+        }
+    }
+
+    public string getSelectedItem()
+    {
+        if (mCurrent>=0 && mCurrent<mItems.Length)
+        {
+            return mItems[mCurrent];
+        }
+
+        return "";
+    }
+
+    public void setCurrentItem(int index)
+    {
+        if (index<0)
+        {
+            index=0;
+        }
+        else
+        if (index>mItems.Length-1)
+        {
+            index=mItems.Length-1;
+        }
+
+        mCurrent=index;
     }
 }

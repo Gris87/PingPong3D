@@ -21,10 +21,14 @@ public class Options : MonoBehaviour
 
     private Vector2           scrollPosition;
     private SelectionScroller languageScroller;
+    private Rect              saveDialogRect;
+    private GUIStyle          saveTextStyle;
 
     private State currentState;
     private int   currentItem;
     private int   itemsCount;
+    private bool  modified;
+    private bool  askSaving;
 
     #region Options
     private static string language;
@@ -37,6 +41,10 @@ public class Options : MonoBehaviour
     private string localizationControls;
     private string localizationBack;
     private string localizationLanguage;
+    private string localizationSettingsChanged;
+    private string localizationDoYouWantToSaveChanges;
+    private string localizationOK;
+    private string localizationCancel;
     #endregion
 
     // Use this for initialization
@@ -45,33 +53,43 @@ public class Options : MonoBehaviour
         #region Localization
         LanguageManager languageManager=LanguageManager.Instance;
 
-        localizationGame     = languageManager.GetTextValue("OptionsScene.Game");
-        localizationSound    = languageManager.GetTextValue("OptionsScene.Sound");
-        localizationVideo    = languageManager.GetTextValue("OptionsScene.Video");
-        localizationControls = languageManager.GetTextValue("OptionsScene.Controls");
-        localizationBack     = languageManager.GetTextValue("OptionsScene.Back");
-        localizationLanguage = languageManager.GetTextValue("OptionsScene.Language");
+        localizationGame                   = languageManager.GetTextValue("OptionsScene.Game");
+        localizationSound                  = languageManager.GetTextValue("OptionsScene.Sound");
+        localizationVideo                  = languageManager.GetTextValue("OptionsScene.Video");
+        localizationControls               = languageManager.GetTextValue("OptionsScene.Controls");
+        localizationBack                   = languageManager.GetTextValue("OptionsScene.Back");
+        localizationLanguage               = languageManager.GetTextValue("OptionsScene.Language");
+        localizationSettingsChanged        = languageManager.GetTextValue("OptionsScene.SettingsChanged");
+        localizationDoYouWantToSaveChanges = languageManager.GetTextValue("OptionsScene.DoYouWantToSaveChanges");
+        localizationOK                     = languageManager.GetTextValue("OptionsScene.OK");
+        localizationCancel                 = languageManager.GetTextValue("OptionsScene.Cancel");
         #endregion
 
+        #region Create text styles
+        saveTextStyle=new GUIStyle();
+
+        saveTextStyle.alignment=TextAnchor.UpperLeft;
+        saveTextStyle.wordWrap=true;
+        saveTextStyle.clipping=TextClipping.Clip;
+        saveTextStyle.fontSize=(int)(Screen.height*0.04);
+        saveTextStyle.normal.textColor=Color.white;
+        #endregion
 
 
         List<CultureInfo> availableLanguages=languageManager.AvailableLanguagesCultureInfo;
         string[] languages=new string[availableLanguages.Count];
-        int languageIndex=0;
 
         for (int i=0; i<availableLanguages.Count; ++i)
         {
             languages[i]=availableLanguages[i].EnglishName;
-
-            if (availableLanguages[i].Name==language)
-            {
-                languageIndex=i;
-            }
         }
 
-        languageScroller=new SelectionScroller(languages, languageIndex, scrollerLeftTexture, scrollerRightTexture);
+        languageScroller=new SelectionScroller(languages, 0, settingsModified, scrollerLeftTexture, scrollerRightTexture);
 
 
+
+        modified  = false;
+        askSaving = false;
 
         goToOptionsList(0);
     }
@@ -84,7 +102,7 @@ public class Options : MonoBehaviour
             goBack();
         }
         else
-        if (Input.GetKeyDown(KeyCode.UpArrow))
+        if (!Utils.isTouchDevice && Input.GetKeyDown(KeyCode.UpArrow))
         {
             if (currentItem>0)
             {
@@ -92,7 +110,7 @@ public class Options : MonoBehaviour
             }
         }
         else
-        if (Input.GetKeyDown(KeyCode.DownArrow))
+        if (!Utils.isTouchDevice && Input.GetKeyDown(KeyCode.DownArrow))
         {
             if (currentItem<itemsCount-1)
             {
@@ -101,9 +119,13 @@ public class Options : MonoBehaviour
         }
         else
         if (
-            Input.GetKeyDown(KeyCode.Return)
-            ||
-            Input.GetKeyDown(KeyCode.KeypadEnter)
+            !Utils.isTouchDevice
+            &&
+            (
+             Input.GetKeyDown(KeyCode.Return)
+             ||
+             Input.GetKeyDown(KeyCode.KeypadEnter)
+            )
            )
         {
             selectItem(currentItem);
@@ -116,21 +138,29 @@ public class Options : MonoBehaviour
 
     void OnGUI()
     {
+        if (askSaving)
+        {
+            GUIStyle windowStyle=new GUIStyle(GUI.skin.window);
+            windowStyle.fontSize=(int)(Screen.height*0.05);
+
+            saveDialogRect=GUI.ModalWindow(0, saveDialogRect, drawSaveDialog, localizationSettingsChanged, windowStyle);
+        }
+
         menuItemStyle.fontSize=(int)(Screen.height*0.05);
         menuSelectedItemStyle.fontSize=(int)(Screen.height*0.05);
-
+        
         float panelWidth  = Screen.width*0.9f;
         float panelHeight = Screen.height*0.9f;
         float rowHeight=Screen.height*0.1f;
         float rowOffset=rowHeight+Screen.height*0.025f;
-
-
-
+        
+        
+        
         GUI.BeginGroup(new Rect(Screen.width*0.05f, Screen.height*0.05f, panelWidth, panelHeight));
         GUI.Box(new Rect(0, 0, panelWidth-1, panelHeight-1), "");
-
+        
         scrollPosition=GUI.BeginScrollView(new Rect(panelWidth*0.01f, panelHeight*0.01f, panelWidth*0.98f, panelHeight*0.98f), scrollPosition, new Rect(0, 0, panelWidth*0.95f, rowHeight+(itemsCount-1)*rowOffset));
-
+        
         switch(currentState)
         {
             case State.InOptionsList:     drawOptionsList    (panelWidth, panelHeight, rowHeight, rowOffset); break;
@@ -140,47 +170,69 @@ public class Options : MonoBehaviour
             case State.InControlsOptions: drawControlsOptions(panelWidth, panelHeight, rowHeight, rowOffset); break;
             default:
                 Debug.LogError("Unknown state");
-            break;
+                break;
+        }
+        
+        GUI.EndScrollView();
+        
+        GUI.EndGroup();
+    }
+
+    private void drawSaveDialog(int id)
+    {
+        GUIStyle buttonStyle=new GUIStyle(GUI.skin.button);
+        buttonStyle.fontSize=(int)(Screen.height*0.03);
+
+        GUI.Label(new Rect(saveDialogRect.width*0.05f, saveDialogRect.height*0.25f, saveDialogRect.width*0.9f, saveDialogRect.height*0.4f), localizationDoYouWantToSaveChanges, saveTextStyle);
+
+        if (GUI.Button(new Rect(saveDialogRect.width*0.1f, saveDialogRect.height*0.7f, saveDialogRect.width*0.3f, saveDialogRect.height*0.2f), localizationOK, buttonStyle))
+        {
+            applyChanges();
+            goBack();
         }
 
-        GUI.EndScrollView();
+        if (GUI.Button(new Rect(saveDialogRect.width*0.6f, saveDialogRect.height*0.7f, saveDialogRect.width*0.3f, saveDialogRect.height*0.2f), localizationCancel, buttonStyle))
+        {
+            modified  = false;
+            askSaving = false;
 
-        GUI.EndGroup();
+            goBack();
+        }
     }
 
     private void drawOptionsList(float panelWidth, float panelHeight, float rowHeight, float rowOffset)
     {
         int cur=0;
 
-        if (GUI.Button(new Rect(0, rowOffset*cur, panelWidth*0.95f, rowHeight), localizationGame,     currentItem==cur ? menuSelectedItemStyle : menuItemStyle))
+        if (drawButton(localizationGame, panelWidth, panelHeight, rowHeight, rowOffset, cur))
         {
             selectItem(cur);
         }
 
         ++cur;
 
-        if (GUI.Button(new Rect(0, rowOffset*cur, panelWidth*0.95f, rowHeight), localizationSound,    currentItem==cur ? menuSelectedItemStyle : menuItemStyle))
+        if (drawButton(localizationSound, panelWidth, panelHeight, rowHeight, rowOffset, cur))
         {
             selectItem(cur);
         }
 
         ++cur;
 
-        if (GUI.Button(new Rect(0, rowOffset*cur, panelWidth*0.95f, rowHeight), localizationVideo,    currentItem==cur ? menuSelectedItemStyle : menuItemStyle))
+        if (drawButton(localizationVideo, panelWidth, panelHeight, rowHeight, rowOffset, cur))
         {
             selectItem(cur);
         }
 
         ++cur;
 
-        if (GUI.Button(new Rect(0, rowOffset*cur, panelWidth*0.95f, rowHeight), localizationControls, currentItem==cur ? menuSelectedItemStyle : menuItemStyle))
+        if (drawButton(localizationControls, panelWidth, panelHeight, rowHeight, rowOffset, cur))
         {
             selectItem(cur);
         }
 
         ++cur;
 
-        if (GUI.Button(new Rect(0, rowOffset*cur, panelWidth*0.95f, rowHeight), localizationBack,     currentItem==cur ? menuSelectedItemStyle : menuItemStyle))
+        if (drawButton(localizationBack, panelWidth, panelHeight, rowHeight, rowOffset, cur))
         {
             selectItem(cur);
         }
@@ -190,12 +242,12 @@ public class Options : MonoBehaviour
     {
         int cur=0;
 
-        GUI.Label(new Rect(0, rowOffset*cur, panelWidth*0.35f, rowHeight), localizationLanguage,  currentItem==cur ? menuSelectedItemStyle : menuItemStyle);
+        GUI.Label(new Rect(0, rowOffset*cur, panelWidth*0.35f, rowHeight), localizationLanguage,  (!Utils.isTouchDevice && currentItem==cur) ? menuSelectedItemStyle : menuItemStyle);
         languageScroller.draw(new Rect(panelWidth*0.4f, rowOffset*cur, panelWidth*0.55f, rowHeight));
 
         ++cur;
 
-        if (GUI.Button(new Rect(0, rowOffset*cur, panelWidth*0.95f, rowHeight), localizationBack, currentItem==cur ? menuSelectedItemStyle : menuItemStyle))
+        if (drawButton(localizationBack, panelWidth, panelHeight, rowHeight, rowOffset, cur))
         {
             selectItem(cur);
         }
@@ -205,7 +257,7 @@ public class Options : MonoBehaviour
     {
         int cur=0;
 
-        if (GUI.Button(new Rect(0, rowOffset*cur, panelWidth*0.95f, rowHeight), localizationBack, currentItem==cur ? menuSelectedItemStyle : menuItemStyle))
+        if (drawButton(localizationBack, panelWidth, panelHeight, rowHeight, rowOffset, cur))
         {
             selectItem(cur);
         }
@@ -215,7 +267,7 @@ public class Options : MonoBehaviour
     {
         int cur=0;
 
-        if (GUI.Button(new Rect(0, rowOffset*cur, panelWidth*0.95f, rowHeight), localizationBack, currentItem==cur ? menuSelectedItemStyle : menuItemStyle))
+        if (drawButton(localizationBack, panelWidth, panelHeight, rowHeight, rowOffset, cur))
         {
             selectItem(cur);
         }
@@ -225,10 +277,15 @@ public class Options : MonoBehaviour
     {
         int cur=0;
 
-        if (GUI.Button(new Rect(0, rowOffset*cur, panelWidth*0.95f, rowHeight), localizationBack, currentItem==cur ? menuSelectedItemStyle : menuItemStyle))
+        if (drawButton(localizationBack, panelWidth, panelHeight, rowHeight, rowOffset, cur))
         {
             selectItem(cur);
         }
+    }
+
+    private bool drawButton(string text, float panelWidth, float panelHeight, float rowHeight, float rowOffset, int cur)
+    {
+        return GUI.Button(new Rect(0, rowOffset*cur, panelWidth*0.95f, rowHeight), text, (!Utils.isTouchDevice && currentItem==cur) ? menuSelectedItemStyle : menuItemStyle);
     }
 
     private void controlItem(int index)
@@ -314,6 +371,7 @@ public class Options : MonoBehaviour
 
     private void selectItemInGameOptions(int index)
     {
+        // Nothing
     }
 
     private void selectItemInSoundOptions(int index)
@@ -326,6 +384,11 @@ public class Options : MonoBehaviour
 
     private void selectItemInControlsOptions(int index)
     {
+    }
+
+    private void settingsModified()
+    {
+        modified=true;
     }
 
     private void goBack()
@@ -355,12 +418,24 @@ public class Options : MonoBehaviour
 
     private void goToOptionsList(int index)
     {
-        Debug.Log("Go to options list");
+        if (modified)
+        {
+            askSaving=!askSaving;
 
-        scrollPosition = Vector2.zero;
-        currentState   = State.InOptionsList;
-        currentItem    = index;
-        itemsCount     = 5;
+            if (askSaving)
+            {
+                saveDialogRect=new Rect(Screen.width*0.3f, Screen.height*0.3f, Screen.width*0.4f, Screen.height*0.4f);
+            }
+        }
+        else
+        {
+            Debug.Log("Go to options list");
+            
+            scrollPosition = Vector2.zero;
+            currentState   = State.InOptionsList;
+            currentItem    = index;
+            itemsCount     = 5;
+        }
     }
 
     private void goToGameOptions()
@@ -371,6 +446,8 @@ public class Options : MonoBehaviour
         currentState   = State.InGameOptions;
         currentItem    = 0;
         itemsCount     = 2;
+
+        updateLanguageScroller();
     }
 
     private void goToSoundOptions()
@@ -403,8 +480,34 @@ public class Options : MonoBehaviour
         itemsCount     = 0;
     }
 
+    private void updateLanguageScroller()
+    {
+        List<CultureInfo> availableLanguages=LanguageManager.Instance.AvailableLanguagesCultureInfo;
+        int languageIndex=0;
+        
+        for (int i=0; i<availableLanguages.Count; ++i)
+        {            
+            if (availableLanguages[i].Name==language)
+            {
+                languageIndex=i;
+                break;
+            }
+        }
+        
+        languageScroller.setCurrentItem(languageIndex);
+    }
+
+    public void applyChanges()
+    {
+        modified  = false;
+        askSaving = false;
+
+        save();
+    }
+
     public static void load()
     {
+        Debug.Log("Loading settings");
         IniFile iniFile=new IniFile("Settings");
 
         LanguageManager languageManager=LanguageManager.Instance;
