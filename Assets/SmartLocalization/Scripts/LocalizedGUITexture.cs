@@ -19,7 +19,12 @@ public class LocalizedGUITexture : MonoBehaviour
 		
 		//Run the method one first time
 		OnChangeLanguage(thisLanguageManager);
-	}
+    }
+    
+    void OnDestroy()
+    {
+        LanguageManager.Instance.OnChangeLanguage -= OnChangeLanguage;
+    }
 	
 	void OnChangeLanguage(LanguageManager thisLanguageManager)
 	{

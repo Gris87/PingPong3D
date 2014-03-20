@@ -23,6 +23,11 @@ public class LocalizedTextMesh : MonoBehaviour
         }
     }
 
+    void OnDestroy()
+    {
+        LanguageManager.Instance.OnChangeLanguage -= OnChangeLanguage;
+    }
+
     void OnChangeLanguage(LanguageManager languageManager)
     {
         //Initialize all your language specific variables here
