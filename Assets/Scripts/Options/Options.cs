@@ -14,10 +14,10 @@ public class Options : MonoBehaviour
         InControlsOptions
     }
 
-    public GUIStyle menuItemStyle;
-    public GUIStyle menuSelectedItemStyle;
-    public Texture  scrollerLeftTexture;
-    public Texture  scrollerRightTexture;
+    public GUIStyle  menuItemStyle;
+    public GUIStyle  menuSelectedItemStyle;
+    public Texture2D scrollerLeftTexture;
+    public Texture2D scrollerRightTexture;
 
     private Vector2           scrollPosition;
     private SelectionScroller languageScroller;
@@ -101,6 +101,10 @@ public class Options : MonoBehaviour
            )
         {
             selectItem(currentItem);
+        }
+        else
+        {
+            controlItem(currentItem);
         }
     }
     
@@ -221,6 +225,52 @@ public class Options : MonoBehaviour
         }
     }
 
+    private void controlItem(int index)
+    {        
+        switch(currentState)
+        {
+            case State.InOptionsList:     controlItemInOptionsList    (index); break;
+            case State.InGameOptions:     controlItemInGameOptions    (index); break;
+            case State.InSoundOptions:    controlItemInSoundOptions   (index); break;
+            case State.InVideoOptions:    controlItemInVideoOptions   (index); break;
+            case State.InControlsOptions: controlItemInControlsOptions(index); break;
+            default:
+                Debug.LogError("Unknown state");
+            break;
+        }
+    }
+
+    private void controlItemInOptionsList(int index)
+    {
+        // Nothing
+    }
+    
+    private void controlItemInGameOptions(int index)
+    {
+        switch(index)
+        {
+            case 0: languageScroller.control(); break;
+            case 1: 
+                // Nothing
+            break;
+            default:
+                Debug.LogError("Don't know how to handle it");
+            break;
+        }
+    }
+    
+    private void controlItemInSoundOptions(int index)
+    {
+    }
+    
+    private void controlItemInVideoOptions(int index)
+    {
+    }
+    
+    private void controlItemInControlsOptions(int index)
+    {
+    }
+
     private void selectItem(int index)
     {
         if (index<0 || index>=itemsCount-1)
@@ -238,7 +288,7 @@ public class Options : MonoBehaviour
             case State.InControlsOptions: selectItemInControlsOptions(index); break;
             default:
                 Debug.LogError("Unknown state");
-                break;
+            break;
         }
     }
 
@@ -250,6 +300,9 @@ public class Options : MonoBehaviour
             case 1: goToSoundOptions();    break;
             case 2: goToVideoOptions();    break;
             case 3: goToControlsOptions(); break;
+            default:
+                Debug.LogError("Don't know how to handle it");
+            break;
         }
     }
 
@@ -287,7 +340,7 @@ public class Options : MonoBehaviour
                 case State.InControlsOptions: goToOptionsList(3); break;
                 default:
                     Debug.LogError("Unknown state");
-                    break;
+                break;
             }
         }
     }
