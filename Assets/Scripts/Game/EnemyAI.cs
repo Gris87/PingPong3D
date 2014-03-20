@@ -14,7 +14,7 @@ public class EnemyAI : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update ()
+    void Update()
     {
         #region Follow ball
         if (ball.transform.position.z<=1)

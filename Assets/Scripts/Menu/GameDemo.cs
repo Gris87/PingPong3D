@@ -7,13 +7,13 @@ public class GameDemo : MonoBehaviour
     public float maxSpeed     = 20f;
 
 	// Use this for initialization
-	void Start ()
+	void Start()
     {
         rigidbody.velocity=new Vector3((float)(10+Random.value*10),  (float)((Random.value-0.5)*20), 0);
 	}
 	
 	// Update is called once per frame
-	void Update ()
+	void Update()
     {
         float factor=(1+acceleration*Time.deltaTime);
         float velocityX=rigidbody.velocity.x*factor;

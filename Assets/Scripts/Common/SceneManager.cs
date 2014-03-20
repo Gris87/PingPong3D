@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class SceneManager
+public static class SceneManager
 {
     private static Hashtable sceneArguments;
 
@@ -14,6 +14,24 @@ public class SceneManager
     {
         sceneArguments=arguments;
         Application.LoadLevel(sceneName);
+    }
+
+    public static void LoadSceneAdditive(string sceneName, Hashtable arguments)
+    {
+        sceneArguments=arguments;
+        Application.LoadLevelAdditive(sceneName);
+    }
+
+    public static void LoadSceneAsync(string sceneName, Hashtable arguments)
+    {
+        sceneArguments=arguments;
+        Application.LoadLevelAsync(sceneName);
+    }
+    
+    public static void LoadSceneAdditiveAsync(string sceneName, Hashtable arguments)
+    {
+        sceneArguments=arguments;
+        Application.LoadLevelAdditiveAsync(sceneName);
     }
 
     public static Hashtable GetSceneArguments()
