@@ -31,7 +31,16 @@ public class Options : MonoBehaviour
     private bool  askSaving;
 
     #region Options
-    private static string language="en";
+    #region Language
+    private static string mLanguage="en";
+    public static string language
+    {
+        get
+        {
+            return mLanguage;
+        }
+    }
+    #endregion
     #endregion
 
     #region Localization
@@ -522,10 +531,10 @@ public class Options : MonoBehaviour
 
         string selectedLanguage=availableLanguages[languageIndex].Name;
 
-        if (!language.Equals(selectedLanguage))
+        if (!mLanguage.Equals(selectedLanguage))
         {
-            language=selectedLanguage;
-            languageManager.ChangeLanguage(language);
+            mLanguage=selectedLanguage;
+            languageManager.ChangeLanguage(mLanguage);
         }
     }
     
@@ -548,7 +557,7 @@ public class Options : MonoBehaviour
         
         for (int i=0; i<availableLanguages.Count; ++i)
         {            
-            if (language.Equals(availableLanguages[i].Name))
+            if (mLanguage.Equals(availableLanguages[i].Name))
             {
                 languageIndex=i;
                 break;
@@ -564,22 +573,22 @@ public class Options : MonoBehaviour
         IniFile iniFile=new IniFile("Settings");
 
         LanguageManager languageManager=LanguageManager.Instance;
-        language=iniFile.Get("Language", languageManager.GetSystemLanguage());
+        mLanguage=iniFile.Get("Language", languageManager.GetSystemLanguage());
 
-        if (!languageManager.IsLanguageSupported(language))
+        if (!languageManager.IsLanguageSupported(mLanguage))
         {
-            language="en";
+            mLanguage="en";
         }
 
-        Debug.Log("Application language: "+language);
-        languageManager.ChangeLanguage(language);
+        Debug.Log("Application language: "+mLanguage);
+        languageManager.ChangeLanguage(mLanguage);
     }
 
     public static void save()
     {
         IniFile iniFile=new IniFile("Settings");
         
-        iniFile.Set("Language", language, "Application language");
+        iniFile.Set("Language", mLanguage, "Application language");
 
         iniFile.save("Settings");
     }
