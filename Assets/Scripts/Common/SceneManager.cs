@@ -27,7 +27,7 @@ public static class SceneManager
         sceneArguments=arguments;
         Application.LoadLevelAsync(sceneName);
     }
-    
+
     public static void LoadSceneAdditiveAsync(string sceneName, Hashtable arguments)
     {
         sceneArguments=arguments;

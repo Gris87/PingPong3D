@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
@@ -38,7 +38,7 @@ public class Options : MonoBehaviour
     private string localizationBack;
     private string localizationLanguage;
     #endregion
-    
+
     // Use this for initialization
     void Start()
     {
@@ -107,7 +107,7 @@ public class Options : MonoBehaviour
             controlItem(currentItem);
         }
     }
-    
+
     void OnGUI()
     {
         menuItemStyle.fontSize=(int)(Screen.height*0.05);
@@ -119,7 +119,7 @@ public class Options : MonoBehaviour
         float rowOffset=rowHeight+Screen.height*0.025f;
 
 
-        
+
         GUI.BeginGroup(new Rect(Screen.width*0.05f, Screen.height*0.05f, panelWidth, panelHeight));
         GUI.Box(new Rect(0, 0, panelWidth-1, panelHeight-1), "");
 
@@ -145,7 +145,7 @@ public class Options : MonoBehaviour
     private void drawOptionsList(float panelWidth, float panelHeight, float rowHeight, float rowOffset)
     {
         int cur=0;
-        
+
         if (GUI.Button(new Rect(0, rowOffset*cur, panelWidth*0.95f, rowHeight), localizationGame,     currentItem==cur ? menuSelectedItemStyle : menuItemStyle))
         {
             selectItem(cur);
@@ -188,7 +188,7 @@ public class Options : MonoBehaviour
         languageScroller.draw(new Rect(panelWidth*0.4f, rowOffset*cur, panelWidth*0.55f, rowHeight));
 
         ++cur;
-        
+
         if (GUI.Button(new Rect(0, rowOffset*cur, panelWidth*0.95f, rowHeight), localizationBack, currentItem==cur ? menuSelectedItemStyle : menuItemStyle))
         {
             selectItem(cur);
@@ -198,7 +198,7 @@ public class Options : MonoBehaviour
     private void drawSoundOptions(float panelWidth, float panelHeight, float rowHeight, float rowOffset)
     {
         int cur=0;
-        
+
         if (GUI.Button(new Rect(0, rowOffset*cur, panelWidth*0.95f, rowHeight), localizationBack, currentItem==cur ? menuSelectedItemStyle : menuItemStyle))
         {
             selectItem(cur);
@@ -208,7 +208,7 @@ public class Options : MonoBehaviour
     private void drawVideoOptions(float panelWidth, float panelHeight, float rowHeight, float rowOffset)
     {
         int cur=0;
-        
+
         if (GUI.Button(new Rect(0, rowOffset*cur, panelWidth*0.95f, rowHeight), localizationBack, currentItem==cur ? menuSelectedItemStyle : menuItemStyle))
         {
             selectItem(cur);
@@ -218,7 +218,7 @@ public class Options : MonoBehaviour
     private void drawControlsOptions(float panelWidth, float panelHeight, float rowHeight, float rowOffset)
     {
         int cur=0;
-        
+
         if (GUI.Button(new Rect(0, rowOffset*cur, panelWidth*0.95f, rowHeight), localizationBack, currentItem==cur ? menuSelectedItemStyle : menuItemStyle))
         {
             selectItem(cur);
@@ -226,7 +226,7 @@ public class Options : MonoBehaviour
     }
 
     private void controlItem(int index)
-    {        
+    {
         switch(currentState)
         {
             case State.InOptionsList:     controlItemInOptionsList    (index); break;
@@ -244,13 +244,13 @@ public class Options : MonoBehaviour
     {
         // Nothing
     }
-    
+
     private void controlItemInGameOptions(int index)
     {
         switch(index)
         {
             case 0: languageScroller.control(); break;
-            case 1: 
+            case 1:
                 // Nothing
             break;
             default:
@@ -258,15 +258,15 @@ public class Options : MonoBehaviour
             break;
         }
     }
-    
+
     private void controlItemInSoundOptions(int index)
     {
     }
-    
+
     private void controlItemInVideoOptions(int index)
     {
     }
-    
+
     private void controlItemInControlsOptions(int index)
     {
     }
@@ -327,7 +327,7 @@ public class Options : MonoBehaviour
         if (currentState==State.InOptionsList)
         {
             Debug.Log("Go to game menu");
-            
+
             SceneManager.LoadScene("GameMenu");
         }
         else
@@ -348,7 +348,7 @@ public class Options : MonoBehaviour
     private void goToOptionsList(int index)
     {
         Debug.Log("Go to options list");
-        
+
         scrollPosition = Vector2.zero;
         currentState   = State.InOptionsList;
         currentItem    = index;
@@ -358,7 +358,7 @@ public class Options : MonoBehaviour
     private void goToGameOptions()
     {
         Debug.Log("Go to game options");
-        
+
         scrollPosition = Vector2.zero;
         currentState   = State.InGameOptions;
         currentItem    = 0;
@@ -368,7 +368,7 @@ public class Options : MonoBehaviour
     private void goToSoundOptions()
     {
         Debug.Log("Go to sound options");
-        
+
         scrollPosition = Vector2.zero;
         currentState   = State.InSoundOptions;
         currentItem    = 0;
@@ -378,7 +378,7 @@ public class Options : MonoBehaviour
     private void goToVideoOptions()
     {
         Debug.Log("Go to video options");
-        
+
         scrollPosition = Vector2.zero;
         currentState   = State.InVideoOptions;
         currentItem    = 0;
@@ -388,7 +388,7 @@ public class Options : MonoBehaviour
     private void goToControlsOptions()
     {
         Debug.Log("Go to controls options");
-        
+
         scrollPosition = Vector2.zero;
         currentState   = State.InControlsOptions;
         currentItem    = 0;

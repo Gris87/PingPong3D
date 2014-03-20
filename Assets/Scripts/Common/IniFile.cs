@@ -10,7 +10,7 @@ public class IniFile
     private ArrayList mKeys;
     private ArrayList mValues;
     private ArrayList mComments;
-    
+
     /// <summary>
     /// Create a new instance of <see cref="IniFile"/>.
     /// </summary>
@@ -18,7 +18,7 @@ public class IniFile
     {
         init();
     }
-    
+
     /// <summary>
     /// Create a new instance of <see cref="IniFile"/> and load file.
     /// </summary>
@@ -48,7 +48,7 @@ public class IniFile
     {
         Set(key, value, "");
     }
-    
+
     /// <summary>
     /// Set value of property and add comment. It will create new property if absent.
     /// </summary>
@@ -67,12 +67,12 @@ public class IniFile
                 return;
             }
         }
-            
+
         mKeys.Add    (key);
         mValues.Add  (value);
         mComments.Add(comment);
     }
-    
+
     /// <summary>
     /// Returns the value of property.
     /// </summary>
@@ -89,7 +89,7 @@ public class IniFile
 
         return "";
     }
-    
+
     /// <summary>
     /// Remove property by name.
     /// </summary>
@@ -108,7 +108,7 @@ public class IniFile
             }
         }
     }
-    
+
     /// <summary>
     /// Save properties to file.
     /// </summary>
@@ -116,7 +116,7 @@ public class IniFile
     public void save(string fileName)
     {
         StreamWriter stream=new StreamWriter(Application.dataPath+"/"+fileName+".ini");
-        
+
         for (int i=0; i<mKeys.Count; ++i)
         {
             if (mComments[i]!="")
@@ -126,10 +126,10 @@ public class IniFile
 
             stream.WriteLine(mKeys[i]+"="+mValues[i]);
         }
-            
+
         stream.Close();
     }
-    
+
     /// <summary>
     /// Load properties from file.
     /// </summary>
@@ -139,10 +139,10 @@ public class IniFile
         mKeys.Clear();
         mValues.Clear();
         mComments.Clear();
-        
+
         string line="";
         string currentComment="";
-            
+
         try
         {
             StreamReader stream=new StreamReader(Application.dataPath+"/"+fileName+".ini");
@@ -156,7 +156,7 @@ public class IniFile
                 else
                 {
                     int index=line.IndexOf("=");
-                    
+
                     if (index>0)
                     {
                         Set(line.Substring(0, index), line.Substring(index+1), currentComment);
@@ -173,7 +173,7 @@ public class IniFile
             Debug.LogWarning(e);
         }
     }
-    
+
     /// <summary>
     /// Amount of properties.
     /// </summary>

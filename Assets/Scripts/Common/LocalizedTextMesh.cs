@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 public class LocalizedTextMesh : MonoBehaviour
@@ -7,8 +7,8 @@ public class LocalizedTextMesh : MonoBehaviour
 
     private TextMesh textMesh;
 
-	// Use this for initialization
-	void Start()
+    // Use this for initialization
+    void Start()
     {
         textMesh=GetComponent<TextMesh>();
 
@@ -17,11 +17,11 @@ public class LocalizedTextMesh : MonoBehaviour
             //Subscribe to the change language event
             LanguageManager thisLanguageManager = LanguageManager.Instance;
             thisLanguageManager.OnChangeLanguage += OnChangeLanguage;
-            
+
             //Run the method one first time
             OnChangeLanguage(thisLanguageManager);
         }
-	}	
+    }
 
     void OnChangeLanguage(LanguageManager thisLanguageManager)
     {
