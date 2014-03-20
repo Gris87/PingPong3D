@@ -59,7 +59,7 @@ public class IniFile
     {
         for (int i=0; i<mKeys.Count; ++i)
         {
-            if (mKeys[i]==key)
+            if (mKeys[i].Equals(key))
             {
                 mValues[i]   = value;
                 mComments[i] = comment;
@@ -79,15 +79,25 @@ public class IniFile
     /// <param name="key">Name of property</param>
     public string Get(string key)
     {
+        return Get(key, "");
+    }
+
+    /// <summary>
+    /// Returns the value of property.
+    /// </summary>
+    /// <param name="key">Name of property</param>
+    /// <param name="defaultValue">Default value if property absent</param>
+    public string Get(string key, string defaultValue)
+    {
         for (int i=0; i<mKeys.Count; ++i)
         {
-            if (mKeys[i]==key)
+            if (mKeys[i].Equals(key))
             {
                 return (string)mValues[i];
             }
         }
-
-        return "";
+        
+        return defaultValue;
     }
 
     /// <summary>
@@ -98,7 +108,7 @@ public class IniFile
     {
         for (int i=0; i<mKeys.Count; ++i)
         {
-            if (mKeys[i]==key)
+            if (mKeys[i].Equals(key))
             {
                 mKeys.RemoveAt    (i);
                 mValues.RemoveAt  (i);
@@ -115,19 +125,27 @@ public class IniFile
     /// <param name="fileName">Name of file</param>
     public void save(string fileName)
     {
-        StreamWriter stream=new StreamWriter(Application.dataPath+"/"+fileName+".ini");
-
-        for (int i=0; i<mKeys.Count; ++i)
+        try
         {
-            if (mComments[i]!="")
+            StreamWriter stream=new StreamWriter(Application.persistentDataPath+"/"+fileName+".ini");
+
+            for (int i=0; i<mKeys.Count; ++i)
             {
-                stream.WriteLine("; "+mComments[i]);
+                if (!mComments[i].Equals(""))
+                {
+                    stream.WriteLine("; "+mComments[i]);
+                }
+
+                stream.WriteLine(mKeys[i]+"="+mValues[i]);
             }
 
-            stream.WriteLine(mKeys[i]+"="+mValues[i]);
+            stream.Close();
         }
-
-        stream.Close();
+        catch(IOException e)
+        {
+            Debug.Log("Impossible to save file: "+fileName+".ini");
+            Debug.LogWarning(e);
+        }
     }
 
     /// <summary>
@@ -136,41 +154,44 @@ public class IniFile
     /// <param name="fileName">The file name.</param>
     public void load(string fileName)
     {
-        mKeys.Clear();
-        mValues.Clear();
-        mComments.Clear();
-
-        string line="";
-        string currentComment="";
-
-        try
+        if (File.Exists(Application.persistentDataPath+"/"+fileName+".ini"))
         {
-            StreamReader stream=new StreamReader(Application.dataPath+"/"+fileName+".ini");
-
-            while ((line=stream.ReadLine())!=null)
+            mKeys.Clear();
+            mValues.Clear();
+            mComments.Clear();
+            
+            string line="";
+            string currentComment="";
+            
+            try
             {
-                if (line.StartsWith(";"))
+                StreamReader stream=new StreamReader(Application.persistentDataPath+"/"+fileName+".ini");
+                
+                while ((line=stream.ReadLine())!=null)
                 {
-                    currentComment=line.Substring(1).Trim();
-                }
-                else
-                {
-                    int index=line.IndexOf("=");
-
-                    if (index>0)
+                    if (line.StartsWith(";"))
                     {
-                        Set(line.Substring(0, index), line.Substring(index+1), currentComment);
-                        currentComment="";
+                        currentComment=line.Substring(1).Trim();
+                    }
+                    else
+                    {
+                        int index=line.IndexOf("=");
+                        
+                        if (index>0)
+                        {
+                            Set(line.Substring(0, index), line.Substring(index+1), currentComment);
+                            currentComment="";
+                        }
                     }
                 }
+                
+                stream.Close();
             }
-
-            stream.Close();
-        }
-        catch(IOException e)
-        {
-            Debug.Log("Impossible to open file: "+fileName+".ini");
-            Debug.LogWarning(e);
+            catch(IOException e)
+            {
+                Debug.Log("Impossible to open file: "+fileName+".ini");
+                Debug.LogWarning(e);
+            }
         }
     }
 

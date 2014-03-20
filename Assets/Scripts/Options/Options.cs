@@ -27,7 +27,7 @@ public class Options : MonoBehaviour
     private int   itemsCount;
 
     #region Options
-    private string language;
+    private static string language;
     #endregion
 
     #region Localization
@@ -57,13 +57,19 @@ public class Options : MonoBehaviour
 
         List<CultureInfo> availableLanguages=languageManager.AvailableLanguagesCultureInfo;
         string[] languages=new string[availableLanguages.Count];
+        int languageIndex=0;
 
         for (int i=0; i<availableLanguages.Count; ++i)
         {
             languages[i]=availableLanguages[i].EnglishName;
+
+            if (availableLanguages[i].Name==language)
+            {
+                languageIndex=i;
+            }
         }
 
-        languageScroller=new SelectionScroller(languages, language, scrollerLeftTexture, scrollerRightTexture);
+        languageScroller=new SelectionScroller(languages, languageIndex, scrollerLeftTexture, scrollerRightTexture);
 
 
 
@@ -328,6 +334,8 @@ public class Options : MonoBehaviour
         {
             Debug.Log("Go to game menu");
 
+            save();
+
             SceneManager.LoadScene("GameMenu");
         }
         else
@@ -393,5 +401,30 @@ public class Options : MonoBehaviour
         currentState   = State.InControlsOptions;
         currentItem    = 0;
         itemsCount     = 0;
+    }
+
+    public static void load()
+    {
+        IniFile iniFile=new IniFile("Settings");
+
+        LanguageManager languageManager=LanguageManager.Instance;
+        language=iniFile.Get("Language", languageManager.GetSystemLanguage());
+
+        if (!languageManager.IsLanguageSupported(language))
+        {
+            language="en";
+        }
+
+        Debug.Log("Application language: "+language);
+        languageManager.ChangeLanguage(language);
+    }
+
+    public static void save()
+    {
+        IniFile iniFile=new IniFile("Settings");
+        
+        iniFile.Set("Language", language, "Application language");
+
+        iniFile.save("Settings");
     }
 }

@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public static class Utils : MonoBehaviour
+public static class Utils
 {
     public static bool isTouchDevice=(
                                      Application.platform==RuntimePlatform.Android
