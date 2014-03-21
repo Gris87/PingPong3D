@@ -3,11 +3,11 @@ using System.Collections;
 
 public class SelectionScroller : ModifiableObject
 {
-    private string[]         mItems;
-    private int              mCurrentIndex;
-    private GUIStyle         mLeftArrowStyle;
-    private GUIStyle         mRightArrowStyle;
-    private GUIStyle         centerTextStyle;
+    private string[] mItems;
+    private int      mCurrentIndex;
+    private GUIStyle mLeftArrowStyle;
+    private GUIStyle mRightArrowStyle;
+    private GUIStyle centerTextStyle;
 
     public SelectionScroller(string[] items, string selectedItem, Texture2D leftTexture, Texture2D rightTexture) : base()
     {
