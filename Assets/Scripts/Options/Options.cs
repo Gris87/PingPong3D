@@ -761,16 +761,33 @@ public class Options : MonoBehaviour
 
     public static void save()
     {
+        #region Get available languages
+        List<CultureInfo> availableLanguages=LanguageManager.Instance.AvailableLanguagesCultureInfo;
+        string languagesList="";
+        
+        for (int i=0; i<availableLanguages.Count; ++i)
+        {
+            if (i>0)
+            {
+                languagesList=languagesList+", ";
+            }
+
+            languagesList=languagesList+availableLanguages[i].Name;
+        }
+        #endregion
+
+
+
         IniFile iniFile=new IniFile();
 
         #region Game
-        iniFile.Set("Language", mLanguage, "Application language");
+        iniFile.Set("Language", mLanguage, "Application language: "+languagesList);
         #endregion
 
         #region Sound
-        iniFile.Set("MasterVolume",  mMasterVolume,  "Master volume");
-        iniFile.Set("MusicVolume",   mMusicVolume,   "Music volume");
-        iniFile.Set("EffectsVolume", mEffectsVolume, "Effects volume");
+        iniFile.Set("MasterVolume",  mMasterVolume,  "Master volume: 0-1");
+        iniFile.Set("MusicVolume",   mMusicVolume,   "Music volume: 0-1");
+        iniFile.Set("EffectsVolume", mEffectsVolume, "Effects volume: 0-1");
         #endregion
 
         #region Video
