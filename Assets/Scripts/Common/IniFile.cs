@@ -49,7 +49,7 @@ public class IniFile
     {
         Set(key, value, "");
     }
-    
+
     /// <summary>
     /// Set value of property and add comment. It will create new property if absent.
     /// </summary>
@@ -70,7 +70,7 @@ public class IniFile
     {
         Set(key, value, "");
     }
-    
+
     /// <summary>
     /// Set value of property and add comment. It will create new property if absent.
     /// </summary>
@@ -91,7 +91,7 @@ public class IniFile
     {
         Set(key, value, "");
     }
-    
+
     /// <summary>
     /// Set value of property and add comment. It will create new property if absent.
     /// </summary>
@@ -136,7 +136,7 @@ public class IniFile
         mValues.Add  (value);
         mComments.Add(comment);
     }
-    
+
     /// <summary>
     /// Returns the value of property.
     /// </summary>
@@ -155,7 +155,7 @@ public class IniFile
             return defaultValue;
         }
     }
-    
+
     /// <summary>
     /// Returns the value of property.
     /// </summary>
@@ -164,7 +164,7 @@ public class IniFile
     public float Get(string key, float defaultValue)
     {
         string value=Get(key);
-        
+
         try
         {
             return Convert.ToSingle(value);
@@ -174,7 +174,7 @@ public class IniFile
             return defaultValue;
         }
     }
-    
+
     /// <summary>
     /// Returns the value of property.
     /// </summary>
@@ -183,7 +183,7 @@ public class IniFile
     public double Get(string key, double defaultValue)
     {
         string value=Get(key);
-        
+
         try
         {
             return Convert.ToDouble(value);
@@ -217,7 +217,7 @@ public class IniFile
                 return (string)mValues[i];
             }
         }
-        
+
         return defaultValue;
     }
 
@@ -282,14 +282,14 @@ public class IniFile
             mKeys.Clear();
             mValues.Clear();
             mComments.Clear();
-            
+
             string line="";
             string currentComment="";
-            
+
             try
             {
                 StreamReader stream=new StreamReader(Application.persistentDataPath+"/"+fileName+".ini");
-                
+
                 while ((line=stream.ReadLine())!=null)
                 {
                     if (line.StartsWith(";"))
@@ -299,7 +299,7 @@ public class IniFile
                     else
                     {
                         int index=line.IndexOf("=");
-                        
+
                         if (index>0)
                         {
                             Set(line.Substring(0, index), line.Substring(index+1), currentComment);
@@ -307,7 +307,7 @@ public class IniFile
                         }
                     }
                 }
-                
+
                 stream.Close();
             }
             catch(IOException e)

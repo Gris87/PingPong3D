@@ -1,7 +1,7 @@
 //
 //  CustomResxImporter.cs
 //
-// Creates or rewrites a .txt file for each .resx file in a subfolder called 
+// Creates or rewrites a .txt file for each .resx file in a subfolder called
 // GeneratedAssets whenever the .resx changes
 //
 // Copyright (c) 2013 Niklas Borglund. All rights reserved.
@@ -11,7 +11,7 @@ using UnityEditor;
 using UnityEngine;
 using System.IO;
 
-public class CustomResxImporter : AssetPostprocessor 
+public class CustomResxImporter : AssetPostprocessor
 {
     public static void OnPostprocessAllAssets(string[] importedAssets, string[] deletedAssets, string[] movedAssets, string[] movedFromAssetPaths)
     {
@@ -26,12 +26,12 @@ public class CustomResxImporter : AssetPostprocessor
                 {
                     Directory.CreateDirectory(filePath);
                 }
-				
-				//Delete the file if it already exists
-				if(File.Exists(newFileName))
-				{
-					File.Delete(newFileName);	
-				}
+
+                //Delete the file if it already exists
+                if(File.Exists(newFileName))
+                {
+                    File.Delete(newFileName);
+                }
 
                 StreamReader reader = new StreamReader(asset);
                 string fileData = reader.ReadToEnd();

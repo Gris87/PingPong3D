@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 public class ModifiableObject
@@ -13,7 +13,7 @@ public class ModifiableObject
     }
 
     protected void modificationMade()
-    {        
+    {
         if (mModifiedFunction!=null)
         {
             mModifiedFunction();

@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 public class BigHorizontalSlider : ModifiableObject
@@ -49,7 +49,7 @@ public class BigHorizontalSlider : ModifiableObject
             foreach (Touch touch in Input.touches)
             {
                 Vector2 touchPos=touch.position;
-                
+
                 clickPositions.Add(new Vector2(touchPos.x, Screen.height-touchPos.y));
             }
         }
@@ -69,22 +69,22 @@ public class BigHorizontalSlider : ModifiableObject
         {
             rect.center      = GUIUtility.GUIToScreenPoint(rect.center);
             rangeRect.center = GUIUtility.GUIToScreenPoint(rangeRect.center);
-            
-            
-            
+
+
+
             float curValue=mValue;
-            
+
             for (int i=0; i<clickPositions.Count; ++i)
             {
                 Vector2 clickPos=(Vector2)clickPositions[i];
-                
+
                 if (rect.Contains(clickPos))
                 {
                     setValue(mMinimum+((clickPos.x-rangeRect.x)/rangeRect.width)*(mMaximum-mMinimum));
                     break;
                 }
             }
-            
+
             if (mValue!=curValue)
             {
                 modificationMade();
@@ -119,7 +119,7 @@ public class BigHorizontalSlider : ModifiableObject
                 {
                     mValue=mMaximum;
                 }
-                
+
                 modificationMade();
             }
         }

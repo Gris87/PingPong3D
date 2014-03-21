@@ -77,7 +77,7 @@ public class SelectionScroller : ModifiableObject
         {
             Color tempColor  = GUI.color;
             Color alphaColor = new Color(tempColor.r, tempColor.g, tempColor.b, 0.3f);
-            
+
             GUI.color=alphaColor;
             GUI.DrawTexture(new Rect(rect.xMax-rect.height, rect.y, rect.height, rect.height), mRightArrowStyle.normal.background);
             GUI.color=tempColor;
@@ -118,7 +118,7 @@ public class SelectionScroller : ModifiableObject
     public void setSelectedItem(string item)
     {
         int index=0;
-        
+
         for (int i=0; i<mItems.Length; ++i)
         {
             if (mItems[i].Equals(item))

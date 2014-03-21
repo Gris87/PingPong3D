@@ -232,14 +232,14 @@ public class Options : MonoBehaviour
         float panelHeight = boxHeight*0.98f;
         float rowHeight   = Screen.height*0.1f;
         float rowOffset   = rowHeight+Screen.height*0.025f;
-        
-        
-        
+
+
+
         GUI.BeginGroup(new Rect(Screen.width*0.05f, Screen.height*0.05f, boxWidth, boxHeight));
         GUI.Box(new Rect(0, 0, boxWidth-1, boxHeight-1), "");
-        
+
         scrollPosition=GUI.BeginScrollView(new Rect(boxWidth*0.02f, boxHeight*0.01f, boxWidth*0.96f, panelHeight), scrollPosition, new Rect(0, 0, panelWidth, rowHeight+(itemsCount-1)*rowOffset));
-        
+
         switch(currentState)
         {
             case State.InOptionsList:     drawOptionsList    (panelWidth, panelHeight, rowHeight, rowOffset); break;
@@ -251,9 +251,9 @@ public class Options : MonoBehaviour
                 Debug.LogError("Unknown state");
                 break;
         }
-        
+
         GUI.EndScrollView();
-        
+
         GUI.EndGroup();
     }
 
@@ -343,12 +343,12 @@ public class Options : MonoBehaviour
 
         GUI.Label(new Rect(0, rowOffset*cur, panelWidth*0.4f, rowHeight), localizationMusicVolume,  (!Utils.isTouchDevice && currentItem==cur) ? menuSelectedItemStyle : menuItemStyle);
         musicVolumeSlider.draw(new Rect(panelWidth*0.45f, rowOffset*cur, panelWidth*0.55f, rowHeight));
-        
+
         ++cur;
 
         GUI.Label(new Rect(0, rowOffset*cur, panelWidth*0.4f, rowHeight), localizationEffectsVolume,  (!Utils.isTouchDevice && currentItem==cur) ? menuSelectedItemStyle : menuItemStyle);
         effectsVolumeSlider.draw(new Rect(panelWidth*0.45f, rowOffset*cur, panelWidth*0.55f, rowHeight));
-        
+
         ++cur;
 
         if (drawButton(localizationBack, panelWidth, panelHeight, rowHeight, rowOffset, cur))
@@ -431,7 +431,7 @@ public class Options : MonoBehaviour
                 break;
         }
     }
-    
+
     private void controlItemInVideoOptions(int index)
     {
     }
@@ -537,7 +537,7 @@ public class Options : MonoBehaviour
         else
         {
             Debug.Log("Go to options list");
-            
+
             scrollPosition = Vector2.zero;
             currentState   = State.InOptionsList;
             currentItem    = index;
@@ -595,7 +595,7 @@ public class Options : MonoBehaviour
     {
         modified  = false;
         askSaving = false;
-    
+
         switch(currentState)
         {
             case State.InOptionsList:
@@ -612,7 +612,7 @@ public class Options : MonoBehaviour
 
         save();
     }
-    
+
     private void applyChangesInGameOptions()
     {
         LanguageManager languageManager=LanguageManager.Instance;
@@ -634,18 +634,18 @@ public class Options : MonoBehaviour
             languageManager.ChangeLanguage(mLanguage);
         }
     }
-    
+
     private void applyChangesInSoundOptions()
     {
         mMasterVolume  = masterVolumeSlider.getValue();
         mMusicVolume   = musicVolumeSlider.getValue();
         mEffectsVolume = effectsVolumeSlider.getValue();
     }
-    
+
     private void applyChangesInVideoOptions()
     {
     }
-    
+
     private void applyChangesInControlsOptions()
     {
     }
@@ -654,16 +654,16 @@ public class Options : MonoBehaviour
     {
         List<CultureInfo> availableLanguages=LanguageManager.Instance.AvailableLanguagesCultureInfo;
         int languageIndex=0;
-        
+
         for (int i=0; i<availableLanguages.Count; ++i)
-        {            
+        {
             if (mLanguage.Equals(availableLanguages[i].Name))
             {
                 languageIndex=i;
                 break;
             }
         }
-        
+
         languageScroller.setCurrentIndex(languageIndex);
     }
 

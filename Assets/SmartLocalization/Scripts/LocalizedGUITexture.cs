@@ -7,28 +7,28 @@
 using UnityEngine;
 using System.Collections;
 
-public class LocalizedGUITexture : MonoBehaviour 
+public class LocalizedGUITexture : MonoBehaviour
 {
-	public string localizedKey = "INSERT_KEY_HERE";
-	
-	void Start () 
-	{
-		//Subscribe to the change language event
-		LanguageManager thisLanguageManager = LanguageManager.Instance;
-		thisLanguageManager.OnChangeLanguage += OnChangeLanguage;
-		
-		//Run the method one first time
-		OnChangeLanguage(thisLanguageManager);
+    public string localizedKey = "INSERT_KEY_HERE";
+
+    void Start ()
+    {
+        //Subscribe to the change language event
+        LanguageManager thisLanguageManager = LanguageManager.Instance;
+        thisLanguageManager.OnChangeLanguage += OnChangeLanguage;
+
+        //Run the method one first time
+        OnChangeLanguage(thisLanguageManager);
     }
-    
+
     void OnDestroy()
     {
         LanguageManager.Instance.OnChangeLanguage -= OnChangeLanguage;
     }
-	
-	void OnChangeLanguage(LanguageManager thisLanguageManager)
-	{
-		//Initialize all your language specific variables here
-		this.guiTexture.texture = LanguageManager.Instance.GetTexture(localizedKey);
-	}
+
+    void OnChangeLanguage(LanguageManager thisLanguageManager)
+    {
+        //Initialize all your language specific variables here
+        this.guiTexture.texture = LanguageManager.Instance.GetTexture(localizedKey);
+    }
 }
