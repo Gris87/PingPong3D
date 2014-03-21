@@ -390,12 +390,12 @@ public class Options : MonoBehaviour
     private void drawVideoOptions(float panelWidth, float panelHeight, float rowHeight, float rowOffset)
     {
         int cur=0;
-        
+
         GUI.Label(new Rect(0, rowOffset*cur, panelWidth*0.4f, rowHeight), localizationQuality, (!Utils.isTouchDevice && currentItem==cur) ? menuSelectedItemStyle : menuItemStyle);
         qualityScroller.draw(new Rect(panelWidth*0.45f, rowOffset*cur, panelWidth*0.55f, rowHeight));
-        
+
         ++cur;
-        
+
         if (drawButton(localizationBack, panelWidth, panelHeight, rowHeight, rowOffset, cur))
         {
             selectItem(cur);
@@ -480,7 +480,7 @@ public class Options : MonoBehaviour
                 break;
         }
     }
-    
+
     private void controlItemInControlsOptions(int index)
     {
     }
@@ -764,7 +764,7 @@ public class Options : MonoBehaviour
         #region Get available languages
         List<CultureInfo> availableLanguages=LanguageManager.Instance.AvailableLanguagesCultureInfo;
         string languagesList="";
-        
+
         for (int i=0; i<availableLanguages.Count; ++i)
         {
             if (i>0)

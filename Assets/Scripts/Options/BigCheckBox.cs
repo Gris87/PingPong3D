@@ -1,10 +1,10 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 public class BigCheckBox : ModifiableObject
 {
     private bool mChecked;
-    
+
     public BigCheckBox() : base()
     {
         mChecked=false;
@@ -27,9 +27,9 @@ public class BigCheckBox : ModifiableObject
     {
         return mChecked;
     }
-    
+
     public void setChecked(bool value)
-    {        
+    {
         mChecked=value;
     }
 }
