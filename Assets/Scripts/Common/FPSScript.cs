@@ -7,7 +7,7 @@ public class FPSScript : MonoBehaviour
 
     private GUIStyle textStyle = null;
 
-    private static float nextSecond = Time.time;
+    private static float nextSecond = 0;
     private static int fpsCurrent   = 0;
     private static int fpsTotal     = 0;
 
