@@ -157,6 +157,7 @@
   <data name="OptionsScene.OK" xml:space="preserve"><value>OK</value></data>
   <data name="OptionsScene.Quality" xml:space="preserve"><value>Quality</value></data>
   <data name="OptionsScene.SettingsChanged" xml:space="preserve"><value>Settings changed</value></data>
+  <data name="OptionsScene.ShowFPS" xml:space="preserve"><value>Show FPS</value></data>
   <data name="OptionsScene.Simple" xml:space="preserve"><value>Simple</value></data>
   <data name="OptionsScene.Sound" xml:space="preserve"><value>Sound</value></data>
   <data name="OptionsScene.Video" xml:space="preserve"><value>Video</value></data>

@@ -18,6 +18,8 @@ public class Options : MonoBehaviour
     public GUIStyle  menuSelectedItemStyle;
     public Texture2D scrollerLeftTexture;
     public Texture2D scrollerRightTexture;
+    public Texture2D checkboxOnTexture;
+    public Texture2D checkboxOffTexture;
 
     private Vector2             scrollPosition;
     private SelectionScroller   languageScroller;
@@ -25,6 +27,7 @@ public class Options : MonoBehaviour
     private BigHorizontalSlider musicVolumeSlider;
     private BigHorizontalSlider effectsVolumeSlider;
     private SelectionScroller   qualityScroller;
+    private BigCheckBox         showFPSCheckBox;
     private Rect                saveDialogRect;
     private GUIStyle            saveTextStyle;
 
@@ -91,6 +94,17 @@ public class Options : MonoBehaviour
     }
     #endregion
 
+    #region Show FPS
+    private static bool mShowFPS=false;
+    public static bool showFPS
+    {
+        get
+        {
+            return mShowFPS;
+        }
+    }
+    #endregion
+
     #endregion
 
     #region Localization
@@ -104,6 +118,7 @@ public class Options : MonoBehaviour
     private string localizationMusicVolume;
     private string localizationEffectsVolume;
     private string localizationQuality;
+    private string localizationShowFPS;
     private string localizationSettingsChanged;
     private string localizationDoYouWantToSaveChanges;
     private string localizationOK;
@@ -149,6 +164,9 @@ public class Options : MonoBehaviour
         #region Video
         qualityScroller=new SelectionScroller(null, 0, scrollerLeftTexture, scrollerRightTexture);
         qualityScroller.setModifiedFunction(settingsModified);
+
+        showFPSCheckBox=new BigCheckBox(checkboxOnTexture, checkboxOffTexture);
+        showFPSCheckBox.setModifiedFunction(settingsModified);
         #endregion
 
         #region Localization
@@ -176,6 +194,7 @@ public class Options : MonoBehaviour
         localizationMusicVolume            = languageManager.GetTextValue("OptionsScene.MusicVolume");
         localizationEffectsVolume          = languageManager.GetTextValue("OptionsScene.EffectsVolume");
         localizationQuality                = languageManager.GetTextValue("OptionsScene.Quality");
+        localizationShowFPS                = languageManager.GetTextValue("OptionsScene.ShowFPS");
         localizationSettingsChanged        = languageManager.GetTextValue("OptionsScene.SettingsChanged");
         localizationDoYouWantToSaveChanges = languageManager.GetTextValue("OptionsScene.DoYouWantToSaveChanges");
         localizationOK                     = languageManager.GetTextValue("OptionsScene.OK");
@@ -279,7 +298,7 @@ public class Options : MonoBehaviour
             case State.InControlsOptions: drawControlsOptions(panelWidth, panelHeight, rowHeight, rowOffset); break;
             default:
                 Debug.LogError("Unknown state");
-                break;
+            break;
         }
 
         GUI.EndScrollView();
@@ -396,6 +415,11 @@ public class Options : MonoBehaviour
 
         ++cur;
 
+        GUI.Label(new Rect(0, rowOffset*cur, panelWidth*0.4f, rowHeight), localizationShowFPS, (!Utils.isTouchDevice && currentItem==cur) ? menuSelectedItemStyle : menuItemStyle);
+        showFPSCheckBox.draw(new Rect(panelWidth*0.45f, rowOffset*cur, panelWidth*0.55f, rowHeight));
+        
+        ++cur;
+
         if (drawButton(localizationBack, panelWidth, panelHeight, rowHeight, rowOffset, cur))
         {
             selectItem(cur);
@@ -460,10 +484,10 @@ public class Options : MonoBehaviour
             case 2: effectsVolumeSlider.control(); break;
             case 3:
                 // Nothing
-                break;
+            break;
             default:
                 Debug.LogError("Don't know how to handle it");
-                break;
+            break;
         }
     }
 
@@ -472,12 +496,13 @@ public class Options : MonoBehaviour
         switch(index)
         {
             case 0: qualityScroller.control(); break;
-            case 1:
+            case 1: showFPSCheckBox.control(); break;
+            case 2:
                 // Nothing
-                break;
+            break;
             default:
                 Debug.LogError("Don't know how to handle it");
-                break;
+            break;
         }
     }
 
@@ -532,9 +557,21 @@ public class Options : MonoBehaviour
 
     private void selectItemInVideoOptions(int index)
     {
-        // Nothing
+        switch(index)
+        {
+            case 0: 
+                // Nothing
+            break;
+            case 1: 
+                showFPSCheckBox.setChecked(!showFPSCheckBox.isChecked());
+                modified=true;
+            break;
+            default:
+                Debug.LogError("Don't know how to handle it");
+            break;
+        }
     }
-
+    
     private void selectItemInControlsOptions(int index)
     {
     }
@@ -624,9 +661,10 @@ public class Options : MonoBehaviour
         scrollPosition = Vector2.zero;
         currentState   = State.InVideoOptions;
         currentItem    = 0;
-        itemsCount     = 2;
+        itemsCount     = 3;
 
         qualityScroller.setCurrentIndex(mQuality);
+        showFPSCheckBox.setChecked(mShowFPS);
     }
 
     private void goToControlsOptions()
@@ -699,6 +737,14 @@ public class Options : MonoBehaviour
             mQuality=qualityIndex;
             QualitySettings.SetQualityLevel(mQuality);
         }
+
+        bool aShowFPS=showFPSCheckBox.isChecked();
+
+        if (mShowFPS!=aShowFPS)
+        {
+            mShowFPS=aShowFPS;
+            // TODO: Show/Hide FPS
+        }
     }
 
     private void applyChangesInControlsOptions()
@@ -753,9 +799,12 @@ public class Options : MonoBehaviour
 
         #region Video
         mQuality=iniFile.Get("Quality", QualitySettings.GetQualityLevel());
+        mShowFPS=iniFile.Get("ShowFPS", false);
 
         Debug.Log("Video quality:  "+mQuality.ToString());
         QualitySettings.SetQualityLevel(mQuality);
+        
+        Debug.Log("Show FPS:       "+mShowFPS.ToString());
         #endregion
     }
 
@@ -792,6 +841,7 @@ public class Options : MonoBehaviour
 
         #region Video
         iniFile.Set("Quality", mQuality, "Video quality: 0-"+QualitySettings.names.Length.ToString());
+        iniFile.Set("ShowFPS", mShowFPS, "Show FPS: True/False");
         #endregion
 
         iniFile.save("Settings");

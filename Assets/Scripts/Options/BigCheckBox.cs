@@ -3,15 +3,27 @@ using System.Collections;
 
 public class BigCheckBox : ModifiableObject
 {
-    private bool mChecked;
+    private bool     mChecked;
+    private GUIStyle mOnStyle;
+    private GUIStyle mOffStyle;
 
-    public BigCheckBox() : base()
+    public BigCheckBox(Texture2D onTexture, Texture2D offTexture) : base()
     {
-        mChecked=false;
+        mChecked  = false;
+        mOnStyle  = new GUIStyle();
+        mOffStyle = new GUIStyle();
+        
+        mOnStyle.normal.background  = onTexture;
+        mOffStyle.normal.background = offTexture;
     }
 
     public void draw(Rect rect)
     {
+        if (GUI.Button(new Rect(rect.x, rect.y, rect.height, rect.height), "", mChecked ? mOnStyle : mOffStyle))
+        {
+            mChecked=!mChecked;
+            modificationMade();
+        }
     }
 
     public void control()

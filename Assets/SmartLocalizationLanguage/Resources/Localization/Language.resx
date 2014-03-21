@@ -161,4 +161,5 @@
   <data name="OptionsScene.Sound" xml:space="preserve"><value>Sound</value></data>
   <data name="OptionsScene.Video" xml:space="preserve"><value>Video</value></data>
   <data name="SplashScene.Loading" xml:space="preserve"><value>Loading...</value></data>
+  <data name="OptionsScene.ShowFPS" xml:space="preserve"><value>Show FPS</value></data>
 </root>

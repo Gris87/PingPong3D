@@ -287,3 +287,5 @@ MonoBehaviour:
   scrollerLeftTexture: {fileID: 2800000, guid: 31ee8adecd6e38c46a1d5b3a640e18af, type: 3}
   scrollerRightTexture: {fileID: 2800000, guid: 4863ce4750915024390ec89ab49d08ec,
     type: 3}
+  checkboxOnTexture: {fileID: 2800000, guid: bea306b710a400e4ebc04acc6fe0770a, type: 3}
+  checkboxOffTexture: {fileID: 2800000, guid: 224421ced5f60f04da49cdcb15279f48, type: 3}
