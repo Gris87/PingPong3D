@@ -114,4 +114,51 @@
   </resheader>
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </resheader><data name="GameMenu.2Players" xml:space="preserve"><value>2 Игрока</value></data><data name="GameMenu.Client" xml:space="preserve"><value>Клиент</value></data><data name="GameMenu.Easy" xml:space="preserve"><value>Легко</value></data><data name="GameMenu.Hard" xml:space="preserve"><value>Трудно</value></data><data name="GameMenu.Multiplayer" xml:space="preserve"><value>Мультиплеер</value></data><data name="GameMenu.NewGame" xml:space="preserve"><value>Новая Игра</value></data><data name="GameMenu.Normal" xml:space="preserve"><value>Нормально</value></data><data name="GameMenu.Options" xml:space="preserve"><value>Настройки</value></data><data name="GameMenu.Quit" xml:space="preserve"><value>Выход</value></data><data name="GameMenu.Server" xml:space="preserve"><value>Сервер</value></data><data name="MainScene.GameMenu" xml:space="preserve"><value>Меню</value></data><data name="MainScene.GameOver" xml:space="preserve"><value>ИГРА ОКОНЧЕНА</value></data><data name="MainScene.Restart" xml:space="preserve"><value>Перезапуск</value></data><data name="NetworkScene.Back" xml:space="preserve"><value>Назад</value></data><data name="NetworkScene.Cancel" xml:space="preserve"><value>Отмена</value></data><data name="NetworkScene.Connect" xml:space="preserve"><value>Подключиться</value></data><data name="NetworkScene.FailedToJoin" xml:space="preserve"><value>Не получилось подключиться</value></data><data name="NetworkScene.ImpossibleToStartServer" xml:space="preserve"><value>Невозможно создать сервер</value></data><data name="NetworkScene.InitializingServer" xml:space="preserve"><value>Инициализация сервера</value></data><data name="NetworkScene.Joining" xml:space="preserve"><value>Подключение...</value></data><data name="NetworkScene.NothingFound" xml:space="preserve"><value>Ничего не найдено</value></data><data name="NetworkScene.Refresh" xml:space="preserve"><value>Обновить</value></data><data name="NetworkScene.Refreshing" xml:space="preserve"><value>Обновление...</value></data><data name="NetworkScene.RegisteringServer" xml:space="preserve"><value>Регистрация сервера</value></data><data name="NetworkScene.WaitingForOpponent" xml:space="preserve"><value>Ожидание соперника...</value></data><data name="OptionsScene.Back" xml:space="preserve"><value>Назад</value></data><data name="OptionsScene.Beautiful" xml:space="preserve"><value>Красиво</value></data><data name="OptionsScene.Cancel" xml:space="preserve"><value>Отмена</value></data><data name="OptionsScene.Controls" xml:space="preserve"><value>Управление</value></data><data name="OptionsScene.DoYouWantToSaveChanges" xml:space="preserve"><value>Вы хотите сохранить изменения?</value></data><data name="OptionsScene.EffectsVolume" xml:space="preserve"><value>Громкость эффектов</value></data><data name="OptionsScene.Fantastic" xml:space="preserve"><value>Фантастика</value></data><data name="OptionsScene.Fast" xml:space="preserve"><value>Быстрое</value></data><data name="OptionsScene.Fastest" xml:space="preserve"><value>Наибыстрейшее</value></data><data name="OptionsScene.Game" xml:space="preserve"><value>Игра</value></data><data name="OptionsScene.Good" xml:space="preserve"><value>Хорошее</value></data><data name="OptionsScene.Language" xml:space="preserve"><value>Язык</value></data><data name="OptionsScene.MasterVolume" xml:space="preserve"><value>Общая громкость</value></data><data name="OptionsScene.MusicVolume" xml:space="preserve"><value>Громкость музыки</value></data><data name="OptionsScene.OK" xml:space="preserve"><value>OK</value></data><data name="OptionsScene.Quality" xml:space="preserve"><value>Качество</value></data><data name="OptionsScene.SettingsChanged" xml:space="preserve"><value>Настройки изменены</value></data><data name="OptionsScene.Simple" xml:space="preserve"><value>Простое</value></data><data name="OptionsScene.Sound" xml:space="preserve"><value>Звук</value></data><data name="OptionsScene.Video" xml:space="preserve"><value>Видео</value></data><data name="SplashScene.Loading" xml:space="preserve"><value>Загрузка...</value></data></root>
+  </resheader>
+  <data name="GameMenu.2Players" xml:space="preserve"><value>2 Игрока</value></data>
+  <data name="GameMenu.Client" xml:space="preserve"><value>Клиент</value></data>
+  <data name="GameMenu.Easy" xml:space="preserve"><value>Легко</value></data>
+  <data name="GameMenu.Hard" xml:space="preserve"><value>Трудно</value></data>
+  <data name="GameMenu.Multiplayer" xml:space="preserve"><value>Мультиплеер</value></data>
+  <data name="GameMenu.NewGame" xml:space="preserve"><value>Новая Игра</value></data>
+  <data name="GameMenu.Normal" xml:space="preserve"><value>Нормально</value></data>
+  <data name="GameMenu.Options" xml:space="preserve"><value>Настройки</value></data>
+  <data name="GameMenu.Quit" xml:space="preserve"><value>Выход</value></data>
+  <data name="GameMenu.Server" xml:space="preserve"><value>Сервер</value></data>
+  <data name="MainScene.GameMenu" xml:space="preserve"><value>Меню</value></data>
+  <data name="MainScene.GameOver" xml:space="preserve"><value>ИГРА ОКОНЧЕНА</value></data>
+  <data name="MainScene.Restart" xml:space="preserve"><value>Перезапуск</value></data>
+  <data name="NetworkScene.Back" xml:space="preserve"><value>Назад</value></data>
+  <data name="NetworkScene.Cancel" xml:space="preserve"><value>Отмена</value></data>
+  <data name="NetworkScene.Connect" xml:space="preserve"><value>Подключиться</value></data>
+  <data name="NetworkScene.FailedToJoin" xml:space="preserve"><value>Не получилось подключиться</value></data>
+  <data name="NetworkScene.ImpossibleToStartServer" xml:space="preserve"><value>Невозможно создать сервер</value></data>
+  <data name="NetworkScene.InitializingServer" xml:space="preserve"><value>Инициализация сервера</value></data>
+  <data name="NetworkScene.Joining" xml:space="preserve"><value>Подключение...</value></data>
+  <data name="NetworkScene.NothingFound" xml:space="preserve"><value>Ничего не найдено</value></data>
+  <data name="NetworkScene.Refresh" xml:space="preserve"><value>Обновить</value></data>
+  <data name="NetworkScene.Refreshing" xml:space="preserve"><value>Обновление...</value></data>
+  <data name="NetworkScene.RegisteringServer" xml:space="preserve"><value>Регистрация сервера</value></data>
+  <data name="NetworkScene.WaitingForOpponent" xml:space="preserve"><value>Ожидание соперника...</value></data>
+  <data name="OptionsScene.Back" xml:space="preserve"><value>Назад</value></data>
+  <data name="OptionsScene.Beautiful" xml:space="preserve"><value>Красиво</value></data>
+  <data name="OptionsScene.Cancel" xml:space="preserve"><value>Отмена</value></data>
+  <data name="OptionsScene.Controls" xml:space="preserve"><value>Управление</value></data>
+  <data name="OptionsScene.DoYouWantToSaveChanges" xml:space="preserve"><value>Вы хотите сохранить изменения?</value></data>
+  <data name="OptionsScene.EffectsVolume" xml:space="preserve"><value>Громкость эффектов</value></data>
+  <data name="OptionsScene.Fantastic" xml:space="preserve"><value>Фантастика</value></data>
+  <data name="OptionsScene.Fast" xml:space="preserve"><value>Быстрое</value></data>
+  <data name="OptionsScene.Fastest" xml:space="preserve"><value>Наибыстрейшее</value></data>
+  <data name="OptionsScene.Game" xml:space="preserve"><value>Игра</value></data>
+  <data name="OptionsScene.Good" xml:space="preserve"><value>Хорошее</value></data>
+  <data name="OptionsScene.Language" xml:space="preserve"><value>Язык</value></data>
+  <data name="OptionsScene.MasterVolume" xml:space="preserve"><value>Общая громкость</value></data>
+  <data name="OptionsScene.MusicVolume" xml:space="preserve"><value>Громкость музыки</value></data>
+  <data name="OptionsScene.OK" xml:space="preserve"><value>OK</value></data>
+  <data name="OptionsScene.Quality" xml:space="preserve"><value>Качество</value></data>
+  <data name="OptionsScene.SettingsChanged" xml:space="preserve"><value>Настройки изменены</value></data>
+  <data name="OptionsScene.Simple" xml:space="preserve"><value>Простое</value></data>
+  <data name="OptionsScene.Sound" xml:space="preserve"><value>Звук</value></data>
+  <data name="OptionsScene.Video" xml:space="preserve"><value>Видео</value></data>
+  <data name="SplashScene.Loading" xml:space="preserve"><value>Загрузка...</value></data>
+</root>

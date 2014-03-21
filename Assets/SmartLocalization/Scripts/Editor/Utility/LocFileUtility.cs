@@ -329,6 +329,7 @@ public class LocFileUtility
         //Copy the keys over to the new language
         foreach(KeyValuePair<string, string> keyPair in languageValueDictionary)
         {
+            xmlWriter.WriteRaw("\n  ");
             xmlWriter.WriteStartElement("data");
             xmlWriter.WriteAttributeString("name", keyPair.Key);
             xmlWriter.WriteAttributeString("xml:space", "preserve");
@@ -338,6 +339,7 @@ public class LocFileUtility
             xmlWriter.WriteEndElement(); //data
         }
 
+        xmlWriter.WriteRaw("\n");
         xmlWriter.WriteEndElement(); //root
         xmlWriter.WriteEndDocument();
 
