@@ -1,37 +1,33 @@
 using UnityEngine;
 using System.Collections;
 
-public class SelectionScroller
+public class SelectionScroller : ModifiableObject
 {
-    public delegate void ModifiedFunction();
-
     private string[]         mItems;
     private int              mCurrentIndex;
-    private ModifiedFunction mModifiedFunction;
     private GUIStyle         mLeftArrowStyle;
     private GUIStyle         mRightArrowStyle;
     private GUIStyle         centerTextStyle;
 
-    public SelectionScroller(string[] items, string selectedItem, ModifiedFunction modifiedFunction, Texture2D leftTexture, Texture2D rightTexture)
+    public SelectionScroller(string[] items, string selectedItem, Texture2D leftTexture, Texture2D rightTexture) : base()
     {
-        init(items, 0, modifiedFunction, leftTexture, rightTexture);
+        init(items, 0, leftTexture, rightTexture);
 
         setSelectedItem(selectedItem);
     }
 
-    public SelectionScroller(string[] items, int selectedItem, ModifiedFunction modifiedFunction, Texture2D leftTexture, Texture2D rightTexture)
+    public SelectionScroller(string[] items, int selectedItem, Texture2D leftTexture, Texture2D rightTexture) : base()
     {
-        init(items, selectedItem, modifiedFunction, leftTexture, rightTexture);
+        init(items, selectedItem, leftTexture, rightTexture);
     }
 
-    public void init(string[] items, int selectedItem, ModifiedFunction modifiedFunction, Texture2D leftTexture, Texture2D rightTexture)
+    public void init(string[] items, int selectedItem, Texture2D leftTexture, Texture2D rightTexture)
     {
-        mItems            = items;
-        mCurrentIndex     = selectedItem;
-        mModifiedFunction = modifiedFunction;
-        mLeftArrowStyle   = new GUIStyle();
-        mRightArrowStyle  = new GUIStyle();
-        centerTextStyle   = new GUIStyle();
+        mItems           = items;
+        mCurrentIndex    = selectedItem;
+        mLeftArrowStyle  = new GUIStyle();
+        mRightArrowStyle = new GUIStyle();
+        centerTextStyle  = new GUIStyle();
 
         mLeftArrowStyle.normal.background  = leftTexture;
         mRightArrowStyle.normal.background = rightTexture;
@@ -51,6 +47,15 @@ public class SelectionScroller
                 modificationMade();
             }
         }
+        else
+        {
+            Color tempColor  = GUI.color;
+            Color alphaColor = new Color(tempColor.r, tempColor.g, tempColor.b, 0.3f);
+
+            GUI.color=alphaColor;
+            GUI.DrawTexture(new Rect(rect.x, rect.y, rect.height, rect.height), mLeftArrowStyle.normal.background);
+            GUI.color=tempColor;
+        }
 
         if (mCurrentIndex>=0 && mCurrentIndex<mItems.Length)
         {
@@ -67,6 +72,15 @@ public class SelectionScroller
                 ++mCurrentIndex;
                 modificationMade();
             }
+        }
+        else
+        {
+            Color tempColor  = GUI.color;
+            Color alphaColor = new Color(tempColor.r, tempColor.g, tempColor.b, 0.3f);
+            
+            GUI.color=alphaColor;
+            GUI.DrawTexture(new Rect(rect.xMax-rect.height, rect.y, rect.height, rect.height), mRightArrowStyle.normal.background);
+            GUI.color=tempColor;
         }
     }
 
@@ -88,14 +102,6 @@ public class SelectionScroller
                 ++mCurrentIndex;
                 modificationMade();
             }
-        }
-    }
-
-    private void modificationMade()
-    {        
-        if (mModifiedFunction!=null)
-        {
-            mModifiedFunction();
         }
     }
 

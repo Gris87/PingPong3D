@@ -124,7 +124,8 @@ public class Options : MonoBehaviour
             languages[i]=availableLanguages[i].EnglishName;
         }
 
-        languageScroller=new SelectionScroller(languages, 0, settingsModified, scrollerLeftTexture, scrollerRightTexture);
+        languageScroller=new SelectionScroller(languages, 0, scrollerLeftTexture, scrollerRightTexture);
+        languageScroller.setModifiedFunction(settingsModified);
 
 
 
