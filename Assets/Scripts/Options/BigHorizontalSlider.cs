@@ -14,7 +14,6 @@ public class BigHorizontalSlider : ModifiableObject
         if (mValueTexture==null)
         {
             mValueTexture=new Texture2D(1, 1);
-            mValueTexture.SetPixel(0, 0, Color.green);
         }
 
         if (minimum<maximum)
@@ -36,8 +35,11 @@ public class BigHorizontalSlider : ModifiableObject
         GUI.Box(rect, "");
 
         Rect rangeRect=new Rect(rect.x+rect.width*0.02f, rect.y+rect.height*0.1f, rect.width*0.96f, rect.height*0.8f);
-        GUI.DrawTexture(new Rect(rangeRect.x, rangeRect.y, rangeRect.width*(mValue-mMinimum)/(mMaximum-mMinimum), rangeRect.height), mValueTexture);
 
+        Color tempColor=GUI.color;
+        GUI.color=Color.green;
+        GUI.DrawTexture(new Rect(rangeRect.x, rangeRect.y, rangeRect.width*(mValue-mMinimum)/(mMaximum-mMinimum), rangeRect.height), mValueTexture);
+        GUI.color=tempColor;
 
 
         ArrayList clickPositions=new ArrayList();
@@ -46,7 +48,9 @@ public class BigHorizontalSlider : ModifiableObject
         {
             foreach (Touch touch in Input.touches)
             {
-                clickPositions.Add(touch.position);
+                Vector2 touchPos=touch.position;
+                
+                clickPositions.Add(new Vector2(touchPos.x, Screen.height-touchPos.y));
             }
         }
         else
