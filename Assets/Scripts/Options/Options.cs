@@ -19,21 +19,22 @@ public class Options : MonoBehaviour
     public Texture2D scrollerLeftTexture;
     public Texture2D scrollerRightTexture;
 
-    private Vector2           scrollPosition;
-    private SelectionScroller languageScroller;
-    private Rect              saveDialogRect;
-    private GUIStyle          saveTextStyle;
+    private Vector2             scrollPosition;
+    private SelectionScroller   languageScroller;
+    private BigHorizontalSlider masterVolumeSlider;
+    private BigHorizontalSlider musicVolumeSlider;
+    private BigHorizontalSlider effectsVolumeSlider;
+    private Rect                saveDialogRect;
+    private GUIStyle            saveTextStyle;
 
     private State currentState;
     private int   currentItem;
     private int   itemsCount;
     private bool  modified;
     private bool  askSaving;
-    private float masterVolumeCur;
-    private float musicVolumeCur;
-    private float effectsVolumeCur;
 
     #region Options
+
     #region Language
     private static string mLanguage="en";
     public static string language
@@ -77,6 +78,7 @@ public class Options : MonoBehaviour
         }
     }
     #endregion
+
     #endregion
 
     #region Localization
@@ -114,8 +116,7 @@ public class Options : MonoBehaviour
         saveTextStyle.normal.textColor=Color.white;
         #endregion
 
-
-
+        #region Game
         List<CultureInfo> availableLanguages=languageManager.AvailableLanguagesCultureInfo;
         string[] languages=new string[availableLanguages.Count];
 
@@ -126,8 +127,17 @@ public class Options : MonoBehaviour
 
         languageScroller=new SelectionScroller(languages, 0, scrollerLeftTexture, scrollerRightTexture);
         languageScroller.setModifiedFunction(settingsModified);
+        #endregion
 
+        #region Sound
+        masterVolumeSlider  = new BigHorizontalSlider(mMasterVolume,  0f, 1f);
+        musicVolumeSlider   = new BigHorizontalSlider(mMusicVolume,   0f, 1f);
+        effectsVolumeSlider = new BigHorizontalSlider(mEffectsVolume, 0f, 1f);
 
+        masterVolumeSlider.setModifiedFunction (settingsModified);
+        musicVolumeSlider.setModifiedFunction  (settingsModified);
+        effectsVolumeSlider.setModifiedFunction(settingsModified);
+        #endregion
 
         modified  = false;
         askSaving = false;
@@ -137,6 +147,7 @@ public class Options : MonoBehaviour
 
     void OnChangeLanguage(LanguageManager languageManager)
     {
+        #region Localization
         localizationGame                   = languageManager.GetTextValue("OptionsScene.Game");
         localizationSound                  = languageManager.GetTextValue("OptionsScene.Sound");
         localizationVideo                  = languageManager.GetTextValue("OptionsScene.Video");
@@ -150,6 +161,7 @@ public class Options : MonoBehaviour
         localizationDoYouWantToSaveChanges = languageManager.GetTextValue("OptionsScene.DoYouWantToSaveChanges");
         localizationOK                     = languageManager.GetTextValue("OptionsScene.OK");
         localizationCancel                 = languageManager.GetTextValue("OptionsScene.Cancel");
+        #endregion
     }
 
     // Update is called once per frame
@@ -160,30 +172,26 @@ public class Options : MonoBehaviour
             goBack();
         }
         else
-        if (!askSaving && !Utils.isTouchDevice && Input.GetKeyDown(KeyCode.UpArrow))
+        if (Input.GetKeyDown(KeyCode.UpArrow))
         {
-            if (currentItem>0)
+            if (!askSaving && currentItem>0)
             {
                 --currentItem;
             }
         }
         else
-        if (!askSaving && !Utils.isTouchDevice && Input.GetKeyDown(KeyCode.DownArrow))
+        if (Input.GetKeyDown(KeyCode.DownArrow))
         {
-            if (currentItem<itemsCount-1)
+            if (!askSaving && currentItem<itemsCount-1)
             {
                 ++currentItem;
             }
         }
         else
         if (
-            !Utils.isTouchDevice
-            &&
-            (
-             Input.GetKeyDown(KeyCode.Return)
-             ||
-             Input.GetKeyDown(KeyCode.KeypadEnter)
-            )
+            Input.GetKeyDown(KeyCode.Return)
+            ||
+            Input.GetKeyDown(KeyCode.KeypadEnter)
            )
         {
             if (askSaving)
@@ -198,7 +206,10 @@ public class Options : MonoBehaviour
         }
         else
         {
-            controlItem(currentItem);
+            if (!askSaving)
+            {
+                controlItem(currentItem);
+            }
         }
     }
 
@@ -325,38 +336,18 @@ public class Options : MonoBehaviour
     {
         int cur=0;
 
-        float temp;
-
         GUI.Label(new Rect(0, rowOffset*cur, panelWidth*0.4f, rowHeight), localizationMasterVolume,  (!Utils.isTouchDevice && currentItem==cur) ? menuSelectedItemStyle : menuItemStyle);
-        temp=GUI.HorizontalSlider(new Rect(panelWidth*0.45f, rowOffset*cur, panelWidth*0.55f, rowHeight), masterVolumeCur, 0, 1);
-
-        if (masterVolumeCur!=temp)
-        {
-            modified=true;
-            masterVolumeCur=temp;
-        }
+        masterVolumeSlider.draw(new Rect(panelWidth*0.45f, rowOffset*cur, panelWidth*0.55f, rowHeight));
 
         ++cur;
 
         GUI.Label(new Rect(0, rowOffset*cur, panelWidth*0.4f, rowHeight), localizationMusicVolume,  (!Utils.isTouchDevice && currentItem==cur) ? menuSelectedItemStyle : menuItemStyle);
-        temp=GUI.HorizontalSlider(new Rect(panelWidth*0.45f, rowOffset*cur, panelWidth*0.55f, rowHeight), musicVolumeCur, 0, 1);
-        
-        if (musicVolumeCur!=temp)
-        {
-            modified=true;
-            musicVolumeCur=temp;
-        }
+        musicVolumeSlider.draw(new Rect(panelWidth*0.45f, rowOffset*cur, panelWidth*0.55f, rowHeight));
         
         ++cur;
 
         GUI.Label(new Rect(0, rowOffset*cur, panelWidth*0.4f, rowHeight), localizationEffectsVolume,  (!Utils.isTouchDevice && currentItem==cur) ? menuSelectedItemStyle : menuItemStyle);
-        temp=GUI.HorizontalSlider(new Rect(panelWidth*0.45f, rowOffset*cur, panelWidth*0.55f, rowHeight), effectsVolumeCur, 0, 1);
-        
-        if (effectsVolumeCur!=temp)
-        {
-            modified=true;
-            effectsVolumeCur=temp;
-        }
+        effectsVolumeSlider.draw(new Rect(panelWidth*0.45f, rowOffset*cur, panelWidth*0.55f, rowHeight));
         
         ++cur;
 
@@ -427,8 +418,20 @@ public class Options : MonoBehaviour
 
     private void controlItemInSoundOptions(int index)
     {
+        switch(index)
+        {
+            case 0: masterVolumeSlider.control();  break;
+            case 1: musicVolumeSlider.control();   break;
+            case 2: effectsVolumeSlider.control(); break;
+            case 3:
+                // Nothing
+                break;
+            default:
+                Debug.LogError("Don't know how to handle it");
+                break;
+        }
     }
-
+    
     private void controlItemInVideoOptions(int index)
     {
     }
@@ -479,6 +482,7 @@ public class Options : MonoBehaviour
 
     private void selectItemInSoundOptions(int index)
     {
+        // Nothing
     }
 
     private void selectItemInVideoOptions(int index)
@@ -560,11 +564,11 @@ public class Options : MonoBehaviour
         scrollPosition = Vector2.zero;
         currentState   = State.InSoundOptions;
         currentItem    = 0;
-        itemsCount     = 0;
+        itemsCount     = 4;
 
-        masterVolumeCur  = mMasterVolume;
-        musicVolumeCur   = mMusicVolume;
-        effectsVolumeCur = mEffectsVolume;
+        masterVolumeSlider.setValue (mMasterVolume);
+        musicVolumeSlider.setValue  (mMusicVolume);
+        effectsVolumeSlider.setValue(mEffectsVolume);
     }
 
     private void goToVideoOptions()
@@ -633,6 +637,9 @@ public class Options : MonoBehaviour
     
     private void applyChangesInSoundOptions()
     {
+        mMasterVolume  = masterVolumeSlider.getValue();
+        mMusicVolume   = musicVolumeSlider.getValue();
+        mEffectsVolume = effectsVolumeSlider.getValue();
     }
     
     private void applyChangesInVideoOptions()
@@ -663,11 +670,10 @@ public class Options : MonoBehaviour
     public static void load()
     {
         Debug.Log("Loading settings");
+
         IniFile iniFile=new IniFile("Settings");
 
-
-
-        // Game
+        #region Game
         LanguageManager languageManager=LanguageManager.Instance;
         mLanguage=iniFile.Get("Language", languageManager.GetSystemLanguage());
 
@@ -678,26 +684,28 @@ public class Options : MonoBehaviour
 
         Debug.Log("Application language: "+mLanguage);
         languageManager.ChangeLanguage(mLanguage);
+        #endregion
 
-
-
-        // Sound
-        mMasterVolume  = iniFile.Get("MasterVolume",  1);
-        mMusicVolume   = iniFile.Get("MusicVolume",   1);
-        mEffectsVolume = iniFile.Get("EffectsVolume", 1);
+        #region Sound
+        mMasterVolume  = iniFile.Get("MasterVolume",  1f);
+        mMusicVolume   = iniFile.Get("MusicVolume",   1f);
+        mEffectsVolume = iniFile.Get("EffectsVolume", 1f);
+        #endregion
     }
 
     public static void save()
     {
-        IniFile iniFile=new IniFile("Settings");
+        IniFile iniFile=new IniFile();
 
-        // Game
+        #region Game
         iniFile.Set("Language", mLanguage, "Application language");
+        #endregion
 
-        // Sound
+        #region Sound
         iniFile.Set("MasterVolume",  mMasterVolume,  "Master volume");
         iniFile.Set("MusicVolume",   mMusicVolume,   "Music volume");
         iniFile.Set("EffectsVolume", mEffectsVolume, "Effects volume");
+        #endregion
 
         iniFile.save("Settings");
     }

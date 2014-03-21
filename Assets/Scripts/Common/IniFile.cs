@@ -246,6 +246,8 @@ public class IniFile
     /// <param name="fileName">Name of file</param>
     public void save(string fileName)
     {
+        Debug.Log("Save properties to file: "+Application.persistentDataPath+"/"+fileName+".ini");
+
         try
         {
             StreamWriter stream=new StreamWriter(Application.persistentDataPath+"/"+fileName+".ini");

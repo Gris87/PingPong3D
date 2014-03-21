@@ -23,6 +23,10 @@ public class BigHorizontalSlider : ModifiableObject
         setValue(value);
     }
 
+    public void draw(Rect rect)
+    {
+    }
+
     public void control()
     {
         if (Input.GetKeyDown(KeyCode.LeftArrow))
