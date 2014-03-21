@@ -87,6 +87,7 @@ GameObject:
   - 124: {fileID: 1370080304}
   - 81: {fileID: 1370080303}
   - 114: {fileID: 1370080308}
+  - 114: {fileID: 1370080309}
   m_Layer: 0
   m_Name: MainCamera
   m_TagString: MainCamera
@@ -289,3 +290,14 @@ MonoBehaviour:
     type: 3}
   checkboxOnTexture: {fileID: 2800000, guid: bea306b710a400e4ebc04acc6fe0770a, type: 3}
   checkboxOffTexture: {fileID: 2800000, guid: 224421ced5f60f04da49cdcb15279f48, type: 3}
+--- !u!114 &1370080309
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1370080302}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 615d7726c192dc5409cb5c3969a066c1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

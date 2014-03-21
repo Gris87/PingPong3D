@@ -946,6 +946,7 @@ GameObject:
   - 23: {fileID: 697319765}
   - 54: {fileID: 697319764}
   - 114: {fileID: 697319762}
+  - 114: {fileID: 697319763}
   m_Layer: 0
   m_Name: Ball
   m_TagString: Untagged
@@ -977,6 +978,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   acceleration: .100000001
   maxSpeed: 20
+--- !u!114 &697319763
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 697319760}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 615d7726c192dc5409cb5c3969a066c1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!54 &697319764
 Rigidbody:
   m_ObjectHideFlags: 0

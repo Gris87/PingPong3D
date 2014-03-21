@@ -743,7 +743,7 @@ public class Options : MonoBehaviour
         if (mShowFPS!=aShowFPS)
         {
             mShowFPS=aShowFPS;
-            // TODO: Show/Hide FPS
+            FPSScript.isOn=mShowFPS;
         }
     }
 
@@ -805,6 +805,7 @@ public class Options : MonoBehaviour
         QualitySettings.SetQualityLevel(mQuality);
         
         Debug.Log("Show FPS:       "+mShowFPS.ToString());
+        FPSScript.isOn=mShowFPS;
         #endregion
     }
 
