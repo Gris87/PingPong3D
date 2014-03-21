@@ -105,6 +105,17 @@ public class SelectionScroller : ModifiableObject
         }
     }
 
+    public string[] getItems()
+    {
+        return mItems;
+    }
+
+    public void setItems(string[] items)
+    {
+        mItems=items;
+        setCurrentIndex(mCurrentIndex);
+    }
+
     public string getSelectedItem()
     {
         if (mCurrentIndex>=0 && mCurrentIndex<mItems.Length)

@@ -24,6 +24,7 @@ public class Options : MonoBehaviour
     private BigHorizontalSlider masterVolumeSlider;
     private BigHorizontalSlider musicVolumeSlider;
     private BigHorizontalSlider effectsVolumeSlider;
+    private SelectionScroller   qualityScroller;
     private Rect                saveDialogRect;
     private GUIStyle            saveTextStyle;
 
@@ -79,6 +80,17 @@ public class Options : MonoBehaviour
     }
     #endregion
 
+    #region Quality
+    private static int mQuality=0;
+    public static int quality
+    {
+        get
+        {
+            return mQuality;
+        }
+    }
+    #endregion
+
     #endregion
 
     #region Localization
@@ -91,6 +103,7 @@ public class Options : MonoBehaviour
     private string localizationMasterVolume;
     private string localizationMusicVolume;
     private string localizationEffectsVolume;
+    private string localizationQuality;
     private string localizationSettingsChanged;
     private string localizationDoYouWantToSaveChanges;
     private string localizationOK;
@@ -100,12 +113,6 @@ public class Options : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        #region Localization
-        LanguageManager languageManager=LanguageManager.Instance;
-        languageManager.OnChangeLanguage+=OnChangeLanguage;
-        OnChangeLanguage(languageManager);
-        #endregion
-
         #region Create text styles
         saveTextStyle=new GUIStyle();
 
@@ -117,7 +124,7 @@ public class Options : MonoBehaviour
         #endregion
 
         #region Game
-        List<CultureInfo> availableLanguages=languageManager.AvailableLanguagesCultureInfo;
+        List<CultureInfo> availableLanguages=LanguageManager.Instance.AvailableLanguagesCultureInfo;
         string[] languages=new string[availableLanguages.Count];
 
         for (int i=0; i<availableLanguages.Count; ++i)
@@ -139,6 +146,17 @@ public class Options : MonoBehaviour
         effectsVolumeSlider.setModifiedFunction(settingsModified);
         #endregion
 
+        #region Video
+        qualityScroller=new SelectionScroller(null, 0, scrollerLeftTexture, scrollerRightTexture);
+        qualityScroller.setModifiedFunction(settingsModified);
+        #endregion
+
+        #region Localization
+        LanguageManager languageManager=LanguageManager.Instance;
+        languageManager.OnChangeLanguage+=OnChangeLanguage;
+        OnChangeLanguage(languageManager);
+        #endregion
+
         modified  = false;
         askSaving = false;
 
@@ -157,10 +175,22 @@ public class Options : MonoBehaviour
         localizationMasterVolume           = languageManager.GetTextValue("OptionsScene.MasterVolume");
         localizationMusicVolume            = languageManager.GetTextValue("OptionsScene.MusicVolume");
         localizationEffectsVolume          = languageManager.GetTextValue("OptionsScene.EffectsVolume");
+        localizationQuality                = languageManager.GetTextValue("OptionsScene.Quality");
         localizationSettingsChanged        = languageManager.GetTextValue("OptionsScene.SettingsChanged");
         localizationDoYouWantToSaveChanges = languageManager.GetTextValue("OptionsScene.DoYouWantToSaveChanges");
         localizationOK                     = languageManager.GetTextValue("OptionsScene.OK");
         localizationCancel                 = languageManager.GetTextValue("OptionsScene.Cancel");
+
+
+
+        string[] qualities=QualitySettings.names;
+
+        for (int i=0; i<qualities.Length; ++i)
+        {
+            qualities[i]                   = languageManager.GetTextValue("OptionsScene."+qualities[i]);
+        }
+
+        qualityScroller.setItems(qualities);
         #endregion
     }
 
@@ -321,7 +351,7 @@ public class Options : MonoBehaviour
     {
         int cur=0;
 
-        GUI.Label(new Rect(0, rowOffset*cur, panelWidth*0.4f, rowHeight), localizationLanguage,  (!Utils.isTouchDevice && currentItem==cur) ? menuSelectedItemStyle : menuItemStyle);
+        GUI.Label(new Rect(0, rowOffset*cur, panelWidth*0.4f, rowHeight), localizationLanguage, (!Utils.isTouchDevice && currentItem==cur) ? menuSelectedItemStyle : menuItemStyle);
         languageScroller.draw(new Rect(panelWidth*0.45f, rowOffset*cur, panelWidth*0.55f, rowHeight));
 
         ++cur;
@@ -336,7 +366,7 @@ public class Options : MonoBehaviour
     {
         int cur=0;
 
-        GUI.Label(new Rect(0, rowOffset*cur, panelWidth*0.4f, rowHeight), localizationMasterVolume,  (!Utils.isTouchDevice && currentItem==cur) ? menuSelectedItemStyle : menuItemStyle);
+        GUI.Label(new Rect(0, rowOffset*cur, panelWidth*0.4f, rowHeight), localizationMasterVolume, (!Utils.isTouchDevice && currentItem==cur) ? menuSelectedItemStyle : menuItemStyle);
         masterVolumeSlider.draw(new Rect(panelWidth*0.45f, rowOffset*cur, panelWidth*0.55f, rowHeight));
 
         ++cur;
@@ -346,7 +376,7 @@ public class Options : MonoBehaviour
 
         ++cur;
 
-        GUI.Label(new Rect(0, rowOffset*cur, panelWidth*0.4f, rowHeight), localizationEffectsVolume,  (!Utils.isTouchDevice && currentItem==cur) ? menuSelectedItemStyle : menuItemStyle);
+        GUI.Label(new Rect(0, rowOffset*cur, panelWidth*0.4f, rowHeight), localizationEffectsVolume, (!Utils.isTouchDevice && currentItem==cur) ? menuSelectedItemStyle : menuItemStyle);
         effectsVolumeSlider.draw(new Rect(panelWidth*0.45f, rowOffset*cur, panelWidth*0.55f, rowHeight));
 
         ++cur;
@@ -360,7 +390,12 @@ public class Options : MonoBehaviour
     private void drawVideoOptions(float panelWidth, float panelHeight, float rowHeight, float rowOffset)
     {
         int cur=0;
-
+        
+        GUI.Label(new Rect(0, rowOffset*cur, panelWidth*0.4f, rowHeight), localizationQuality, (!Utils.isTouchDevice && currentItem==cur) ? menuSelectedItemStyle : menuItemStyle);
+        qualityScroller.draw(new Rect(panelWidth*0.45f, rowOffset*cur, panelWidth*0.55f, rowHeight));
+        
+        ++cur;
+        
         if (drawButton(localizationBack, panelWidth, panelHeight, rowHeight, rowOffset, cur))
         {
             selectItem(cur);
@@ -434,8 +469,18 @@ public class Options : MonoBehaviour
 
     private void controlItemInVideoOptions(int index)
     {
+        switch(index)
+        {
+            case 0: qualityScroller.control(); break;
+            case 1:
+                // Nothing
+                break;
+            default:
+                Debug.LogError("Don't know how to handle it");
+                break;
+        }
     }
-
+    
     private void controlItemInControlsOptions(int index)
     {
     }
@@ -487,6 +532,7 @@ public class Options : MonoBehaviour
 
     private void selectItemInVideoOptions(int index)
     {
+        // Nothing
     }
 
     private void selectItemInControlsOptions(int index)
@@ -578,7 +624,9 @@ public class Options : MonoBehaviour
         scrollPosition = Vector2.zero;
         currentState   = State.InVideoOptions;
         currentItem    = 0;
-        itemsCount     = 0;
+        itemsCount     = 2;
+
+        qualityScroller.setCurrentIndex(mQuality);
     }
 
     private void goToControlsOptions()
@@ -644,6 +692,13 @@ public class Options : MonoBehaviour
 
     private void applyChangesInVideoOptions()
     {
+        int qualityIndex=qualityScroller.getCurrentIndex();
+
+        if (mQuality!=qualityIndex)
+        {
+            mQuality=qualityIndex;
+            QualitySettings.SetQualityLevel(mQuality);
+        }
     }
 
     private void applyChangesInControlsOptions()
@@ -690,6 +745,17 @@ public class Options : MonoBehaviour
         mMasterVolume  = iniFile.Get("MasterVolume",  1f);
         mMusicVolume   = iniFile.Get("MusicVolume",   1f);
         mEffectsVolume = iniFile.Get("EffectsVolume", 1f);
+
+        Debug.Log("Master volume:  "+mMasterVolume.ToString());
+        Debug.Log("Music volume:   "+mMusicVolume.ToString());
+        Debug.Log("Effects volume: "+mEffectsVolume.ToString());
+        #endregion
+
+        #region Video
+        mQuality=iniFile.Get("Quality", QualitySettings.GetQualityLevel());
+
+        Debug.Log("Video quality:  "+mQuality.ToString());
+        QualitySettings.SetQualityLevel(mQuality);
         #endregion
     }
 
@@ -705,6 +771,10 @@ public class Options : MonoBehaviour
         iniFile.Set("MasterVolume",  mMasterVolume,  "Master volume");
         iniFile.Set("MusicVolume",   mMusicVolume,   "Music volume");
         iniFile.Set("EffectsVolume", mEffectsVolume, "Effects volume");
+        #endregion
+
+        #region Video
+        iniFile.Set("Quality", mQuality, "Video quality: 0-"+QualitySettings.names.Length.ToString());
         #endregion
 
         iniFile.save("Settings");
