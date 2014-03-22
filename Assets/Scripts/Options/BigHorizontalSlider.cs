@@ -30,7 +30,7 @@ public class BigHorizontalSlider : ModifiableObject
         setValue(value);
     }
 
-    public void draw(Rect rect)
+    public void draw(Rect rect, bool catchMouseEvents)
     {
         GUI.Box(rect, "");
 
@@ -41,53 +41,55 @@ public class BigHorizontalSlider : ModifiableObject
         GUI.DrawTexture(new Rect(rangeRect.x, rangeRect.y, rangeRect.width*(mValue-mMinimum)/(mMaximum-mMinimum), rangeRect.height), mValueTexture);
         GUI.color=tempColor;
 
-
-        ArrayList clickPositions=new ArrayList();
-
-        if (Utils.isTouchDevice)
+        if (catchMouseEvents)
         {
-            foreach (Touch touch in Input.touches)
+            ArrayList clickPositions=new ArrayList();
+            
+            if (Utils.isTouchDevice)
             {
-                Vector2 touchPos=touch.position;
-
-                clickPositions.Add(new Vector2(touchPos.x, Screen.height-touchPos.y));
-            }
-        }
-        else
-        {
-            if (Input.GetMouseButton(0))
-            {
-                Vector3 mousePos=Input.mousePosition;
-
-                clickPositions.Add(new Vector2(mousePos.x, Screen.height-mousePos.y));
-            }
-        }
-
-
-
-        if (clickPositions.Count>0)
-        {
-            rect.center      = GUIUtility.GUIToScreenPoint(rect.center);
-            rangeRect.center = GUIUtility.GUIToScreenPoint(rangeRect.center);
-
-
-
-            float curValue=mValue;
-
-            for (int i=0; i<clickPositions.Count; ++i)
-            {
-                Vector2 clickPos=(Vector2)clickPositions[i];
-
-                if (rect.Contains(clickPos))
+                foreach (Touch touch in Input.touches)
                 {
-                    setValue(mMinimum+((clickPos.x-rangeRect.x)/rangeRect.width)*(mMaximum-mMinimum));
-                    break;
+                    Vector2 touchPos=touch.position;
+                    
+                    clickPositions.Add(new Vector2(touchPos.x, Screen.height-touchPos.y));
                 }
             }
-
-            if (mValue!=curValue)
+            else
             {
-                modificationMade();
+                if (Input.GetMouseButton(0))
+                {
+                    Vector3 mousePos=Input.mousePosition;
+                    
+                    clickPositions.Add(new Vector2(mousePos.x, Screen.height-mousePos.y));
+                }
+            }
+            
+            
+            
+            if (clickPositions.Count>0)
+            {
+                rect.center      = GUIUtility.GUIToScreenPoint(rect.center);
+                rangeRect.center = GUIUtility.GUIToScreenPoint(rangeRect.center);
+                
+                
+                
+                float curValue=mValue;
+                
+                for (int i=0; i<clickPositions.Count; ++i)
+                {
+                    Vector2 clickPos=(Vector2)clickPositions[i];
+                    
+                    if (rect.Contains(clickPos))
+                    {
+                        setValue(mMinimum+((clickPos.x-rangeRect.x)/rangeRect.width)*(mMaximum-mMinimum));
+                        break;
+                    }
+                }
+                
+                if (mValue!=curValue)
+                {
+                    modificationMade();
+                }
             }
         }
     }

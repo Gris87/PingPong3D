@@ -300,7 +300,6 @@ Transform:
   m_Children:
   - {fileID: 56390198}
   - {fileID: 1696839730}
-  - {fileID: 1018115582}
   - {fileID: 1278218116}
   - {fileID: 1352865295}
   m_Father: {fileID: 0}
@@ -566,16 +565,16 @@ Light:
   m_GameObject: {fileID: 1018115580}
   m_Enabled: 1
   serializedVersion: 3
-  m_Type: 2
+  m_Type: 1
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Intensity: .600000024
   m_Range: 500
   m_SpotAngle: 30
   m_CookieSize: 10
   m_Shadows:
-    m_Type: 0
+    m_Type: 2
     m_Resolution: -1
-    m_Strength: 1
+    m_Strength: .400000006
     m_Bias: .0500000007
     m_Softness: 4
     m_SoftnessFade: 1
@@ -599,11 +598,11 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1018115580}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 15, y: 15, z: -20}
+  m_LocalRotation: {x: .214198977, y: -.28601253, z: .0657608435, w: .931660473}
+  m_LocalPosition: {x: 0, y: 20, z: -20}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 752856231}
+  m_Father: {fileID: 0}
 --- !u!1 &1278218115
 GameObject:
   m_ObjectHideFlags: 0
