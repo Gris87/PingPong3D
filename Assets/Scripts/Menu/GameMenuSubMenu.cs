@@ -17,7 +17,7 @@ public class GameMenuSubMenu : MonoBehaviour
         isAnimated=false;
     }
 
-    IEnumerator OnMouseDown()
+    IEnumerator OnButtonPress()
     {
         if (lastSelectedItem!=this && !isAnimated)
         {

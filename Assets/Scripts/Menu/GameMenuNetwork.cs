@@ -5,7 +5,7 @@ public class GameMenuNetwork : MonoBehaviour
 {
     public bool isServerMode;
 
-    void OnMouseDown()
+    void OnButtonPress()
     {
         Hashtable arguments=new Hashtable();
 

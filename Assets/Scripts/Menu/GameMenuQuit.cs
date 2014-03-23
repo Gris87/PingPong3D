@@ -17,11 +17,11 @@ public class GameMenuQuit : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            OnMouseDown();
+            OnButtonPress();
         }
     }
 
-    void OnMouseDown()
+    void OnButtonPress()
     {
         Debug.Log("Application finished");
         Application.Quit();

@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class GameMenuHighlight : MonoBehaviour
+public class GameMenuBehaviour : MonoBehaviour
 {
     void OnMouseEnter()
     {
@@ -17,5 +17,10 @@ public class GameMenuHighlight : MonoBehaviour
         {
             renderer.material.color=Color.white;
         }
+    }
+
+    void OnMouseDown()
+    {
+        animation.Play("GameMenuButtonPress");
     }
 }

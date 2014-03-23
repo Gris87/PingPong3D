@@ -5,7 +5,7 @@ public class GameMenuStart : MonoBehaviour
 {
     public int difficulty=0;
 
-    void OnMouseDown()
+    void OnButtonPress()
     {
         Hashtable arguments=new Hashtable();
 

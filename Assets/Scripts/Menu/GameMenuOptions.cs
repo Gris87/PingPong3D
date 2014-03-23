@@ -3,7 +3,7 @@ using System.Collections;
 
 public class GameMenuOptions : MonoBehaviour
 {
-    void OnMouseDown()
+    void OnButtonPress()
     {
         SceneManager.LoadScene("OptionsScene");
     }
