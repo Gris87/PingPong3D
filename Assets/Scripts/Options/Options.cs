@@ -912,7 +912,7 @@ public class Options : MonoBehaviour
                 height = Convert.ToInt32(resolution.Substring(index+1).Trim());
             }
 
-            Screen.SetResolution(width, height, mFullScreen);
+            Screen.SetResolution(width, height, mFullScreen, rate);
         }   
         catch (Exception)
         {

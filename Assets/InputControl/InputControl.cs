@@ -5,7 +5,7 @@ using System.Collections.Generic;
 public static class InputControl
 {
     #region KeyMapping
-    public static class KeyMapping
+    public class KeyMapping
     {
         private string  mName;
         private KeyCode mPrimaryCode;
@@ -50,7 +50,7 @@ public static class InputControl
     #endregion
 
     #region Axis
-    public static class Axis
+    public class Axis
     {
         private string     mName;
         private KeyMapping mNegative;
@@ -94,18 +94,18 @@ public static class InputControl
     }
     #endregion
 
-    private static List<KeyMapping>               mKeysList = new List();
-    private static Dictionary<string, KeyMapping> mKeysMap  = new Dictionary();
+    private static List<KeyMapping>               mKeysList = new List<KeyMapping>();
+    private static Dictionary<string, KeyMapping> mKeysMap  = new Dictionary<string, KeyMapping>();
 
-    private static List<Axis>                     mAxesList = new List();
-    private static Dictionary<string, Axis>       mAxesMap  = new Dictionary();
+    private static List<Axis>                     mAxesList = new List<Axis>();
+    private static Dictionary<string, Axis>       mAxesMap  = new Dictionary<string, Axis>();
 
     #region Setup keys
     public static void setKey(string aName, KeyCode aPrimaryCode, KeyCode aSecondaryCode = KeyCode.None)
     {
-        KeyMapping outKey;
+        KeyMapping outKey=null;
 
-        if (mKeysMap.TryGetValue(aName, outKey))
+        if (mKeysMap.TryGetValue(aName, out outKey))
         {
             outKey.set(aPrimaryCode, aSecondaryCode);
         }
@@ -120,9 +120,9 @@ public static class InputControl
 
     public static void removeKey(string aName)
     {
-        KeyMapping outKey;
+        KeyMapping outKey=null;
 
-        if (mKeysMap.TryGetValue(aName, outKey))
+        if (mKeysMap.TryGetValue(aName, out outKey))
         {
             mKeysList.Remove(outKey);
             mKeysMap.Remove (aName);
@@ -138,16 +138,16 @@ public static class InputControl
     #region Setup axes
     public static void setAxis(string aName, string aNegative, string aPositive)
     {
-        KeyMapping aNegativeKey;
-        KeyMapping aPositiveKey;
+        KeyMapping aNegativeKey=null;
+        KeyMapping aPositiveKey=null;
 
-        if (!mAxesMap.TryGetValue(aNegative, aNegativeKey))
+        if (!mKeysMap.TryGetValue(aNegative, out aNegativeKey))
         {
             Debug.LogError("Negative key "+aNegative+" not found for axis "+aName);
             return;
         }
 
-        if (!mAxesMap.TryGetValue(aPositive, aPositiveKey))
+        if (!mKeysMap.TryGetValue(aPositive, out aPositiveKey))
         {
             Debug.LogError("Positive key "+aPositive+" not found for axis "+aName);
             return;
@@ -158,9 +158,9 @@ public static class InputControl
 
     public static void setAxis(string aName, KeyMapping aNegative, KeyMapping aPositive)
     {
-        Axis outAxis;
+        Axis outAxis=null;
         
-        if (mAxesMap.TryGetValue(aName, outAxis))
+        if (mAxesMap.TryGetValue(aName, out outAxis))
         {
             outAxis.set(aNegative, aPositive);
         }
@@ -175,9 +175,9 @@ public static class InputControl
     
     public static void removeAxis(string aName)
     {
-        Axis outAxis;
+        Axis outAxis=null;
 
-        if (mAxesMap.TryGetValue(aName, outAxis))
+        if (mAxesMap.TryGetValue(aName, out outAxis))
         {
             mAxesList.Remove(outAxis);
             mAxesMap.Remove (aName);
@@ -213,6 +213,46 @@ public static class InputControl
         get
         {
             return Input.accelerationEvents;
+        }
+    }
+
+    public static bool anyKey
+    {
+        get
+        {
+            return Input.anyKey;
+        }
+    }
+
+    public static bool anyKeyDown
+    {
+        get
+        {
+            return Input.anyKeyDown;
+        }
+    }
+
+    public static Compass compass
+    {
+        get
+        {
+            return Input.compass;
+        }
+    }
+
+    public static bool compensateSensors
+    {
+        get
+        {
+            return Input.compensateSensors;
+        }
+    }
+
+    public static Vector2 compositionCursorPos
+    {
+        get
+        {
+            return Input.compositionCursorPos;
         }
     }
 }
