@@ -1,4 +1,5 @@
 using UnityEngine;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
@@ -108,7 +109,7 @@ public class Options : MonoBehaviour
     #endregion
 
     #region Resolution
-    private static string mResolution="800 x 600";
+    private static string mResolution="800x600";
     public static string resolution
     {
         get
@@ -201,7 +202,7 @@ public class Options : MonoBehaviour
         {
             Resolution resolution=availableResolutions[i];
             
-            resolutions[i]=resolution.width.ToString()+" x resolution.height.ToString()+" "+resolution.refreshRate.ToString()+" Hz";
+            resolutions[i]=resolution.width.ToString()+"x"+resolution.height.ToString()+" : "+resolution.refreshRate.ToString()+" Hz";
         }
         
         resolutionScroller=new SelectionScroller(resolutions, 0, scrollerLeftTexture, scrollerRightTexture);
@@ -733,7 +734,7 @@ public class Options : MonoBehaviour
         itemsCount     = Utils.isTouchDevice? 3 : 5;
 
         showFPSCheckBox.setChecked(mShowFPS);
-        resolutionScroller.setSelectedItem(mResolution);
+        updateResolutionScroller();
         fullScreenCheckBox.setChecked(mFullScreen);
         qualityScroller.setCurrentIndex(mQuality);
     }
@@ -824,8 +825,10 @@ public class Options : MonoBehaviour
             
             if (!mResolution.Equals(resolution) || mFullScreen!=aFullScreen)
             {
-                mResolution=resolution;
-                mFullScreen=aFullScreen;
+                mResolution = resolution;
+                mFullScreen = aFullScreen;
+
+                changeResolution();
             }
         }
     }
@@ -849,6 +852,75 @@ public class Options : MonoBehaviour
         }
 
         languageScroller.setCurrentIndex(languageIndex);
+    }
+
+    private void updateResolutionScroller()
+    {
+        Resolution[] availableResolutions=Screen.resolutions;
+        int resolutionIndex=0;
+        
+        for (int i=0; i<availableResolutions.Length; ++i)
+        {
+            Resolution resolution=availableResolutions[i];
+            string resolutionString=resolution.width.ToString()+"x"+resolution.height.ToString()+" : "+resolution.refreshRate.ToString()+" Hz";
+
+            if (mResolution.Equals(resolutionString))
+            {
+                resolutionIndex=i;
+                break;
+            }
+            else
+            if (resolutionString.StartsWith(mResolution))
+            {
+                resolutionIndex=i;
+            }
+        }
+
+        resolutionScroller.setCurrentIndex(resolutionIndex);
+    }
+
+    private static void changeResolution()
+    {
+        try
+        {
+            string resolution=mResolution;
+
+            if (resolution.EndsWith("Hz", StringComparison.OrdinalIgnoreCase))
+            {
+                resolution=resolution.Remove(resolution.Length-2).Trim();
+            }
+
+            int index  = resolution.IndexOf('x');
+            int index2 = resolution.LastIndexOf(':');
+
+            int width  = 800;
+            int height = 600;
+            int rate   = 0;
+
+            width      = Convert.ToInt32(resolution.Substring(0, index).Trim());
+
+            if (index2>=0)
+            {
+                height = Convert.ToInt32(resolution.Substring(index+1, index2-index-1).Trim());
+                rate   = Convert.ToInt32(resolution.Substring(index2+1).Trim());
+            }
+            else
+            {
+                height = Convert.ToInt32(resolution.Substring(index+1).Trim());
+            }
+
+            Screen.SetResolution(width, height, mFullScreen);
+        }   
+        catch (Exception)
+        {
+            string temp = mResolution;
+
+            mResolution = "800x600";
+            mFullScreen = true;
+
+            Screen.SetResolution(800, 600, true);
+            Debug.LogError("Impossible to set resolution: "+temp);
+        }        
     }
 
     public static void load()
@@ -892,7 +964,7 @@ public class Options : MonoBehaviour
 
         if (!Utils.isTouchDevice)
         {
-            mResolution = iniFile.Get("Resolution", "800 x 600");
+            mResolution = iniFile.Get("Resolution", "800x600");
             mFullScreen = iniFile.Get("FullScreen", true);
         }
 
@@ -906,6 +978,8 @@ public class Options : MonoBehaviour
         {
             Debug.Log("Resolution:     "+mResolution);
             Debug.Log("Full screen:    "+mFullScreen.ToString());
+
+            changeResolution();
         }
         #endregion
     }
@@ -942,12 +1016,14 @@ public class Options : MonoBehaviour
         #endregion
 
         #region Video
+
+
         iniFile.Set("ShowFPS",    mShowFPS, "Show FPS: True/False");
-        iniFile.Set("Quality",    mQuality, "Video quality: 0-"+QualitySettings.names.Length.ToString());
+        iniFile.Set("Quality",    mQuality, "Video quality: 0-"+QualitySettings.names.Length.ToString()+" ("+QualitySettings.names.Length.ToString()+" - Custom)");
 
         if (!Utils.isTouchDevice)
         {
-            iniFile.Set("Resolution", mResolution, "Screen resolution: WIDTH x HEIGHT RATE Hz");
+            iniFile.Set("Resolution", mResolution, "Screen resolution: WIDTH x HEIGHT : RATE Hz");
             iniFile.Set("FullScreen", mFullScreen, "Full screen mode: True/False");
         }
         #endregion
