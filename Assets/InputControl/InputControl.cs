@@ -46,6 +46,51 @@ public static class InputControl
             mPrimaryCode   = aPrimaryCode;
             mSecondaryCode = aSecondaryCode;
         }
+
+        public bool isPressed()
+        {
+            if (Input.GetKey(mPrimaryCode))
+            {
+                return true;
+            }
+
+            if (Input.GetKey(mSecondaryCode))
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        public bool isPressedDown()
+        {
+            if (Input.GetKeyDown(mPrimaryCode))
+            {
+                return true;
+            }
+            
+            if (Input.GetKeyDown(mSecondaryCode))
+            {
+                return true;
+            }
+            
+            return false;
+        }
+
+        public bool isPressedUp()
+        {
+            if (Input.GetKeyUp(mPrimaryCode))
+            {
+                return true;
+            }
+            
+            if (Input.GetKeyUp(mSecondaryCode))
+            {
+                return true;
+            }
+            
+            return false;
+        }
     }
     #endregion
 
@@ -254,5 +299,134 @@ public static class InputControl
         {
             return Input.compositionCursorPos;
         }
+    }
+
+    public static string compositionString
+    {
+        get
+        {
+            return Input.compositionString;
+        }
+    }
+
+    public static DeviceOrientation deviceOrientation
+    {
+        get
+        {
+            return Input.deviceOrientation;
+        }
+    }
+
+    public static AccelerationEvent GetAccelerationEvent(int index)
+    {
+        return Input.GetAccelerationEvent(index);
+    }
+
+    public static float GetAxis(string axisName)
+    {
+        // TODO: Smooth difference from previous value (0 - 0.5 - 0.75 - 0.875 - 1)
+        return GetAxisRaw(axisName);
+    }
+
+    public static float GetAxisRaw(string axisName)
+    {
+        Axis outAxis=null;
+        
+        if (!mAxesMap.TryGetValue(axisName, out outAxis))
+        {
+            Debug.LogError("Axis "+axisName+" not found");
+            return 0;
+        }
+
+        bool negativePressing=GetButton(outAxis.negative.name);
+        bool positivePressing=GetButton(outAxis.positive.name);
+
+        if (negativePressing!=positivePressing)
+        {
+            if (negativePressing)
+            {
+                return -1;
+            }
+            else
+            {
+                return 1;
+            }
+        }
+
+        return 0;
+    }
+
+    public static bool GetButton(string buttonName)
+    {
+        KeyMapping outKey=null;
+        
+        if (!mKeysMap.TryGetValue(buttonName, out outKey))
+        {
+            Debug.LogError("Key "+buttonName+" not found");
+            return false;
+        }
+
+        return outKey.isPressed();
+    }
+
+    public static bool GetButtonDown(string buttonName)
+    {
+        KeyMapping outKey=null;
+        
+        if (!mKeysMap.TryGetValue(buttonName, out outKey))
+        {
+            Debug.LogError("Key "+buttonName+" not found");
+            return false;
+        }
+
+        return outKey.isPressedDown();
+    }
+
+    public static bool GetButtonUp(string buttonName)
+    {
+        KeyMapping outKey=null;
+        
+        if (!mKeysMap.TryGetValue(buttonName, out outKey))
+        {
+            Debug.LogError("Key "+buttonName+" not found");
+            return false;
+        }
+        
+        return outKey.isPressedUp();
+    }
+
+    public static string[] GetJoystickNames()
+    {
+        return Input.GetJoystickNames();
+    }
+
+    public static bool GetKey(string name)
+    {
+        return Input.GetKey(name);
+    }
+
+    public static bool GetKey(KeyCode key)
+    {
+        return Input.GetKey(key);
+    }
+
+    public static bool GetKeyDown(string name)
+    {
+        return Input.GetKeyDown(name);
+    }
+    
+    public static bool GetKeyDown(KeyCode key)
+    {
+        return Input.GetKeyDown(key);
+    }
+
+    public static bool GetKeyUp(string name)
+    {
+        return Input.GetKeyUp(name);
+    }
+    
+    public static bool GetKeyUp(KeyCode key)
+    {
+        return Input.GetKeyUp(key);
     }
 }
