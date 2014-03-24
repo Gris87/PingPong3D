@@ -161,7 +161,6 @@ public class Options : MonoBehaviour
         saveTextStyle.alignment=TextAnchor.UpperLeft;
         saveTextStyle.wordWrap=true;
         saveTextStyle.clipping=TextClipping.Clip;
-        saveTextStyle.fontSize=(int)(Screen.height*0.04);
         saveTextStyle.normal.textColor=Color.white;
         #endregion
 
@@ -312,7 +311,7 @@ public class Options : MonoBehaviour
         if (askSaving)
         {
             GUIStyle windowStyle=new GUIStyle(GUI.skin.window);
-            windowStyle.fontSize=(int)(Screen.height*0.05);
+            windowStyle.fontSize=(int)(Screen.height*0.045);
 
             saveDialogRect=GUI.ModalWindow(0, saveDialogRect, drawSaveDialog, localizationSettingsChanged, windowStyle);
         }
@@ -355,6 +354,10 @@ public class Options : MonoBehaviour
     {
         GUIStyle buttonStyle=new GUIStyle(GUI.skin.button);
         buttonStyle.fontSize=(int)(Screen.height*0.03);
+
+        saveTextStyle.fontSize=(int)(Screen.height*0.04);
+
+
 
         GUI.Label(new Rect(saveDialogRect.width*0.05f, saveDialogRect.height*0.25f, saveDialogRect.width*0.9f, saveDialogRect.height*0.4f), localizationDoYouWantToSaveChanges, saveTextStyle);
 
