@@ -54,11 +54,11 @@ public class PlayerLogic : MonoBehaviour
             }
             else
             {
-                verticalMovement=Input.GetAxis("Vertical");
+                verticalMovement=InputControl.GetAxis("Vertical");
 
                 if (verticalMovement==0)
                 {
-                    verticalMovement=Input.GetAxis("Vertical 2");
+                    verticalMovement=InputControl.GetAxis("Vertical 2");
                 }
             }
         }
@@ -132,7 +132,7 @@ public class PlayerLogic : MonoBehaviour
                         axis="Vertical";
                     }
 
-                    verticalMovement=Input.GetAxis(axis);
+                    verticalMovement=InputControl.GetAxis(axis);
                 }
             }
         }

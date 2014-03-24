@@ -143,14 +143,37 @@ public static class InputControl
             mNegative = aNegative;
             mPositive = aPositive;
         }
+
+        public float getValue()
+        {
+            bool negativePressing=mNegative.isPressed();
+            bool positivePressing=mPositive.isPressed();
+            
+            if (negativePressing!=positivePressing)
+            {
+                if (negativePressing)
+                {
+                    return -1;
+                }
+                else
+                {
+                    return 1;
+                }
+            }
+            
+            return 0;
+        }
     }
     #endregion
 
-    private static List<KeyMapping>               mKeysList = new List<KeyMapping>();
-    private static Dictionary<string, KeyMapping> mKeysMap  = new Dictionary<string, KeyMapping>();
+    private static List<KeyMapping>               mKeysList          = new List<KeyMapping>();
+    private static Dictionary<string, KeyMapping> mKeysMap           = new Dictionary<string, KeyMapping>();
 
-    private static List<Axis>                     mAxesList = new List<Axis>();
-    private static Dictionary<string, Axis>       mAxesMap  = new Dictionary<string, Axis>();
+    private static List<Axis>                     mAxesList          = new List<Axis>();
+    private static Dictionary<string, Axis>       mAxesMap           = new Dictionary<string, Axis>();
+
+    private static Dictionary<string, float>      mSmoothAxesValues  = new Dictionary<string, float>();
+    private static float                          mSmoothCoefficient = 0.125f;
 
     #region Setup keys
     public static void setKey(string aName, KeyCode aPrimaryCode, KeyCode aSecondaryCode = KeyCode.None)
@@ -242,6 +265,33 @@ public static class InputControl
     }
     #endregion
 
+    #region Axis smooth
+    public static float smoothCoefficient
+    {
+        get
+        {
+            return mSmoothCoefficient;
+        }
+
+        set
+        {
+            if (value<0.0001f)
+            {
+                mSmoothCoefficient=0.0001f;
+            }
+            else
+            if (value>1f)
+            {
+                mSmoothCoefficient=1f;
+            }
+            else
+            {
+                mSmoothCoefficient=value;
+            }
+        }
+    }
+    #endregion
+
     // ----------------------------------------------------------------
 
     public static Vector3 acceleration
@@ -316,6 +366,18 @@ public static class InputControl
         }
     }
 
+    public static KeyCode currentKeyCode
+    {
+        get
+        {
+            string keyDesc=Input.inputString;
+
+            Debug.Log(keyDesc);
+
+            return KeyCode.None;
+        }
+    }
+
     public static DeviceOrientation deviceOrientation
     {
         get
@@ -331,8 +393,19 @@ public static class InputControl
 
     public static float GetAxis(string axisName)
     {
-        // TODO: Smooth difference from previous value (0 - 0.5 - 0.75 - 0.875 - 1)
-        return GetAxisRaw(axisName);
+        float previousValue;
+
+        if (!mSmoothAxesValues.TryGetValue(axisName, out previousValue))
+        {
+            previousValue=0f;
+        }
+
+        float newValue = GetAxisRaw(axisName);
+        float res      = previousValue+(newValue-previousValue)*mSmoothCoefficient;
+
+        mSmoothAxesValues[axisName]=res;
+
+        return res;
     }
 
     public static float GetAxisRaw(string axisName)
@@ -345,22 +418,7 @@ public static class InputControl
             return 0;
         }
 
-        bool negativePressing=GetButton(outAxis.negative.name);
-        bool positivePressing=GetButton(outAxis.positive.name);
-
-        if (negativePressing!=positivePressing)
-        {
-            if (negativePressing)
-            {
-                return -1;
-            }
-            else
-            {
-                return 1;
-            }
-        }
-
-        return 0;
+        return outAxis.getValue();
     }
 
     public static bool GetButton(string buttonName)
