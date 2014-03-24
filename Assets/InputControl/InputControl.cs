@@ -4,6 +4,13 @@ using System.Collections.Generic;
 
 public static class InputControl
 {
+    public enum MouseButton
+    {
+        Left,
+        Right,
+        Middle
+    }
+
     #region KeyMapping
     public class KeyMapping
     {
@@ -428,5 +435,148 @@ public static class InputControl
     public static bool GetKeyUp(KeyCode key)
     {
         return Input.GetKeyUp(key);
+    }
+
+    public static bool GetMouseButton(int button)
+    {
+        return Input.GetMouseButton(button);
+    }
+
+    public static bool GetMouseButton(MouseButton button)
+    {
+        return Input.GetMouseButton((int)button);
+    }
+
+    public static bool GetMouseButtonDown(int button)
+    {
+        return Input.GetMouseButtonDown(button);
+    }
+    
+    public static bool GetMouseButtonDown(MouseButton button)
+    {
+        return Input.GetMouseButtonDown((int)button);
+    }
+
+    public static bool GetMouseButtonUp(int button)
+    {
+        return Input.GetMouseButtonUp(button);
+    }
+    
+    public static bool GetMouseButtonUp(MouseButton button)
+    {
+        return Input.GetMouseButtonUp((int)button);
+    }
+
+    public static Touch GetTouch(int button)
+    {
+        return Input.GetTouch(button);
+    }
+
+    public static Gyroscope gyro
+    {
+        get
+        {
+            return Input.gyro;
+        }
+    }
+
+    public static IMECompositionMode imeCompositionMode
+    {
+        get
+        {
+            return Input.imeCompositionMode;
+        }
+
+        set
+        {
+            Input.imeCompositionMode=value;
+        }
+    }
+
+    public static bool imeIsSelected
+    {
+        get
+        {
+            return Input.imeIsSelected;
+        }
+    }
+
+    public static string inputString
+    {
+        get
+        {
+            return Input.inputString;
+        }
+    }
+
+    public static LocationService location
+    {
+        get
+        {
+            return Input.location;
+        }
+    }
+
+    public static Vector3 mousePosition
+    {
+        get
+        {
+            return Input.mousePosition;
+        }
+    }
+
+    public static bool mousePresent
+    {
+        get
+        {
+            return Input.mousePresent;
+        }
+    }
+
+    public static bool multiTouchEnabled
+    {
+        get
+        {
+            return Input.multiTouchEnabled;
+        }
+
+        set
+        {
+            Input.multiTouchEnabled=value;
+        }
+    }
+
+    public static void ResetInputAxes()
+    {
+        Input.ResetInputAxes();
+    }
+
+    public static bool simulateMouseWithTouches
+    {
+        get
+        {
+            return Input.simulateMouseWithTouches;
+        }
+        
+        set
+        {
+            Input.simulateMouseWithTouches=value;
+        }
+    }
+
+    public static int touchCount
+    {
+        get
+        {
+            return Input.touchCount;
+        }
+    }
+
+    public static Touch[] touches
+    {
+        get
+        {
+            return Input.touches;
+        }
     }
 }
