@@ -149,6 +149,7 @@
   <data name="OptionsScene.Fantastic" xml:space="preserve"><value>Фантастика</value></data>
   <data name="OptionsScene.Fast" xml:space="preserve"><value>Быстрое</value></data>
   <data name="OptionsScene.Fastest" xml:space="preserve"><value>Наибыстрейшее</value></data>
+  <data name="OptionsScene.FullScreen" xml:space="preserve"><value>Во весь экран</value></data>
   <data name="OptionsScene.Game" xml:space="preserve"><value>Игра</value></data>
   <data name="OptionsScene.Good" xml:space="preserve"><value>Хорошее</value></data>
   <data name="OptionsScene.Language" xml:space="preserve"><value>Язык</value></data>
@@ -156,6 +157,7 @@
   <data name="OptionsScene.MusicVolume" xml:space="preserve"><value>Громкость музыки</value></data>
   <data name="OptionsScene.OK" xml:space="preserve"><value>OK</value></data>
   <data name="OptionsScene.Quality" xml:space="preserve"><value>Качество</value></data>
+  <data name="OptionsScene.Resolution" xml:space="preserve"><value>Разрешение</value></data>
   <data name="OptionsScene.SettingsChanged" xml:space="preserve"><value>Настройки изменены</value></data>
   <data name="OptionsScene.ShowFPS" xml:space="preserve"><value>Показывать FPS</value></data>
   <data name="OptionsScene.Simple" xml:space="preserve"><value>Простое</value></data>
