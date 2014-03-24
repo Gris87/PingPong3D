@@ -15,7 +15,7 @@ public class GameMenuQuit : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (InputControl.GetKeyDown(KeyCode.Escape))
         {
             OnButtonPress();
         }
