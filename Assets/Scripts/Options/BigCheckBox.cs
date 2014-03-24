@@ -28,7 +28,7 @@ public class BigCheckBox : ModifiableObject
 
     public void control()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (InputControl.GetKeyDown(KeyCode.Space))
         {
             mChecked=!mChecked;
             modificationMade();

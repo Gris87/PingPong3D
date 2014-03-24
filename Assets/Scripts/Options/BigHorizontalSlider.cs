@@ -47,7 +47,7 @@ public class BigHorizontalSlider : ModifiableObject
             
             if (Utils.isTouchDevice)
             {
-                foreach (Touch touch in Input.touches)
+                foreach (Touch touch in InputControl.touches)
                 {
                     Vector2 touchPos=touch.position;
                     
@@ -56,9 +56,9 @@ public class BigHorizontalSlider : ModifiableObject
             }
             else
             {
-                if (Input.GetMouseButton(0))
+                if (InputControl.GetMouseButton(InputControl.MouseButton.Left))
                 {
-                    Vector3 mousePos=Input.mousePosition;
+                    Vector3 mousePos=InputControl.mousePosition;
                     
                     clickPositions.Add(new Vector2(mousePos.x, Screen.height-mousePos.y));
                 }
@@ -96,7 +96,7 @@ public class BigHorizontalSlider : ModifiableObject
 
     public void control()
     {
-        if (Input.GetKeyDown(KeyCode.LeftArrow))
+        if (InputControl.GetKeyDown(KeyCode.LeftArrow))
         {
             if (mValue>mMinimum)
             {
@@ -111,7 +111,7 @@ public class BigHorizontalSlider : ModifiableObject
             }
         }
         else
-        if (Input.GetKeyDown(KeyCode.RightArrow))
+        if (InputControl.GetKeyDown(KeyCode.RightArrow))
         {
             if (mValue<mMaximum)
             {

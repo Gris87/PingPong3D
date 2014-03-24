@@ -260,12 +260,12 @@ public class Options : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (InputControl.GetKeyDown(KeyCode.Escape))
         {
             goBack();
         }
         else
-        if (Input.GetKeyDown(KeyCode.UpArrow))
+        if (InputControl.GetKeyDown(KeyCode.UpArrow))
         {
             if (!askSaving && currentItem>0)
             {
@@ -273,7 +273,7 @@ public class Options : MonoBehaviour
             }
         }
         else
-        if (Input.GetKeyDown(KeyCode.DownArrow))
+        if (InputControl.GetKeyDown(KeyCode.DownArrow))
         {
             if (!askSaving && currentItem<itemsCount-1)
             {
@@ -282,9 +282,9 @@ public class Options : MonoBehaviour
         }
         else
         if (
-            Input.GetKeyDown(KeyCode.Return)
+            InputControl.GetKeyDown(KeyCode.Return)
             ||
-            Input.GetKeyDown(KeyCode.KeypadEnter)
+            InputControl.GetKeyDown(KeyCode.KeypadEnter)
            )
         {
             if (askSaving)

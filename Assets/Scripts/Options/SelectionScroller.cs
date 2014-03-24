@@ -86,7 +86,7 @@ public class SelectionScroller : ModifiableObject
 
     public void control()
     {
-        if (Input.GetKeyDown(KeyCode.LeftArrow))
+        if (InputControl.GetKeyDown(KeyCode.LeftArrow))
         {
             if (mCurrentIndex>0)
             {
@@ -95,7 +95,7 @@ public class SelectionScroller : ModifiableObject
             }
         }
         else
-        if (Input.GetKeyDown(KeyCode.RightArrow))
+        if (InputControl.GetKeyDown(KeyCode.RightArrow))
         {
             if (mCurrentIndex<mItems.Length-1)
             {

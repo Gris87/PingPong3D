@@ -34,9 +34,9 @@ public class PlayerLogic : MonoBehaviour
         #region Get vertical movement
         if (playerMode==Mode.BothPlayers)
         {
-            if (Input.GetMouseButton(0))
+            if (InputControl.GetMouseButton(InputControl.MouseButton.Left))
             {
-                Vector3 mousePos = getClickPosition(Input.mousePosition);
+                Vector3 mousePos = getClickPosition(InputControl.mousePosition);
                 verticalMovement = mousePos.y-transform.position.y;
                 float maxOffset  = speed*Time.deltaTime;
 
@@ -82,9 +82,9 @@ public class PlayerLogic : MonoBehaviour
             }
             else
             {
-                if (Input.touchCount>0)
+                if (InputControl.touchCount>0)
                 {
-                    foreach (Touch touch in Input.touches)
+                    foreach (Touch touch in InputControl.touches)
                     {
                         Vector3 mousePos = getClickPosition(touch.position);
 
