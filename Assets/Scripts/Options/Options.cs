@@ -33,6 +33,7 @@ public class Options : MonoBehaviour
     private SelectionScroller   qualityScroller;
     private SelectionScroller   resolutionScroller;
     private BigCheckBox         fullScreenCheckBox;
+    private List<ControlSetter> controlSetters;
 
     private State currentState;
     private int   currentItem;
@@ -130,26 +131,37 @@ public class Options : MonoBehaviour
     }
     #endregion
 
+    #region Keys
+    public static List<InputControl.KeyMapping> keys
+    {
+        get
+        {
+            return InputControl.getKeys();
+        }
+    }
+    #endregion
+
     #endregion
 
     #region Localization
-    private string localizationGame;
-    private string localizationSound;
-    private string localizationVideo;
-    private string localizationControls;
-    private string localizationBack;
-    private string localizationLanguage;
-    private string localizationMasterVolume;
-    private string localizationMusicVolume;
-    private string localizationEffectsVolume;
-    private string localizationShowFPS;
-    private string localizationQuality;
-    private string localizationResolution;
-    private string localizationFullScreen;
-    private string localizationSettingsChanged;
-    private string localizationDoYouWantToSaveChanges;
-    private string localizationOK;
-    private string localizationCancel;
+    private string       localizationGame;
+    private string       localizationSound;
+    private string       localizationVideo;
+    private string       localizationControls;
+    private string       localizationBack;
+    private string       localizationLanguage;
+    private string       localizationMasterVolume;
+    private string       localizationMusicVolume;
+    private string       localizationEffectsVolume;
+    private string       localizationShowFPS;
+    private string       localizationQuality;
+    private string       localizationResolution;
+    private string       localizationFullScreen;
+    private List<string> localizationKeys;
+    private string       localizationSettingsChanged;
+    private string       localizationDoYouWantToSaveChanges;
+    private string       localizationOK;
+    private string       localizationCancel;
     #endregion
 
     // Use this for initialization
@@ -211,6 +223,17 @@ public class Options : MonoBehaviour
         fullScreenCheckBox.setModifiedFunction(settingsModified);
         #endregion
 
+        #region Controls
+        controlSetters=new List<ControlSetter>();
+
+        foreach (InputControl.KeyMapping key in InputControl.getKeys())
+        {
+            controlSetters.Add(new ControlSetter());
+        }
+
+        localizationKeys=new List<string>();
+        #endregion
+
         #region Localization
         LanguageManager languageManager=LanguageManager.Instance;
         languageManager.OnChangeLanguage+=OnChangeLanguage;
@@ -254,6 +277,15 @@ public class Options : MonoBehaviour
         }
 
         qualityScroller.setItems(qualities);
+
+
+
+        localizationKeys.Clear();
+
+        foreach (InputControl.KeyMapping key in InputControl.getKeys())
+        {
+            localizationKeys.Add(languageManager.GetTextValue("OptionsScene."+key.name));
+        }
         #endregion
     }
 
