@@ -144,6 +144,8 @@
   <data name="OptionsScene.Beautiful" xml:space="preserve"><value>Beautiful</value></data>
   <data name="OptionsScene.Cancel" xml:space="preserve"><value>Cancel</value></data>
   <data name="OptionsScene.Controls" xml:space="preserve"><value>Controls</value></data>
+  <data name="OptionsScene.Down" xml:space="preserve"><value>Down</value></data>
+  <data name="OptionsScene.Down 2" xml:space="preserve"><value>Down 2</value></data>
   <data name="OptionsScene.DoYouWantToSaveChanges" xml:space="preserve"><value>Do you want to save changes?</value></data>
   <data name="OptionsScene.EffectsVolume" xml:space="preserve"><value>Effects volume</value></data>
   <data name="OptionsScene.Fantastic" xml:space="preserve"><value>Fantastic</value></data>
@@ -162,10 +164,9 @@
   <data name="OptionsScene.ShowFPS" xml:space="preserve"><value>Show FPS</value></data>
   <data name="OptionsScene.Simple" xml:space="preserve"><value>Simple</value></data>
   <data name="OptionsScene.Sound" xml:space="preserve"><value>Sound</value></data>
+  <data name="OptionsScene.Up" xml:space="preserve"><value>Up</value></data>
+  <data name="OptionsScene.Up 2" xml:space="preserve"><value>Up 2</value></data>
   <data name="OptionsScene.Video" xml:space="preserve"><value>Video</value></data>
   <data name="SplashScene.Loading" xml:space="preserve"><value>Loading...</value></data>
-  <data name="OptionsScene.Up" xml:space="preserve"><value>Up</value></data>
-  <data name="OptionsScene.Down" xml:space="preserve"><value>Down</value></data>
-  <data name="OptionsScene.Up 2" xml:space="preserve"><value>Up 2</value></data>
-  <data name="OptionsScene.Down 2" xml:space="preserve"><value>Down 2</value></data>
+  <data name="OptionsScene.PressAnyKey" xml:space="preserve"><value>Press any key</value></data>
 </root>

@@ -25,6 +25,7 @@ public class Options : MonoBehaviour
     private Vector2             scrollPosition;
     private Rect                saveDialogRect;
     private GUIStyle            saveTextStyle;
+    private ControlSetter       selectedControlSetter;
     private SelectionScroller   languageScroller;
     private BigHorizontalSlider masterVolumeSlider;
     private BigHorizontalSlider musicVolumeSlider;
@@ -224,6 +225,7 @@ public class Options : MonoBehaviour
         #endregion
 
         #region Controls
+        selectedControlSetter=null;
         controlSetters=new List<ControlSetter>();
 
         foreach (InputControl.KeyMapping key in InputControl.getKeys())
@@ -292,54 +294,72 @@ public class Options : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (InputControl.GetKeyDown(KeyCode.Escape))
+        if (selectedControlSetter!=null)
         {
-            goBack();
-        }
-        else
-        if (InputControl.GetKeyDown(KeyCode.UpArrow))
-        {
-            if (!askSaving && currentItem>0)
+            if (InputControl.GetKeyDown(KeyCode.Escape))
             {
-                --currentItem;
+                selectedControlSetter.setSelectedKey(KeyCode.None);
+                selectedControlSetter=null;
+
+                modified=true;
             }
         }
         else
-        if (InputControl.GetKeyDown(KeyCode.DownArrow))
         {
-            if (!askSaving && currentItem<itemsCount-1)
+            if (InputControl.GetKeyDown(KeyCode.Escape))
             {
-                ++currentItem;
-            }
-        }
-        else
-        if (
-            InputControl.GetKeyDown(KeyCode.Return)
-            ||
-            InputControl.GetKeyDown(KeyCode.KeypadEnter)
-           )
-        {
-            if (askSaving)
-            {
-                applyChanges();
                 goBack();
             }
             else
+            if (InputControl.GetKeyDown(KeyCode.UpArrow))
             {
-                selectItem(currentItem);
+                if (!askSaving && currentItem>0)
+                {
+                    --currentItem;
+                }
             }
-        }
-        else
-        {
-            if (!askSaving)
+            else
+            if (InputControl.GetKeyDown(KeyCode.DownArrow))
             {
-                controlItem(currentItem);
+                if (!askSaving && currentItem<itemsCount-1)
+                {
+                    ++currentItem;
+                }
+            }
+            else
+            if (
+                InputControl.GetKeyDown(KeyCode.Return)
+                ||
+                InputControl.GetKeyDown(KeyCode.KeypadEnter)
+               )
+            {
+                if (askSaving)
+                {
+                    applyChanges();
+                    goBack();
+                }
+                else
+                {
+                    selectItem(currentItem);
+                }
+            }
+            else
+            {
+                if (!askSaving)
+                {
+                    controlItem(currentItem);
+                }
             }
         }
     }
 
     void OnGUI()
     {
+        if (selectedControlSetter!=null && Event.current.type!=EventType.Repaint && Event.current.type!=EventType.Layout)
+        {
+            Event.current.Use();
+        }
+
         if (askSaving)
         {
             GUIStyle windowStyle=new GUIStyle(GUI.skin.window);
@@ -529,7 +549,11 @@ public class Options : MonoBehaviour
         for (int i=0; i<controlSetters.Count; ++i)
         {
             GUI.Label(new Rect(0, rowOffset*cur, panelWidth*0.4f, rowHeight), localizationKeys[i], (!Utils.isTouchDevice && currentItem==cur) ? menuSelectedItemStyle : menuItemStyle);
-            controlSetters[i].draw(new Rect(panelWidth*0.45f, rowOffset*cur, panelWidth*0.55f, rowHeight));
+
+            if (controlSetters[i].draw(new Rect(panelWidth*0.45f, rowOffset*cur, panelWidth*0.55f, rowHeight)))
+            {
+                selectedControlSetter=controlSetters[i];
+            }
             
             ++cur;
         }
