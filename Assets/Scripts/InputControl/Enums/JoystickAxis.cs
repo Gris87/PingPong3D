@@ -1,0 +1,24 @@
+﻿public enum JoystickAxis
+{
+    Axis1Positive,
+    Axis1Negative,
+    Axis2Positive,
+    Axis2Negative,
+    Axis3Positive,
+    Axis3Negative,
+    Axis4Positive,
+    Axis4Negative,
+    Axis5Positive,
+    Axis5Negative,
+    Axis6Positive,
+    Axis6Negative,
+    Axis7Positive,
+    Axis7Negative,
+    Axis8Positive,
+    Axis8Negative,
+    Axis9Positive,
+    Axis9Negative,
+    Axis10Positive,
+    Axis10Negative,
+    None
+}

@@ -8,8 +8,40 @@ public static class InputControl
     {
         Left,
         Right,
-        Middle
+        Middle,
+        None
     }
+
+    public enum MouseWheel
+    {
+        Up,
+        Down,
+        None
+    }
+
+    public enum JoystickAxis
+    {
+        Axis1,
+        Axis2,
+        Axis3,
+        Axis4,
+        Axis5,
+        Axis6,
+        Axis7,
+        Axis8,
+        Axis9,
+        Axis10
+    }
+
+    #region CustomInput
+    public class CustomInput
+    {
+        private KeyCode     mKeyCode;
+        private MouseButton mMouseButton;
+        private MouseWheel  mMouseWheel;
+
+    }
+    #endregion
 
     #region KeyMapping
     public class KeyMapping

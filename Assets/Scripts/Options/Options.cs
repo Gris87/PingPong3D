@@ -712,6 +712,7 @@ public class Options : MonoBehaviour
     
     private void selectItemInControlsOptions(int index)
     {
+        controlSetters[index].setKeyPressed(0);
     }
 
     private void settingsModified()

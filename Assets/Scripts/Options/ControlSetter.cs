@@ -29,12 +29,7 @@ public class ControlSetter : ModifiableObject
         return mKeyPressed>=0;
     }
 
-    public void control()
-    {
-
-    }
-
-    private void setKeyPressed(int value)
+    public void setKeyPressed(int value)
     {
         mKeyPressed             = value;
         localizationPressAnyKey = LanguageManager.Instance.GetTextValue("OptionsScene.PressAnyKey");
