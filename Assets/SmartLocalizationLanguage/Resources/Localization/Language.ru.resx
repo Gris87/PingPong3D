@@ -144,6 +144,8 @@
   <data name="OptionsScene.Beautiful" xml:space="preserve"><value>Красиво</value></data>
   <data name="OptionsScene.Cancel" xml:space="preserve"><value>Отмена</value></data>
   <data name="OptionsScene.Controls" xml:space="preserve"><value>Управление</value></data>
+  <data name="OptionsScene.Down" xml:space="preserve"><value>Вниз</value></data>
+  <data name="OptionsScene.Down 2" xml:space="preserve"><value>Вниз 2</value></data>
   <data name="OptionsScene.DoYouWantToSaveChanges" xml:space="preserve"><value>Вы хотите сохранить изменения?</value></data>
   <data name="OptionsScene.EffectsVolume" xml:space="preserve"><value>Громкость эффектов</value></data>
   <data name="OptionsScene.Fantastic" xml:space="preserve"><value>Фантастика</value></data>
@@ -162,6 +164,8 @@
   <data name="OptionsScene.ShowFPS" xml:space="preserve"><value>Показывать FPS</value></data>
   <data name="OptionsScene.Simple" xml:space="preserve"><value>Простое</value></data>
   <data name="OptionsScene.Sound" xml:space="preserve"><value>Звук</value></data>
+  <data name="OptionsScene.Up" xml:space="preserve"><value>Вверх</value></data>
+  <data name="OptionsScene.Up 2" xml:space="preserve"><value>Вверх 2</value></data>
   <data name="OptionsScene.Video" xml:space="preserve"><value>Видео</value></data>
   <data name="SplashScene.Loading" xml:space="preserve"><value>Загрузка...</value></data>
 </root>

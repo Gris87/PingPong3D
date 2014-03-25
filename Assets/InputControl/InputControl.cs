@@ -54,6 +54,12 @@ public static class InputControl
             mSecondaryCode = aSecondaryCode;
         }
 
+        public void set(KeyMapping another)
+        {
+            mPrimaryCode   = another.mPrimaryCode;
+            mSecondaryCode = another.mSecondaryCode;
+        }
+
         public bool isPressed()
         {
             if (Input.GetKey(mPrimaryCode))

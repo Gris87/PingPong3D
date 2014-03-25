@@ -8,15 +8,18 @@ public class LoadingScript : MonoBehaviour
     {
         guiText.fontSize=(int)(Screen.height*0.1);
 
-        // Setup keys
-        InputControl.setKey("Up",     KeyCode.W);
-        InputControl.setKey("Down",   KeyCode.S);
-        InputControl.setKey("Up 2",   KeyCode.UpArrow);
-        InputControl.setKey("Down 2", KeyCode.DownArrow);
-
-        // Setup axis
-        InputControl.setAxis("Vertical",   "Down",   "Up");
-        InputControl.setAxis("Vertical 2", "Down 2", "Up 2");
+        if (!Utils.isTouchDevice)
+        {
+            // Setup keys
+            InputControl.setKey("Up",     KeyCode.W);
+            InputControl.setKey("Down",   KeyCode.S);
+            InputControl.setKey("Up 2",   KeyCode.UpArrow);
+            InputControl.setKey("Down 2", KeyCode.DownArrow);
+            
+            // Setup axis
+            InputControl.setAxis("Vertical",   "Down",   "Up");
+            InputControl.setAxis("Vertical 2", "Down 2", "Up 2");
+        }
 
         Options.load();
 

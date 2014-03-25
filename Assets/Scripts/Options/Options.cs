@@ -526,6 +526,14 @@ public class Options : MonoBehaviour
     {
         int cur=0;
 
+        for (int i=0; i<controlSetters.Count; ++i)
+        {
+            GUI.Label(new Rect(0, rowOffset*cur, panelWidth*0.4f, rowHeight), localizationKeys[i], (!Utils.isTouchDevice && currentItem==cur) ? menuSelectedItemStyle : menuItemStyle);
+            controlSetters[i].draw(new Rect(panelWidth*0.45f, rowOffset*cur, panelWidth*0.55f, rowHeight));
+            
+            ++cur;
+        }
+
         if (drawButton(localizationBack, panelWidth, panelHeight, rowHeight, rowOffset, cur))
         {
             selectItem(cur);
@@ -606,6 +614,7 @@ public class Options : MonoBehaviour
 
     private void controlItemInControlsOptions(int index)
     {
+        // Nothing
     }
 
     private void selectItem(int index)
@@ -781,7 +790,16 @@ public class Options : MonoBehaviour
         scrollPosition = Vector2.zero;
         currentState   = State.InControlsOptions;
         currentItem    = 0;
-        itemsCount     = 0;
+        itemsCount     = controlSetters.Count+1;
+
+        int cur=0;
+
+        foreach (InputControl.KeyMapping key in InputControl.getKeys())
+        {
+            controlSetters[cur].setKeys(key);
+
+            ++cur;
+        }
     }
 
     public void applyChanges()
@@ -870,6 +888,14 @@ public class Options : MonoBehaviour
 
     private void applyChangesInControlsOptions()
     {
+        int cur=0;
+        
+        foreach (InputControl.KeyMapping key in InputControl.getKeys())
+        {
+            key.set(controlSetters[cur].getKeys());
+
+            ++cur;
+        }
     }
 
     private void updateLanguageScroller()
@@ -972,7 +998,7 @@ public class Options : MonoBehaviour
 
         #region Game
         LanguageManager languageManager=LanguageManager.Instance;
-        mLanguage=iniFile.Get("Language", languageManager.GetSystemLanguage());
+        mLanguage=iniFile.Get("Game.Language", languageManager.GetSystemLanguage());
 
         if (!languageManager.IsLanguageSupported(mLanguage))
         {
@@ -984,9 +1010,9 @@ public class Options : MonoBehaviour
         #endregion
 
         #region Sound
-        mMasterVolume  = iniFile.Get("MasterVolume",  1f);
-        mMusicVolume   = iniFile.Get("MusicVolume",   1f);
-        mEffectsVolume = iniFile.Get("EffectsVolume", 1f);
+        mMasterVolume  = iniFile.Get("Sound.MasterVolume",  1f);
+        mMusicVolume   = iniFile.Get("Sound.MusicVolume",   1f);
+        mEffectsVolume = iniFile.Get("Sound.EffectsVolume", 1f);
 
         Debug.Log("Master volume:  "+mMasterVolume.ToString());
         Debug.Log("Music volume:   "+mMusicVolume.ToString());
@@ -994,13 +1020,13 @@ public class Options : MonoBehaviour
         #endregion
 
         #region Video
-        mShowFPS        = iniFile.Get("ShowFPS",    false);
-        mQuality        = iniFile.Get("Quality",    QualitySettings.GetQualityLevel());
+        mShowFPS        = iniFile.Get("Video.ShowFPS",    false);
+        mQuality        = iniFile.Get("Video.Quality",    QualitySettings.GetQualityLevel());
 
         if (!Utils.isTouchDevice)
         {
-            mResolution = iniFile.Get("Resolution", "800x600");
-            mFullScreen = iniFile.Get("FullScreen", true);
+            mResolution = iniFile.Get("Video.Resolution", "800x600");
+            mFullScreen = iniFile.Get("Video.FullScreen", true);
         }
 
         Debug.Log("Show FPS:       "+mShowFPS.ToString());
@@ -1015,6 +1041,38 @@ public class Options : MonoBehaviour
             Debug.Log("Full screen:    "+mFullScreen.ToString());
 
             changeResolution();
+        }
+        #endregion
+
+        #region Controls        
+        foreach (InputControl.KeyMapping key in InputControl.getKeys())
+        {
+            KeyCode primaryKey;
+            KeyCode secondaryKey;
+
+
+
+            try
+            {
+                primaryKey   = (KeyCode)Enum.Parse(typeof(KeyCode), iniFile.Get("Controls."+key.name+".Primary",   "None"));
+            }
+            catch(Exception)
+            {
+                primaryKey   = KeyCode.None;
+            }
+
+            try
+            {
+                secondaryKey = (KeyCode)Enum.Parse(typeof(KeyCode), iniFile.Get("Controls."+key.name+".Secondary", "None"));
+            }
+            catch(Exception)
+            {
+                secondaryKey = KeyCode.None;
+            }
+
+
+
+            key.set(primaryKey, secondaryKey);
         }
         #endregion
     }
@@ -1041,25 +1099,42 @@ public class Options : MonoBehaviour
         IniFile iniFile=new IniFile();
 
         #region Game
-        iniFile.Set("Language", mLanguage, "Application language: "+languagesList);
+        iniFile.Set("Game.Language",        mLanguage,      "Application language: "+languagesList);
         #endregion
 
         #region Sound
-        iniFile.Set("MasterVolume",  mMasterVolume,  "Master volume: 0-1");
-        iniFile.Set("MusicVolume",   mMusicVolume,   "Music volume: 0-1");
-        iniFile.Set("EffectsVolume", mEffectsVolume, "Effects volume: 0-1");
+        iniFile.Set("Sound.MasterVolume",   mMasterVolume,  "Master volume: 0-1");
+        iniFile.Set("Sound.MusicVolume",    mMusicVolume,   "Music volume: 0-1");
+        iniFile.Set("Sound.EffectsVolume",  mEffectsVolume, "Effects volume: 0-1");
         #endregion
 
         #region Video
-
-
-        iniFile.Set("ShowFPS",    mShowFPS, "Show FPS: True/False");
-        iniFile.Set("Quality",    mQuality, "Video quality: 0-"+QualitySettings.names.Length.ToString()+" ("+QualitySettings.names.Length.ToString()+" - Custom)");
+        iniFile.Set("Video.ShowFPS",        mShowFPS,       "Show FPS: True/False");
+        iniFile.Set("Video.Quality",        mQuality,       "Video quality: 0-"+QualitySettings.names.Length.ToString()+" ("+QualitySettings.names.Length.ToString()+" - Custom)");
 
         if (!Utils.isTouchDevice)
         {
-            iniFile.Set("Resolution", mResolution, "Screen resolution: WIDTH x HEIGHT : RATE Hz");
-            iniFile.Set("FullScreen", mFullScreen, "Full screen mode: True/False");
+            iniFile.Set("Video.Resolution", mResolution,    "Screen resolution: WIDTH x HEIGHT : RATE Hz");
+            iniFile.Set("Video.FullScreen", mFullScreen,    "Full screen mode: True/False");
+        }
+        #endregion
+
+        #region Controls
+        bool firstKey=true;
+
+        foreach (InputControl.KeyMapping key in InputControl.getKeys())
+        {
+            if (firstKey)
+            {
+                firstKey=false;
+                iniFile.Set("Controls."+key.name+".Primary", key.primaryCode.ToString(), "Controls");
+            }
+            else
+            {
+                iniFile.Set("Controls."+key.name+".Primary", key.primaryCode.ToString());
+            }
+
+            iniFile.Set("Controls."+key.name+".Secondary",   key.secondaryCode.ToString());
         }
         #endregion
 
