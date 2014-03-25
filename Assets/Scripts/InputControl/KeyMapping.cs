@@ -1,13 +1,11 @@
-﻿using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
-
-public class KeyMapping
+﻿public class KeyMapping
 {
-    private string  mName;
-    private KeyCode mPrimaryCode;
-    private KeyCode mSecondaryCode;
-    
+    private string      mName;
+    private CustomInput mPrimaryInput;
+    private CustomInput mSecondaryInput;
+    private CustomInput mThirdInput;
+
+    #region Properties
     public string name
     {
         get
@@ -16,82 +14,184 @@ public class KeyMapping
         }
     }
     
-    public KeyCode primaryCode
+    public CustomInput primaryInput
     {
         get
         {
-            return mPrimaryCode;
+            return mPrimaryInput;
+        }
+
+        set
+        {
+            if (value==null)
+            {
+                mPrimaryInput=new KeyboardInput();
+            }
+            else
+            {
+                mPrimaryInput=value;
+            }
         }
     }
     
-    public KeyCode secondaryCode
+    public CustomInput secondaryInput
     {
         get
         {
-            return mSecondaryCode;
+            return mSecondaryInput;
+        }
+
+        set
+        {
+            if (value==null)
+            {
+                mSecondaryInput=new KeyboardInput();
+            }
+            else
+            {
+                mSecondaryInput=value;
+            }
         }
     }
+
+    public CustomInput thirdInput
+    {
+        get
+        {
+            return mThirdInput;
+        }
+
+        set
+        {
+            if (value==null)
+            {
+                mThirdInput=new KeyboardInput();
+            }
+            else
+            {
+                mThirdInput=value;
+            }
+        }
+    }
+    #endregion
     
-    public KeyMapping(string aName, KeyCode aPrimaryCode, KeyCode aSecondaryCode = KeyCode.None)
+    public KeyMapping(string aName="", CustomInput aPrimaryInput=null, CustomInput aSecondaryInput=null, CustomInput aThirdInput=null)
     {
         mName=aName;
-        set(aPrimaryCode, aSecondaryCode);
+        primaryInput   = aPrimaryInput;
+        secondaryInput = aSecondaryInput;
+        thirdInput     = aThirdInput;
     }
-    
-    public void set(KeyCode aPrimaryCode, KeyCode aSecondaryCode = KeyCode.None)
+
+    public KeyMapping(KeyMapping another)
     {
-        mPrimaryCode   = aPrimaryCode;
-        mSecondaryCode = aSecondaryCode;
+        mName=another.mName;
+        set(another);
     }
     
     public void set(KeyMapping another)
     {
-        mPrimaryCode   = another.mPrimaryCode;
-        mSecondaryCode = another.mSecondaryCode;
+        mPrimaryInput   = another.mPrimaryInput;
+        mSecondaryInput = another.mSecondaryInput;
+        mThirdInput     = another.mThirdInput;
+    }
+
+    public float getValue()
+    {
+        float res;
+
+        res=mPrimaryInput.getInput();
+
+        if (res!=0)
+        {
+            return res;
+        }
+
+        res=mSecondaryInput.getInput();
+        
+        if (res!=0)
+        {
+            return res;
+        }
+
+        res=mThirdInput.getInput();
+        
+        if (res!=0)
+        {
+            return res;
+        }
+
+        return 0;
+    }
+
+    public float getValueDown()
+    {
+        float res;
+        
+        res=mPrimaryInput.getInputDown();
+        
+        if (res!=0)
+        {
+            return res;
+        }
+        
+        res=mSecondaryInput.getInputDown();
+        
+        if (res!=0)
+        {
+            return res;
+        }
+        
+        res=mThirdInput.getInputDown();
+        
+        if (res!=0)
+        {
+            return res;
+        }
+        
+        return 0;
+    }
+
+    public float getValueUp()
+    {
+        float res;
+        
+        res=mPrimaryInput.getInputUp();
+        
+        if (res!=0)
+        {
+            return res;
+        }
+        
+        res=mSecondaryInput.getInputUp();
+        
+        if (res!=0)
+        {
+            return res;
+        }
+        
+        res=mThirdInput.getInputUp();
+        
+        if (res!=0)
+        {
+            return res;
+        }
+        
+        return 0;
     }
     
     public bool isPressed()
-    {
-        if (Input.GetKey(mPrimaryCode))
-        {
-            return true;
-        }
-        
-        if (Input.GetKey(mSecondaryCode))
-        {
-            return true;
-        }
-        
-        return false;
+    {        
+        return getValue()!=0;
     }
     
     public bool isPressedDown()
     {
-        if (Input.GetKeyDown(mPrimaryCode))
-        {
-            return true;
-        }
-        
-        if (Input.GetKeyDown(mSecondaryCode))
-        {
-            return true;
-        }
-        
-        return false;
+        return getValueDown()!=0;
     }
     
     public bool isPressedUp()
     {
-        if (Input.GetKeyUp(mPrimaryCode))
-        {
-            return true;
-        }
-        
-        if (Input.GetKeyUp(mSecondaryCode))
-        {
-            return true;
-        }
-        
-        return false;
+        return getValueUp()!=0;
     }
 }

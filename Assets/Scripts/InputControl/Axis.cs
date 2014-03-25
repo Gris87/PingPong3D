@@ -1,9 +1,12 @@
-﻿public class Axis
+﻿using UnityEngine;
+
+public class Axis
 {
     private string     mName;
     private KeyMapping mNegative;
     private KeyMapping mPositive;
-    
+
+    #region Properties
     public string name
     {
         get
@@ -18,6 +21,16 @@
         {
             return mNegative;
         }
+        
+        set
+        {
+            if (value==null)
+            {
+                Debug.LogError("value can't be null");
+            }
+
+            mNegative=value;
+        }
     }
     
     public KeyMapping positive
@@ -26,12 +39,35 @@
         {
             return mPositive;
         }
+
+        set
+        {
+            if (value==null)
+            {
+                Debug.LogError("value can't be null");
+            }
+
+            mPositive=value;
+        }
     }
+    #endregion
     
     public Axis(string aName, KeyMapping aNegative, KeyMapping aPositive)
     {
         mName=aName;
         set(aNegative, aPositive);
+    }
+
+    public Axis(Axis another)
+    {
+        mName=another.mName;
+        set(another);
+    }
+
+    public void set(Axis another)
+    {
+        mNegative = another.mNegative;
+        mPositive = another.mPositive;
     }
     
     public void set(KeyMapping aNegative, KeyMapping aPositive)
@@ -42,21 +78,6 @@
     
     public float getValue()
     {
-        bool negativePressing=mNegative.isPressed();
-        bool positivePressing=mPositive.isPressed();
-        
-        if (negativePressing!=positivePressing)
-        {
-            if (negativePressing)
-            {
-                return -1;
-            }
-            else
-            {
-                return 1;
-            }
-        }
-        
-        return 0;
+        return mPositive.getValue()-mNegative.getValue();
     }
 }
