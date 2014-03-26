@@ -115,13 +115,8 @@
         }
 
         res=mThirdInput.getInput();
-        
-        if (res!=0)
-        {
-            return res;
-        }
 
-        return 0;
+        return res;
     }
 
     public float getValueDown()
@@ -144,12 +139,7 @@
         
         res=mThirdInput.getInputDown();
         
-        if (res!=0)
-        {
-            return res;
-        }
-        
-        return 0;
+        return res;
     }
 
     public float getValueUp()
@@ -172,26 +162,21 @@
         
         res=mThirdInput.getInputUp();
         
-        if (res!=0)
-        {
-            return res;
-        }
-        
-        return 0;
+        return res;
     }
     
     public bool isPressed()
     {        
-        return getValue()!=0;
+        return getValue()     != 0;
     }
     
     public bool isPressedDown()
     {
-        return getValueDown()!=0;
+        return getValueDown() != 0;
     }
     
     public bool isPressedUp()
     {
-        return getValueUp()!=0;
+        return getValueUp()   != 0;
     }
 }

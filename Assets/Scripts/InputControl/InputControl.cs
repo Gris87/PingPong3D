@@ -4,231 +4,58 @@ using System.Collections.Generic;
 
 public static class InputControl
 {
-    public enum MouseButton
-    {
-        Left,
-        Right,
-        Middle,
-        None
-    }
-
-    public enum MouseWheel
-    {
-        Up,
-        Down,
-        None
-    }
-
-    public enum JoystickAxis
-    {
-        Axis1,
-        Axis2,
-        Axis3,
-        Axis4,
-        Axis5,
-        Axis6,
-        Axis7,
-        Axis8,
-        Axis9,
-        Axis10
-    }
-
-    #region CustomInput
-    public class CustomInput
-    {
-        private KeyCode     mKeyCode;
-        private MouseButton mMouseButton;
-        private MouseWheel  mMouseWheel;
-
-    }
-    #endregion
-
-    #region KeyMapping
-    public class KeyMapping
-    {
-        private string  mName;
-        private KeyCode mPrimaryCode;
-        private KeyCode mSecondaryCode;
-
-        public string name
-        {
-            get
-            {
-                return mName;
-            }
-        }
-
-        public KeyCode primaryCode
-        {
-            get
-            {
-                return mPrimaryCode;
-            }
-        }
-
-        public KeyCode secondaryCode
-        {
-            get
-            {
-                return mSecondaryCode;
-            }
-        }
-
-        public KeyMapping(string aName, KeyCode aPrimaryCode, KeyCode aSecondaryCode = KeyCode.None)
-        {
-            mName=aName;
-            set(aPrimaryCode, aSecondaryCode);
-        }
-
-        public void set(KeyCode aPrimaryCode, KeyCode aSecondaryCode = KeyCode.None)
-        {
-            mPrimaryCode   = aPrimaryCode;
-            mSecondaryCode = aSecondaryCode;
-        }
-
-        public void set(KeyMapping another)
-        {
-            mPrimaryCode   = another.mPrimaryCode;
-            mSecondaryCode = another.mSecondaryCode;
-        }
-
-        public bool isPressed()
-        {
-            if (Input.GetKey(mPrimaryCode))
-            {
-                return true;
-            }
-
-            if (Input.GetKey(mSecondaryCode))
-            {
-                return true;
-            }
-
-            return false;
-        }
-
-        public bool isPressedDown()
-        {
-            if (Input.GetKeyDown(mPrimaryCode))
-            {
-                return true;
-            }
-            
-            if (Input.GetKeyDown(mSecondaryCode))
-            {
-                return true;
-            }
-            
-            return false;
-        }
-
-        public bool isPressedUp()
-        {
-            if (Input.GetKeyUp(mPrimaryCode))
-            {
-                return true;
-            }
-            
-            if (Input.GetKeyUp(mSecondaryCode))
-            {
-                return true;
-            }
-            
-            return false;
-        }
-    }
-    #endregion
-
-    #region Axis
-    public class Axis
-    {
-        private string     mName;
-        private KeyMapping mNegative;
-        private KeyMapping mPositive;
-        
-        public string name
-        {
-            get
-            {
-                return mName;
-            }
-        }
-        
-        public KeyMapping negative
-        {
-            get
-            {
-                return mNegative;
-            }
-        }
-        
-        public KeyMapping positive
-        {
-            get
-            {
-                return mPositive;
-            }
-        }
-        
-        public Axis(string aName, KeyMapping aNegative, KeyMapping aPositive)
-        {
-            mName=aName;
-            set(aNegative, aPositive);
-        }
-        
-        public void set(KeyMapping aNegative, KeyMapping aPositive)
-        {
-            mNegative = aNegative;
-            mPositive = aPositive;
-        }
-
-        public float getValue()
-        {
-            bool negativePressing=mNegative.isPressed();
-            bool positivePressing=mPositive.isPressed();
-            
-            if (negativePressing!=positivePressing)
-            {
-                if (negativePressing)
-                {
-                    return -1;
-                }
-                else
-                {
-                    return 1;
-                }
-            }
-            
-            return 0;
-        }
-    }
-    #endregion
-
+    // Set of keys
     private static List<KeyMapping>               mKeysList          = new List<KeyMapping>();
     private static Dictionary<string, KeyMapping> mKeysMap           = new Dictionary<string, KeyMapping>();
 
+    // Set of axes
     private static List<Axis>                     mAxesList          = new List<Axis>();
     private static Dictionary<string, Axis>       mAxesMap           = new Dictionary<string, Axis>();
 
+    // Smooth for GetAxis
     private static Dictionary<string, float>      mSmoothAxesValues  = new Dictionary<string, float>();
-    private static float                          mSmoothCoefficient = 0.125f;
+    private static float                          mSmoothCoefficient = 0.1f;
+
+    // Joystick options
+    private static float                          mJoystickThreshold = 0.2f;
 
     #region Setup keys
-    public static void setKey(string aName, KeyCode aPrimaryCode, KeyCode aSecondaryCode = KeyCode.None)
+    #region setKey with different arguments
+    public static KeyMapping setKey(string aName, KeyCode primary)
+    {
+        return setKey(aName, new KeyboardInput(primary));
+    }
+
+    public static KeyMapping setKey(string aName, KeyCode primary, KeyCode secondary)
+    {
+        return setKey(aName, new KeyboardInput(primary), new KeyboardInput(secondary));
+    }
+
+    public static KeyMapping setKey(string aName, KeyCode primary, KeyCode secondary, KeyCode third)
+    {
+        return setKey(aName, new KeyboardInput(primary), new KeyboardInput(secondary), new KeyboardInput(third));
+    }
+    #endregion
+
+    public static KeyMapping setKey(string aName, CustomInput primary=null, CustomInput secondary=null, CustomInput third=null)
     {
         KeyMapping outKey=null;
 
         if (mKeysMap.TryGetValue(aName, out outKey))
         {
-            outKey.set(aPrimaryCode, aSecondaryCode);
+            outKey.primaryInput   = primary;
+            outKey.secondaryInput = secondary;
+            outKey.thirdInput     = third;
         }
         else
         {
-            KeyMapping newKey=new KeyMapping(aName, aPrimaryCode, aSecondaryCode);
+            outKey=new KeyMapping(aName, primary, secondary, third);
 
-            mKeysList.Add(newKey);
-            mKeysMap.Add (aName, newKey);
+            mKeysList.Add(outKey);
+            mKeysMap.Add (aName, outKey);
         }
+
+        return outKey;
     }
 
     public static void removeKey(string aName)
@@ -249,41 +76,43 @@ public static class InputControl
     #endregion
 
     #region Setup axes
-    public static void setAxis(string aName, string aNegative, string aPositive)
+    public static void setAxis(string aName, string negative, string positive)
     {
-        KeyMapping aNegativeKey=null;
-        KeyMapping aPositiveKey=null;
+        KeyMapping negativeKey=null;
+        KeyMapping positiveKey=null;
 
-        if (!mKeysMap.TryGetValue(aNegative, out aNegativeKey))
+        if (!mKeysMap.TryGetValue(negative, out negativeKey))
         {
-            Debug.LogError("Negative key "+aNegative+" not found for axis "+aName);
+            Debug.LogError("Negative key "+negative+" not found for axis "+aName);
             return;
         }
 
-        if (!mKeysMap.TryGetValue(aPositive, out aPositiveKey))
+        if (!mKeysMap.TryGetValue(positive, out positiveKey))
         {
-            Debug.LogError("Positive key "+aPositive+" not found for axis "+aName);
+            Debug.LogError("Positive key "+positive+" not found for axis "+aName);
             return;
         }
 
-        setAxis(aName, aNegativeKey, aPositiveKey);
+        setAxis(aName, negativeKey, positiveKey);
     }
 
-    public static void setAxis(string aName, KeyMapping aNegative, KeyMapping aPositive)
+    public static Axis setAxis(string aName, KeyMapping negative, KeyMapping positive)
     {
         Axis outAxis=null;
         
         if (mAxesMap.TryGetValue(aName, out outAxis))
         {
-            outAxis.set(aNegative, aPositive);
+            outAxis.set(negative, positive);
         }
         else
         {
-            Axis newAxis=new Axis(aName, aNegative, aPositive);
+            outAxis=new Axis(aName, negative, positive);
             
-            mAxesList.Add(newAxis);
-            mAxesMap.Add (aName, newAxis);
+            mAxesList.Add(outAxis);
+            mAxesMap.Add (aName, outAxis);
         }
+
+        return outAxis;
     }
     
     public static void removeAxis(string aName)
@@ -404,15 +233,12 @@ public static class InputControl
         }
     }
 
-    public static KeyCode currentKeyCode
+    public static CustomInput currentInput
     {
         get
         {
-            string keyDesc=Input.inputString;
-
-            Debug.Log(keyDesc);
-
-            return KeyCode.None;
+            // TODO: Get current input
+            return new KeyboardInput();
         }
     }
 
