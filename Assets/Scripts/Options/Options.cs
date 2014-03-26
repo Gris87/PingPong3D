@@ -228,9 +228,11 @@ public class Options : MonoBehaviour
         selectedControlSetter=null;
         controlSetters=new List<ControlSetter>();
 
-        foreach (InputControl.KeyMapping key in InputControl.getKeys())
+        for (int i=0; i<InputControl.getKeys().Count; ++i)
         {
-            controlSetters.Add(new ControlSetter());
+            ControlSetter controlSetter=new ControlSetter();
+            controlSetter.setModifiedFunction(settingsModified);
+            controlSetters.Add(controlSetter);
         }
 
         localizationKeys=new List<string>();
@@ -284,7 +286,7 @@ public class Options : MonoBehaviour
 
         localizationKeys.Clear();
 
-        foreach (InputControl.KeyMapping key in InputControl.getKeys())
+        foreach (KeyMapping key in InputControl.getKeys())
         {
             localizationKeys.Add(languageManager.GetTextValue("OptionsScene."+key.name));
         }
@@ -298,10 +300,8 @@ public class Options : MonoBehaviour
         {
             if (InputControl.GetKeyDown(KeyCode.Escape))
             {
-                selectedControlSetter.setSelectedKey(KeyCode.None);
+                selectedControlSetter.setSelectedKey(null);
                 selectedControlSetter=null;
-
-                modified=true;
             }
         }
         else
@@ -819,7 +819,7 @@ public class Options : MonoBehaviour
 
         int cur=0;
 
-        foreach (InputControl.KeyMapping key in InputControl.getKeys())
+        foreach (KeyMapping key in InputControl.getKeys())
         {
             controlSetters[cur].setKeyMapping(key);
 
@@ -915,7 +915,7 @@ public class Options : MonoBehaviour
     {
         int cur=0;
         
-        foreach (InputControl.KeyMapping key in InputControl.getKeys())
+        foreach (KeyMapping key in InputControl.getKeys())
         {
             key.set(controlSetters[cur].getKeyMapping());
 
@@ -1069,8 +1069,10 @@ public class Options : MonoBehaviour
         }
         #endregion
 
-        #region Controls        
-        foreach (InputControl.KeyMapping key in InputControl.getKeys())
+        #region Controls     
+        // TODO: Implement
+        /*
+        foreach (KeyMapping key in InputControl.getKeys())
         {
             KeyCode primaryKey;
             KeyCode secondaryKey;
@@ -1099,6 +1101,7 @@ public class Options : MonoBehaviour
 
             key.set(primaryKey, secondaryKey);
         }
+        */
         #endregion
     }
 
@@ -1147,19 +1150,20 @@ public class Options : MonoBehaviour
         #region Controls
         bool firstKey=true;
 
-        foreach (InputControl.KeyMapping key in InputControl.getKeys())
+        foreach (KeyMapping key in InputControl.getKeys())
         {
             if (firstKey)
             {
                 firstKey=false;
-                iniFile.Set("Controls."+key.name+".Primary", key.primaryCode.ToString(), "Controls");
+                iniFile.Set("Controls."+key.name+".Primary", key.primaryInput.ToString(), "Controls");
             }
             else
             {
-                iniFile.Set("Controls."+key.name+".Primary", key.primaryCode.ToString());
+                iniFile.Set("Controls."+key.name+".Primary", key.primaryInput.ToString());
             }
 
-            iniFile.Set("Controls."+key.name+".Secondary",   key.secondaryCode.ToString());
+            iniFile.Set("Controls."+key.name+".Secondary",   key.secondaryInput.ToString());
+            iniFile.Set("Controls."+key.name+".Third",       key.thirdInput.ToString());
         }
         #endregion
 

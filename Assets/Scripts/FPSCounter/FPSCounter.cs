@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class FPSScript : MonoBehaviour
+public class FPSCounter : MonoBehaviour
 {
     public static bool isOn = false;
 

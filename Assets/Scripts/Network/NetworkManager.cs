@@ -94,7 +94,7 @@ public class NetworkManager : MonoBehaviour
         // -----------------------------------------------------------
 
         #region Get mode from arguments
-        Hashtable arguments=SceneManager.GetSceneArguments();
+        Hashtable arguments=SceneManager.sceneArguments;
 
         if (arguments!=null && arguments.ContainsKey("serverMode"))
         {

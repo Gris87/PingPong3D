@@ -56,7 +56,7 @@ public class BigHorizontalSlider : ModifiableObject
             }
             else
             {
-                if (InputControl.GetMouseButton(InputControl.MouseButton.Left))
+                if (InputControl.GetMouseButton(MouseButton.Left))
                 {
                     Vector3 mousePos=InputControl.mousePosition;
                     
