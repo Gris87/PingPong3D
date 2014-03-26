@@ -74,6 +74,11 @@ public static class InputControl
     // ------------------------------------------------------------------------------------------------------------
 
     #region Level 2-1
+    public static KeyMapping setKey(string aName, KeyCode primary, CustomInput secondary)
+    {
+        return setKey(aName, new KeyboardInput(primary), secondary);
+    }
+
     public static KeyMapping setKey(string aName, KeyCode primary, KeyCode secondary)
     {
         return setKey(aName, new KeyboardInput(primary), new KeyboardInput(secondary));
@@ -98,6 +103,11 @@ public static class InputControl
     // ------------------------------------------------------------------------------------------------------------
 
     #region Level 2-2
+    public static KeyMapping setKey(string aName, MouseAxis primary, CustomInput secondary)
+    {
+        return setKey(aName, new MouseInput(primary), secondary);
+    }
+
     public static KeyMapping setKey(string aName, MouseAxis primary, KeyCode secondary)
     {
         return setKey(aName, new MouseInput(primary), new KeyboardInput(secondary));
@@ -122,6 +132,11 @@ public static class InputControl
     // ------------------------------------------------------------------------------------------------------------
     
     #region Level 2-3
+    public static KeyMapping setKey(string aName, MouseButton primary, CustomInput secondary)
+    {
+        return setKey(aName, new MouseInput(primary), secondary);
+    }
+
     public static KeyMapping setKey(string aName, MouseButton primary, KeyCode secondary)
     {
         return setKey(aName, new MouseInput(primary), new KeyboardInput(secondary));
@@ -146,6 +161,11 @@ public static class InputControl
     // ------------------------------------------------------------------------------------------------------------
     
     #region Level 2-4
+    public static KeyMapping setKey(string aName, JoystickInput primary, CustomInput secondary)
+    {
+        return setKey(aName, primary, secondary);
+    }
+
     public static KeyMapping setKey(string aName, JoystickInput primary, KeyCode secondary)
     {
         return setKey(aName, primary, new KeyboardInput(secondary));
@@ -172,6 +192,744 @@ public static class InputControl
     // ============================================================================================================
 
     #region Level 3
+
+    #region Level 3-0
+
+    #region Level 3-0-0
+    public static KeyMapping setKey(string aName, CustomInput primary, CustomInput secondary, KeyCode third)
+    {
+        return setKey(aName, primary, secondary, new KeyboardInput(third));
+    }
+    
+    public static KeyMapping setKey(string aName, CustomInput primary, CustomInput secondary, MouseAxis third)
+    {
+        return setKey(aName, primary, secondary, new MouseInput(third));
+    }
+    
+    public static KeyMapping setKey(string aName, CustomInput primary, CustomInput secondary, MouseButton third)
+    {
+        return setKey(aName, primary, secondary, new MouseInput(third));
+    }
+    
+    public static KeyMapping setKey(string aName, CustomInput primary, CustomInput secondary, JoystickInput third)
+    {
+        return setKey(aName, primary, secondary, third);
+    }
+    #endregion
+
+    // ------------------------------------------------------------------------------------------------------------
+
+    #region Level 3-0-1
+    public static KeyMapping setKey(string aName, CustomInput primary, KeyCode secondary, CustomInput third)
+    {
+        return setKey(aName, primary, new KeyboardInput(secondary), third);
+    }
+
+    public static KeyMapping setKey(string aName, CustomInput primary, KeyCode secondary, KeyCode third)
+    {
+        return setKey(aName, primary, new KeyboardInput(secondary), new KeyboardInput(third));
+    }
+    
+    public static KeyMapping setKey(string aName, CustomInput primary, KeyCode secondary, MouseAxis third)
+    {
+        return setKey(aName, primary, new KeyboardInput(secondary), new MouseInput(third));
+    }
+    
+    public static KeyMapping setKey(string aName, CustomInput primary, KeyCode secondary, MouseButton third)
+    {
+        return setKey(aName, primary, new KeyboardInput(secondary), new MouseInput(third));
+    }
+    
+    public static KeyMapping setKey(string aName, CustomInput primary, KeyCode secondary, JoystickInput third)
+    {
+        return setKey(aName, primary, new KeyboardInput(secondary), third);
+    }
+    #endregion
+
+    // ------------------------------------------------------------------------------------------------------------
+    
+    #region Level 3-0-2
+    public static KeyMapping setKey(string aName, CustomInput primary, MouseAxis secondary, CustomInput third)
+    {
+        return setKey(aName, primary, new MouseInput(secondary), third);
+    }
+
+    public static KeyMapping setKey(string aName, CustomInput primary, MouseAxis secondary, KeyCode third)
+    {
+        return setKey(aName, primary, new MouseInput(secondary), new KeyboardInput(third));
+    }
+    
+    public static KeyMapping setKey(string aName, CustomInput primary, MouseAxis secondary, MouseAxis third)
+    {
+        return setKey(aName, primary, new MouseInput(secondary), new MouseInput(third));
+    }
+    
+    public static KeyMapping setKey(string aName, CustomInput primary, MouseAxis secondary, MouseButton third)
+    {
+        return setKey(aName, primary, new MouseInput(secondary), new MouseInput(third));
+    }
+    
+    public static KeyMapping setKey(string aName, CustomInput primary, MouseAxis secondary, JoystickInput third)
+    {
+        return setKey(aName, primary, new MouseInput(secondary), third);
+    }
+    #endregion
+
+    // ------------------------------------------------------------------------------------------------------------
+    
+    #region Level 3-0-3
+    public static KeyMapping setKey(string aName, CustomInput primary, MouseButton secondary, CustomInput third)
+    {
+        return setKey(aName, primary, new MouseInput(secondary), third);
+    }
+
+    public static KeyMapping setKey(string aName, CustomInput primary, MouseButton secondary, KeyCode third)
+    {
+        return setKey(aName, primary, new MouseInput(secondary), new KeyboardInput(third));
+    }
+    
+    public static KeyMapping setKey(string aName, CustomInput primary, MouseButton secondary, MouseAxis third)
+    {
+        return setKey(aName, primary, new MouseInput(secondary), new MouseInput(third));
+    }
+    
+    public static KeyMapping setKey(string aName, CustomInput primary, MouseButton secondary, MouseButton third)
+    {
+        return setKey(aName, primary, new MouseInput(secondary), new MouseInput(third));
+    }
+    
+    public static KeyMapping setKey(string aName, CustomInput primary, MouseButton secondary, JoystickInput third)
+    {
+        return setKey(aName, primary, new MouseInput(secondary), third);
+    }
+    #endregion
+
+    // ------------------------------------------------------------------------------------------------------------
+    
+    #region Level 3-0-4
+    public static KeyMapping setKey(string aName, CustomInput primary, JoystickInput secondary, CustomInput third)
+    {
+        return setKey(aName, primary, secondary, third);
+    }
+
+    public static KeyMapping setKey(string aName, CustomInput primary, JoystickInput secondary, KeyCode third)
+    {
+        return setKey(aName, primary, secondary, new KeyboardInput(third));
+    }
+    
+    public static KeyMapping setKey(string aName, CustomInput primary, JoystickInput secondary, MouseAxis third)
+    {
+        return setKey(aName, primary, secondary, new MouseInput(third));
+    }
+    
+    public static KeyMapping setKey(string aName, CustomInput primary, JoystickInput secondary, MouseButton third)
+    {
+        return setKey(aName, primary, secondary, new MouseInput(third));
+    }
+    
+    public static KeyMapping setKey(string aName, CustomInput primary, JoystickInput secondary, JoystickInput third)
+    {
+        return setKey(aName, primary, secondary, third);
+    }
+    #endregion
+    
+    #endregion
+
+    // ************************************************************************************************************
+
+    #region Level 3-1
+    
+    #region Level 3-1-0
+    public static KeyMapping setKey(string aName, KeyCode primary, CustomInput secondary, CustomInput third)
+    {
+        return setKey(aName, new KeyboardInput(primary), secondary, third);
+    }
+
+    public static KeyMapping setKey(string aName, KeyCode primary, CustomInput secondary, KeyCode third)
+    {
+        return setKey(aName, new KeyboardInput(primary), secondary, new KeyboardInput(third));
+    }
+    
+    public static KeyMapping setKey(string aName, KeyCode primary, CustomInput secondary, MouseAxis third)
+    {
+        return setKey(aName, new KeyboardInput(primary), secondary, new MouseInput(third));
+    }
+    
+    public static KeyMapping setKey(string aName, KeyCode primary, CustomInput secondary, MouseButton third)
+    {
+        return setKey(aName, new KeyboardInput(primary), secondary, new MouseInput(third));
+    }
+    
+    public static KeyMapping setKey(string aName, KeyCode primary, CustomInput secondary, JoystickInput third)
+    {
+        return setKey(aName, new KeyboardInput(primary), secondary, third);
+    }
+    #endregion
+    
+    // ------------------------------------------------------------------------------------------------------------
+    
+    #region Level 3-1-1
+    public static KeyMapping setKey(string aName, KeyCode primary, KeyCode secondary, CustomInput third)
+    {
+        return setKey(aName, new KeyboardInput(primary), new KeyboardInput(secondary), third);
+    }
+    
+    public static KeyMapping setKey(string aName, KeyCode primary, KeyCode secondary, KeyCode third)
+    {
+        return setKey(aName, new KeyboardInput(primary), new KeyboardInput(secondary), new KeyboardInput(third));
+    }
+    
+    public static KeyMapping setKey(string aName, KeyCode primary, KeyCode secondary, MouseAxis third)
+    {
+        return setKey(aName, new KeyboardInput(primary), new KeyboardInput(secondary), new MouseInput(third));
+    }
+    
+    public static KeyMapping setKey(string aName, KeyCode primary, KeyCode secondary, MouseButton third)
+    {
+        return setKey(aName, new KeyboardInput(primary), new KeyboardInput(secondary), new MouseInput(third));
+    }
+    
+    public static KeyMapping setKey(string aName, KeyCode primary, KeyCode secondary, JoystickInput third)
+    {
+        return setKey(aName, new KeyboardInput(primary), new KeyboardInput(secondary), third);
+    }
+    #endregion
+    
+    // ------------------------------------------------------------------------------------------------------------
+    
+    #region Level 3-1-2
+    public static KeyMapping setKey(string aName, KeyCode primary, MouseAxis secondary, CustomInput third)
+    {
+        return setKey(aName, new KeyboardInput(primary), new MouseInput(secondary), third);
+    }
+    
+    public static KeyMapping setKey(string aName, KeyCode primary, MouseAxis secondary, KeyCode third)
+    {
+        return setKey(aName, new KeyboardInput(primary), new MouseInput(secondary), new KeyboardInput(third));
+    }
+    
+    public static KeyMapping setKey(string aName, KeyCode primary, MouseAxis secondary, MouseAxis third)
+    {
+        return setKey(aName, new KeyboardInput(primary), new MouseInput(secondary), new MouseInput(third));
+    }
+    
+    public static KeyMapping setKey(string aName, KeyCode primary, MouseAxis secondary, MouseButton third)
+    {
+        return setKey(aName, new KeyboardInput(primary), new MouseInput(secondary), new MouseInput(third));
+    }
+    
+    public static KeyMapping setKey(string aName, KeyCode primary, MouseAxis secondary, JoystickInput third)
+    {
+        return setKey(aName, new KeyboardInput(primary), new MouseInput(secondary), third);
+    }
+    #endregion
+    
+    // ------------------------------------------------------------------------------------------------------------
+    
+    #region Level 3-1-3
+    public static KeyMapping setKey(string aName, KeyCode primary, MouseButton secondary, CustomInput third)
+    {
+        return setKey(aName, new KeyboardInput(primary), new MouseInput(secondary), third);
+    }
+    
+    public static KeyMapping setKey(string aName, KeyCode primary, MouseButton secondary, KeyCode third)
+    {
+        return setKey(aName, new KeyboardInput(primary), new MouseInput(secondary), new KeyboardInput(third));
+    }
+    
+    public static KeyMapping setKey(string aName, KeyCode primary, MouseButton secondary, MouseAxis third)
+    {
+        return setKey(aName, new KeyboardInput(primary), new MouseInput(secondary), new MouseInput(third));
+    }
+    
+    public static KeyMapping setKey(string aName, KeyCode primary, MouseButton secondary, MouseButton third)
+    {
+        return setKey(aName, new KeyboardInput(primary), new MouseInput(secondary), new MouseInput(third));
+    }
+    
+    public static KeyMapping setKey(string aName, KeyCode primary, MouseButton secondary, JoystickInput third)
+    {
+        return setKey(aName, new KeyboardInput(primary), new MouseInput(secondary), third);
+    }
+    #endregion
+    
+    // ------------------------------------------------------------------------------------------------------------
+    
+    #region Level 3-1-4
+    public static KeyMapping setKey(string aName, KeyCode primary, JoystickInput secondary, CustomInput third)
+    {
+        return setKey(aName, new KeyboardInput(primary), secondary, third);
+    }
+    
+    public static KeyMapping setKey(string aName, KeyCode primary, JoystickInput secondary, KeyCode third)
+    {
+        return setKey(aName, new KeyboardInput(primary), secondary, new KeyboardInput(third));
+    }
+    
+    public static KeyMapping setKey(string aName, KeyCode primary, JoystickInput secondary, MouseAxis third)
+    {
+        return setKey(aName, new KeyboardInput(primary), secondary, new MouseInput(third));
+    }
+    
+    public static KeyMapping setKey(string aName, KeyCode primary, JoystickInput secondary, MouseButton third)
+    {
+        return setKey(aName, new KeyboardInput(primary), secondary, new MouseInput(third));
+    }
+    
+    public static KeyMapping setKey(string aName, KeyCode primary, JoystickInput secondary, JoystickInput third)
+    {
+        return setKey(aName, new KeyboardInput(primary), secondary, third);
+    }
+    #endregion
+    
+    #endregion
+
+    // ************************************************************************************************************
+    
+    #region Level 3-2
+    
+    #region Level 3-2-0
+    public static KeyMapping setKey(string aName, MouseAxis primary, CustomInput secondary, CustomInput third)
+    {
+        return setKey(aName, new MouseInput(primary), secondary, third);
+    }
+    
+    public static KeyMapping setKey(string aName, MouseAxis primary, CustomInput secondary, KeyCode third)
+    {
+        return setKey(aName, new MouseInput(primary), secondary, new KeyboardInput(third));
+    }
+    
+    public static KeyMapping setKey(string aName, MouseAxis primary, CustomInput secondary, MouseAxis third)
+    {
+        return setKey(aName, new MouseInput(primary), secondary, new MouseInput(third));
+    }
+    
+    public static KeyMapping setKey(string aName, MouseAxis primary, CustomInput secondary, MouseButton third)
+    {
+        return setKey(aName, new MouseInput(primary), secondary, new MouseInput(third));
+    }
+    
+    public static KeyMapping setKey(string aName, MouseAxis primary, CustomInput secondary, JoystickInput third)
+    {
+        return setKey(aName, new MouseInput(primary), secondary, third);
+    }
+    #endregion
+    
+    // ------------------------------------------------------------------------------------------------------------
+    
+    #region Level 3-2-1
+    public static KeyMapping setKey(string aName, MouseAxis primary, KeyCode secondary, CustomInput third)
+    {
+        return setKey(aName, new MouseInput(primary), new KeyboardInput(secondary), third);
+    }
+    
+    public static KeyMapping setKey(string aName, MouseAxis primary, KeyCode secondary, KeyCode third)
+    {
+        return setKey(aName, new MouseInput(primary), new KeyboardInput(secondary), new KeyboardInput(third));
+    }
+    
+    public static KeyMapping setKey(string aName, MouseAxis primary, KeyCode secondary, MouseAxis third)
+    {
+        return setKey(aName, new MouseInput(primary), new KeyboardInput(secondary), new MouseInput(third));
+    }
+    
+    public static KeyMapping setKey(string aName, MouseAxis primary, KeyCode secondary, MouseButton third)
+    {
+        return setKey(aName, new MouseInput(primary), new KeyboardInput(secondary), new MouseInput(third));
+    }
+    
+    public static KeyMapping setKey(string aName, MouseAxis primary, KeyCode secondary, JoystickInput third)
+    {
+        return setKey(aName, new MouseInput(primary), new KeyboardInput(secondary), third);
+    }
+    #endregion
+    
+    // ------------------------------------------------------------------------------------------------------------
+    
+    #region Level 3-2-2
+    public static KeyMapping setKey(string aName, MouseAxis primary, MouseAxis secondary, CustomInput third)
+    {
+        return setKey(aName, new MouseInput(primary), new MouseInput(secondary), third);
+    }
+    
+    public static KeyMapping setKey(string aName, MouseAxis primary, MouseAxis secondary, KeyCode third)
+    {
+        return setKey(aName, new MouseInput(primary), new MouseInput(secondary), new KeyboardInput(third));
+    }
+    
+    public static KeyMapping setKey(string aName, MouseAxis primary, MouseAxis secondary, MouseAxis third)
+    {
+        return setKey(aName, new MouseInput(primary), new MouseInput(secondary), new MouseInput(third));
+    }
+    
+    public static KeyMapping setKey(string aName, MouseAxis primary, MouseAxis secondary, MouseButton third)
+    {
+        return setKey(aName, new MouseInput(primary), new MouseInput(secondary), new MouseInput(third));
+    }
+    
+    public static KeyMapping setKey(string aName, MouseAxis primary, MouseAxis secondary, JoystickInput third)
+    {
+        return setKey(aName, new MouseInput(primary), new MouseInput(secondary), third);
+    }
+    #endregion
+    
+    // ------------------------------------------------------------------------------------------------------------
+    
+    #region Level 3-2-3
+    public static KeyMapping setKey(string aName, MouseAxis primary, MouseButton secondary, CustomInput third)
+    {
+        return setKey(aName, new MouseInput(primary), new MouseInput(secondary), third);
+    }
+    
+    public static KeyMapping setKey(string aName, MouseAxis primary, MouseButton secondary, KeyCode third)
+    {
+        return setKey(aName, new MouseInput(primary), new MouseInput(secondary), new KeyboardInput(third));
+    }
+    
+    public static KeyMapping setKey(string aName, MouseAxis primary, MouseButton secondary, MouseAxis third)
+    {
+        return setKey(aName, new MouseInput(primary), new MouseInput(secondary), new MouseInput(third));
+    }
+    
+    public static KeyMapping setKey(string aName, MouseAxis primary, MouseButton secondary, MouseButton third)
+    {
+        return setKey(aName, new MouseInput(primary), new MouseInput(secondary), new MouseInput(third));
+    }
+    
+    public static KeyMapping setKey(string aName, MouseAxis primary, MouseButton secondary, JoystickInput third)
+    {
+        return setKey(aName, new MouseInput(primary), new MouseInput(secondary), third);
+    }
+    #endregion
+    
+    // ------------------------------------------------------------------------------------------------------------
+    
+    #region Level 3-2-4
+    public static KeyMapping setKey(string aName, MouseAxis primary, JoystickInput secondary, CustomInput third)
+    {
+        return setKey(aName, new MouseInput(primary), secondary, third);
+    }
+    
+    public static KeyMapping setKey(string aName, MouseAxis primary, JoystickInput secondary, KeyCode third)
+    {
+        return setKey(aName, new MouseInput(primary), secondary, new KeyboardInput(third));
+    }
+    
+    public static KeyMapping setKey(string aName, MouseAxis primary, JoystickInput secondary, MouseAxis third)
+    {
+        return setKey(aName, new MouseInput(primary), secondary, new MouseInput(third));
+    }
+    
+    public static KeyMapping setKey(string aName, MouseAxis primary, JoystickInput secondary, MouseButton third)
+    {
+        return setKey(aName, new MouseInput(primary), secondary, new MouseInput(third));
+    }
+    
+    public static KeyMapping setKey(string aName, MouseAxis primary, JoystickInput secondary, JoystickInput third)
+    {
+        return setKey(aName, new MouseInput(primary), secondary, third);
+    }
+    #endregion
+    
+    #endregion
+
+    // ************************************************************************************************************
+    
+    #region Level 3-3
+    
+    #region Level 3-3-0
+    public static KeyMapping setKey(string aName, MouseButton primary, CustomInput secondary, CustomInput third)
+    {
+        return setKey(aName, new MouseInput(primary), secondary, third);
+    }
+    
+    public static KeyMapping setKey(string aName, MouseButton primary, CustomInput secondary, KeyCode third)
+    {
+        return setKey(aName, new MouseInput(primary), secondary, new KeyboardInput(third));
+    }
+    
+    public static KeyMapping setKey(string aName, MouseButton primary, CustomInput secondary, MouseAxis third)
+    {
+        return setKey(aName, new MouseInput(primary), secondary, new MouseInput(third));
+    }
+    
+    public static KeyMapping setKey(string aName, MouseButton primary, CustomInput secondary, MouseButton third)
+    {
+        return setKey(aName, new MouseInput(primary), secondary, new MouseInput(third));
+    }
+    
+    public static KeyMapping setKey(string aName, MouseButton primary, CustomInput secondary, JoystickInput third)
+    {
+        return setKey(aName, new MouseInput(primary), secondary, third);
+    }
+    #endregion
+    
+    // ------------------------------------------------------------------------------------------------------------
+    
+    #region Level 3-3-1
+    public static KeyMapping setKey(string aName, MouseButton primary, KeyCode secondary, CustomInput third)
+    {
+        return setKey(aName, new MouseInput(primary), new KeyboardInput(secondary), third);
+    }
+    
+    public static KeyMapping setKey(string aName, MouseButton primary, KeyCode secondary, KeyCode third)
+    {
+        return setKey(aName, new MouseInput(primary), new KeyboardInput(secondary), new KeyboardInput(third));
+    }
+    
+    public static KeyMapping setKey(string aName, MouseButton primary, KeyCode secondary, MouseAxis third)
+    {
+        return setKey(aName, new MouseInput(primary), new KeyboardInput(secondary), new MouseInput(third));
+    }
+    
+    public static KeyMapping setKey(string aName, MouseButton primary, KeyCode secondary, MouseButton third)
+    {
+        return setKey(aName, new MouseInput(primary), new KeyboardInput(secondary), new MouseInput(third));
+    }
+    
+    public static KeyMapping setKey(string aName, MouseButton primary, KeyCode secondary, JoystickInput third)
+    {
+        return setKey(aName, new MouseInput(primary), new KeyboardInput(secondary), third);
+    }
+    #endregion
+    
+    // ------------------------------------------------------------------------------------------------------------
+    
+    #region Level 3-3-2
+    public static KeyMapping setKey(string aName, MouseButton primary, MouseAxis secondary, CustomInput third)
+    {
+        return setKey(aName, new MouseInput(primary), new MouseInput(secondary), third);
+    }
+    
+    public static KeyMapping setKey(string aName, MouseButton primary, MouseAxis secondary, KeyCode third)
+    {
+        return setKey(aName, new MouseInput(primary), new MouseInput(secondary), new KeyboardInput(third));
+    }
+    
+    public static KeyMapping setKey(string aName, MouseButton primary, MouseAxis secondary, MouseAxis third)
+    {
+        return setKey(aName, new MouseInput(primary), new MouseInput(secondary), new MouseInput(third));
+    }
+    
+    public static KeyMapping setKey(string aName, MouseButton primary, MouseAxis secondary, MouseButton third)
+    {
+        return setKey(aName, new MouseInput(primary), new MouseInput(secondary), new MouseInput(third));
+    }
+    
+    public static KeyMapping setKey(string aName, MouseButton primary, MouseAxis secondary, JoystickInput third)
+    {
+        return setKey(aName, new MouseInput(primary), new MouseInput(secondary), third);
+    }
+    #endregion
+    
+    // ------------------------------------------------------------------------------------------------------------
+    
+    #region Level 3-3-3
+    public static KeyMapping setKey(string aName, MouseButton primary, MouseButton secondary, CustomInput third)
+    {
+        return setKey(aName, new MouseInput(primary), new MouseInput(secondary), third);
+    }
+    
+    public static KeyMapping setKey(string aName, MouseButton primary, MouseButton secondary, KeyCode third)
+    {
+        return setKey(aName, new MouseInput(primary), new MouseInput(secondary), new KeyboardInput(third));
+    }
+    
+    public static KeyMapping setKey(string aName, MouseButton primary, MouseButton secondary, MouseAxis third)
+    {
+        return setKey(aName, new MouseInput(primary), new MouseInput(secondary), new MouseInput(third));
+    }
+    
+    public static KeyMapping setKey(string aName, MouseButton primary, MouseButton secondary, MouseButton third)
+    {
+        return setKey(aName, new MouseInput(primary), new MouseInput(secondary), new MouseInput(third));
+    }
+    
+    public static KeyMapping setKey(string aName, MouseButton primary, MouseButton secondary, JoystickInput third)
+    {
+        return setKey(aName, new MouseInput(primary), new MouseInput(secondary), third);
+    }
+    #endregion
+    
+    // ------------------------------------------------------------------------------------------------------------
+    
+    #region Level 3-3-4
+    public static KeyMapping setKey(string aName, MouseButton primary, JoystickInput secondary, CustomInput third)
+    {
+        return setKey(aName, new MouseInput(primary), secondary, third);
+    }
+    
+    public static KeyMapping setKey(string aName, MouseButton primary, JoystickInput secondary, KeyCode third)
+    {
+        return setKey(aName, new MouseInput(primary), secondary, new KeyboardInput(third));
+    }
+    
+    public static KeyMapping setKey(string aName, MouseButton primary, JoystickInput secondary, MouseAxis third)
+    {
+        return setKey(aName, new MouseInput(primary), secondary, new MouseInput(third));
+    }
+    
+    public static KeyMapping setKey(string aName, MouseButton primary, JoystickInput secondary, MouseButton third)
+    {
+        return setKey(aName, new MouseInput(primary), secondary, new MouseInput(third));
+    }
+    
+    public static KeyMapping setKey(string aName, MouseButton primary, JoystickInput secondary, JoystickInput third)
+    {
+        return setKey(aName, new MouseInput(primary), secondary, third);
+    }
+    #endregion
+    
+    #endregion
+
+    // ************************************************************************************************************
+    
+    #region Level 3-4
+    
+    #region Level 3-4-0
+    public static KeyMapping setKey(string aName, JoystickInput primary, CustomInput secondary, CustomInput third)
+    {
+        return setKey(aName, primary, secondary, third);
+    }
+    
+    public static KeyMapping setKey(string aName, JoystickInput primary, CustomInput secondary, KeyCode third)
+    {
+        return setKey(aName, primary, secondary, new KeyboardInput(third));
+    }
+    
+    public static KeyMapping setKey(string aName, JoystickInput primary, CustomInput secondary, MouseAxis third)
+    {
+        return setKey(aName, primary, secondary, new MouseInput(third));
+    }
+    
+    public static KeyMapping setKey(string aName, JoystickInput primary, CustomInput secondary, MouseButton third)
+    {
+        return setKey(aName, primary, secondary, new MouseInput(third));
+    }
+    
+    public static KeyMapping setKey(string aName, JoystickInput primary, CustomInput secondary, JoystickInput third)
+    {
+        return setKey(aName, primary, secondary, third);
+    }
+    #endregion
+    
+    // ------------------------------------------------------------------------------------------------------------
+    
+    #region Level 3-4-1
+    public static KeyMapping setKey(string aName, JoystickInput primary, KeyCode secondary, CustomInput third)
+    {
+        return setKey(aName, primary, new KeyboardInput(secondary), third);
+    }
+    
+    public static KeyMapping setKey(string aName, JoystickInput primary, KeyCode secondary, KeyCode third)
+    {
+        return setKey(aName, primary, new KeyboardInput(secondary), new KeyboardInput(third));
+    }
+    
+    public static KeyMapping setKey(string aName, JoystickInput primary, KeyCode secondary, MouseAxis third)
+    {
+        return setKey(aName, primary, new KeyboardInput(secondary), new MouseInput(third));
+    }
+    
+    public static KeyMapping setKey(string aName, JoystickInput primary, KeyCode secondary, MouseButton third)
+    {
+        return setKey(aName, primary, new KeyboardInput(secondary), new MouseInput(third));
+    }
+    
+    public static KeyMapping setKey(string aName, JoystickInput primary, KeyCode secondary, JoystickInput third)
+    {
+        return setKey(aName, primary, new KeyboardInput(secondary), third);
+    }
+    #endregion
+    
+    // ------------------------------------------------------------------------------------------------------------
+    
+    #region Level 3-4-2
+    public static KeyMapping setKey(string aName, JoystickInput primary, MouseAxis secondary, CustomInput third)
+    {
+        return setKey(aName, primary, new MouseInput(secondary), third);
+    }
+    
+    public static KeyMapping setKey(string aName, JoystickInput primary, MouseAxis secondary, KeyCode third)
+    {
+        return setKey(aName, primary, new MouseInput(secondary), new KeyboardInput(third));
+    }
+    
+    public static KeyMapping setKey(string aName, JoystickInput primary, MouseAxis secondary, MouseAxis third)
+    {
+        return setKey(aName, primary, new MouseInput(secondary), new MouseInput(third));
+    }
+    
+    public static KeyMapping setKey(string aName, JoystickInput primary, MouseAxis secondary, MouseButton third)
+    {
+        return setKey(aName, primary, new MouseInput(secondary), new MouseInput(third));
+    }
+    
+    public static KeyMapping setKey(string aName, JoystickInput primary, MouseAxis secondary, JoystickInput third)
+    {
+        return setKey(aName, primary, new MouseInput(secondary), third);
+    }
+    #endregion
+    
+    // ------------------------------------------------------------------------------------------------------------
+    
+    #region Level 3-4-3
+    public static KeyMapping setKey(string aName, JoystickInput primary, MouseButton secondary, CustomInput third)
+    {
+        return setKey(aName, primary, new MouseInput(secondary), third);
+    }
+    
+    public static KeyMapping setKey(string aName, JoystickInput primary, MouseButton secondary, KeyCode third)
+    {
+        return setKey(aName, primary, new MouseInput(secondary), new KeyboardInput(third));
+    }
+    
+    public static KeyMapping setKey(string aName, JoystickInput primary, MouseButton secondary, MouseAxis third)
+    {
+        return setKey(aName, primary, new MouseInput(secondary), new MouseInput(third));
+    }
+    
+    public static KeyMapping setKey(string aName, JoystickInput primary, MouseButton secondary, MouseButton third)
+    {
+        return setKey(aName, primary, new MouseInput(secondary), new MouseInput(third));
+    }
+    
+    public static KeyMapping setKey(string aName, JoystickInput primary, MouseButton secondary, JoystickInput third)
+    {
+        return setKey(aName, primary, new MouseInput(secondary), third);
+    }
+    #endregion
+    
+    // ------------------------------------------------------------------------------------------------------------
+    
+    #region Level 3-4-4
+    public static KeyMapping setKey(string aName, JoystickInput primary, JoystickInput secondary, CustomInput third)
+    {
+        return setKey(aName, primary, secondary, third);
+    }
+    
+    public static KeyMapping setKey(string aName, JoystickInput primary, JoystickInput secondary, KeyCode third)
+    {
+        return setKey(aName, primary, secondary, new KeyboardInput(third));
+    }
+    
+    public static KeyMapping setKey(string aName, JoystickInput primary, JoystickInput secondary, MouseAxis third)
+    {
+        return setKey(aName, primary, secondary, new MouseInput(third));
+    }
+    
+    public static KeyMapping setKey(string aName, JoystickInput primary, JoystickInput secondary, MouseButton third)
+    {
+        return setKey(aName, primary, secondary, new MouseInput(third));
+    }
+    
+    public static KeyMapping setKey(string aName, JoystickInput primary, JoystickInput secondary, JoystickInput third)
+    {
+        return setKey(aName, primary, secondary, third);
+    }
+    #endregion
+    
+    #endregion
 
     #endregion
 
