@@ -1167,7 +1167,7 @@ public static class InputControl
         get
         {
             // TODO: Get current input
-            return new KeyboardInput();
+            return null;
         }
     }
 

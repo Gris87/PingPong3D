@@ -3,7 +3,14 @@ using System.Collections;
 
 public static class SceneManager
 {
-    private static Hashtable sceneArguments;
+    private static Hashtable mSceneArguments;
+    public static Hashtable sceneArguments
+    {
+        get
+        {
+           return mSceneArguments;
+        }
+    }
 
 
 
@@ -14,7 +21,7 @@ public static class SceneManager
 
     public static void LoadScene(string sceneName, Hashtable arguments)
     {
-        sceneArguments=arguments;
+        mSceneArguments=arguments;
         Application.LoadLevel(sceneName);
     }
 
@@ -27,7 +34,7 @@ public static class SceneManager
 
     public static void LoadSceneAdditive(string sceneName, Hashtable arguments)
     {
-        sceneArguments=arguments;
+        mSceneArguments=arguments;
         Application.LoadLevelAdditive(sceneName);
     }
 
@@ -40,7 +47,7 @@ public static class SceneManager
 
     public static void LoadSceneAsync(string sceneName, Hashtable arguments)
     {
-        sceneArguments=arguments;
+        mSceneArguments=arguments;
         Application.LoadLevelAsync(sceneName);
     }
 
@@ -53,14 +60,7 @@ public static class SceneManager
 
     public static void LoadSceneAdditiveAsync(string sceneName, Hashtable arguments)
     {
-        sceneArguments=arguments;
+        mSceneArguments=arguments;
         Application.LoadLevelAdditiveAsync(sceneName);
-    }
-
-
-
-    public static Hashtable GetSceneArguments()
-    {
-        return sceneArguments;
     }
 }

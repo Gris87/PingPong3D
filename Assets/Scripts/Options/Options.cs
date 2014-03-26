@@ -885,7 +885,7 @@ public class Options : MonoBehaviour
         if (mShowFPS!=aShowFPS)
         {
             mShowFPS=aShowFPS;
-            FPSScript.isOn=mShowFPS;
+            FPSCounter.isOn=mShowFPS;
         }
 
         int qualityIndex=qualityScroller.getCurrentIndex();
@@ -1055,7 +1055,7 @@ public class Options : MonoBehaviour
         }
 
         Debug.Log("Show FPS:       "+mShowFPS.ToString());
-        FPSScript.isOn=mShowFPS;
+        FPSCounter.isOn=mShowFPS;
         
         Debug.Log("Video quality:  "+mQuality.ToString());
         QualitySettings.SetQualityLevel(mQuality);
