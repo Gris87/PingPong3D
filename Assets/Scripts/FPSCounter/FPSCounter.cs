@@ -8,8 +8,8 @@ public class FPSCounter : MonoBehaviour
     private GUIStyle textStyle = null;
 
     private static float nextSecond = 0;
-    private static int fpsCurrent   = 0;
-    private static int fpsTotal     = 0;
+    private static int   fpsCurrent = 0;
+    private static int   fpsTotal   = 0;
 
     // Use this for initialization
     void Start()
@@ -32,7 +32,7 @@ public class FPSCounter : MonoBehaviour
 
             float curTime=Time.time;
 
-            if (curTime>nextSecond)
+            if (curTime>=nextSecond)
             {
                 nextSecond = curTime+1;
                 fpsTotal   = fpsCurrent;

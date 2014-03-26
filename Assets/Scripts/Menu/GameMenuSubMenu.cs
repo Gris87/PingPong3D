@@ -19,6 +19,7 @@ public class GameMenuSubMenu : MonoBehaviour
 
     IEnumerator OnButtonPress()
     {
+        // TODO: Try to use animator
         if (lastSelectedItem!=this && !isAnimated)
         {
             isAnimated=true;

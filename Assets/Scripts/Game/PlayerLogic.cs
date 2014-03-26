@@ -45,7 +45,7 @@ public class PlayerLogic : MonoBehaviour
                     verticalMovement=maxOffset;
                 }
                 else
-                    if (verticalMovement<-maxOffset)
+                if (verticalMovement<-maxOffset)
                 {
                     verticalMovement=-maxOffset;
                 }
@@ -92,7 +92,7 @@ public class PlayerLogic : MonoBehaviour
                             (mousePos.x<0 && playerMode==Mode.LeftPlayer)
                             ||
                             (mousePos.x>=0 && playerMode==Mode.RightPlayer)
-                            )
+                           )
                         {
                             verticalMovement = mousePos.y-transform.position.y;
                             float maxOffset  = speed*Time.deltaTime;

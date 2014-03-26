@@ -314,7 +314,7 @@ public class IniFile
     /// <summary>
     /// Load properties from file.
     /// </summary>
-    /// <param name="fileName">The file name.</param>
+    /// <param name="fileName">Name of file</param>
     public void load(string fileName)
     {
         if (File.Exists(Application.persistentDataPath+"/"+fileName+".ini"))

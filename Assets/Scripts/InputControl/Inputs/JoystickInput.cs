@@ -2,19 +2,11 @@
 
 public class JoystickInput : CustomInput
 {
-    private Joystick       mTarget;
     private JoystickAxis   mAxis;
     private JoystickButton mButton;
+    private Joystick       mTarget;
 
     #region Properties
-    public Joystick target
-    {
-        get
-        {
-            return mTarget;
-        }
-    }
-
     public JoystickAxis axis
     {
         get
@@ -30,31 +22,41 @@ public class JoystickInput : CustomInput
             return mButton;
         }
     }
+
+    public Joystick target
+    {
+        get
+        {
+            return mTarget;
+        }
+    }
     #endregion
 
-    public JoystickInput(Joystick aTarget, JoystickAxis aAxis)
+    public JoystickInput(JoystickAxis aAxis, Joystick aTarget=Joystick.AllJoysticks)
     {
         if (aAxis==JoystickAxis.None)
         {
             Debug.LogError("aAxis can't be JoystickAxis.None");
         }
 
-        mTarget = aTarget;
         mAxis   = aAxis;
         mButton = JoystickButton.None;
+        mTarget = aTarget;
     }
 
-    public JoystickInput(Joystick aTarget, JoystickButton aButton)
+    public JoystickInput(JoystickButton aButton, Joystick aTarget=Joystick.AllJoysticks)
     {
         if (aButton==JoystickButton.None)
         {
             Debug.LogError("aButton can't be JoystickButton.None");
         }
-        
-        mTarget = aTarget;
+
         mAxis   = JoystickAxis.None;
         mButton = aButton;
+        mTarget = aTarget;
     }
+
+    // TODO: Create from string
 
     public override string ToString()
     {

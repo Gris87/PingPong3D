@@ -45,6 +45,8 @@ public class MouseInput : CustomInput
         mButton = aButton;
     }
 
+    // TODO: Create from string
+
     public override string ToString()
     {
         string res="Mouse ";

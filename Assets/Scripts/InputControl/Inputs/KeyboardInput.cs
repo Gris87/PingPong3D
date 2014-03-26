@@ -16,6 +16,8 @@ public class KeyboardInput : CustomInput
         mKey=aKey;
     }
 
+    // TODO: Create from string
+
     public override string ToString()
     {
         return mKey.ToString();

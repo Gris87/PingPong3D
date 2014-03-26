@@ -11,10 +11,10 @@ public class LoadingScript : MonoBehaviour
         if (!Utils.isTouchDevice)
         {
             // Setup keys
-            InputControl.setKey("Up",     KeyCode.W,         new JoystickInput(Joystick.Joystick1, JoystickAxis.Axis1Positive));
-            InputControl.setKey("Down",   KeyCode.S,         new JoystickInput(Joystick.Joystick1, JoystickAxis.Axis1Negative));
-            InputControl.setKey("Up 2",   KeyCode.UpArrow,   new JoystickInput(Joystick.Joystick2, JoystickAxis.Axis1Positive));
-            InputControl.setKey("Down 2", KeyCode.DownArrow, new JoystickInput(Joystick.Joystick2, JoystickAxis.Axis1Negative));
+            InputControl.setKey("Up",     KeyCode.W,         new JoystickInput(JoystickAxis.Axis1Positive, Joystick.Joystick1));
+            InputControl.setKey("Down",   KeyCode.S,         new JoystickInput(JoystickAxis.Axis1Negative, Joystick.Joystick1));
+            InputControl.setKey("Up 2",   KeyCode.UpArrow,   new JoystickInput(JoystickAxis.Axis1Positive, Joystick.Joystick2));
+            InputControl.setKey("Down 2", KeyCode.DownArrow, new JoystickInput(JoystickAxis.Axis1Negative, Joystick.Joystick2));
             
             // Setup axes
             InputControl.setAxis("Vertical",   "Down",   "Up");
