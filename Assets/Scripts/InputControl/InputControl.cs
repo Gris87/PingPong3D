@@ -20,21 +20,161 @@ public static class InputControl
     private static float                          mJoystickThreshold = 0.2f;
 
     #region Setup keys
+
     #region setKey with different arguments
+
+    #region Level 1
     public static KeyMapping setKey(string aName, KeyCode primary)
     {
         return setKey(aName, new KeyboardInput(primary));
     }
 
+    public static KeyMapping setKey(string aName, MouseAxis primary)
+    {
+        return setKey(aName, new MouseInput(primary));
+    }
+
+    public static KeyMapping setKey(string aName, MouseButton primary)
+    {
+        return setKey(aName, new MouseInput(primary));
+    }
+
+    public static KeyMapping setKey(string aName, JoystickInput primary)
+    {
+        return setKey(aName, primary);
+    }
+    #endregion
+
+    // ============================================================================================================
+
+    #region Level 2
+
+    #region Level 2-0
+    public static KeyMapping setKey(string aName, CustomInput primary, KeyCode secondary)
+    {
+        return setKey(aName, primary, new KeyboardInput(secondary));
+    }
+
+    public static KeyMapping setKey(string aName, CustomInput primary, MouseAxis secondary)
+    {
+        return setKey(aName, primary, new MouseInput(secondary));
+    }
+
+    public static KeyMapping setKey(string aName, CustomInput primary, MouseButton secondary)
+    {
+        return setKey(aName, primary, new MouseInput(secondary));
+    }
+
+    public static KeyMapping setKey(string aName, CustomInput primary, JoystickInput secondary)
+    {
+        return setKey(aName, primary, secondary);
+    }
+    #endregion
+
+    // ------------------------------------------------------------------------------------------------------------
+
+    #region Level 2-1
     public static KeyMapping setKey(string aName, KeyCode primary, KeyCode secondary)
     {
         return setKey(aName, new KeyboardInput(primary), new KeyboardInput(secondary));
     }
-
-    public static KeyMapping setKey(string aName, KeyCode primary, KeyCode secondary, KeyCode third)
+    
+    public static KeyMapping setKey(string aName, KeyCode primary, MouseAxis secondary)
     {
-        return setKey(aName, new KeyboardInput(primary), new KeyboardInput(secondary), new KeyboardInput(third));
+        return setKey(aName, new KeyboardInput(primary), new MouseInput(secondary));
     }
+    
+    public static KeyMapping setKey(string aName, KeyCode primary, MouseButton secondary)
+    {
+        return setKey(aName, new KeyboardInput(primary), new MouseInput(secondary));
+    }
+    
+    public static KeyMapping setKey(string aName, KeyCode primary, JoystickInput secondary)
+    {
+        return setKey(aName, new KeyboardInput(primary), secondary);
+    }
+    #endregion
+    
+    // ------------------------------------------------------------------------------------------------------------
+
+    #region Level 2-2
+    public static KeyMapping setKey(string aName, MouseAxis primary, KeyCode secondary)
+    {
+        return setKey(aName, new MouseInput(primary), new KeyboardInput(secondary));
+    }
+    
+    public static KeyMapping setKey(string aName, MouseAxis primary, MouseAxis secondary)
+    {
+        return setKey(aName, new MouseInput(primary), new MouseInput(secondary));
+    }
+    
+    public static KeyMapping setKey(string aName, MouseAxis primary, MouseButton secondary)
+    {
+        return setKey(aName, new MouseInput(primary), new MouseInput(secondary));
+    }
+    
+    public static KeyMapping setKey(string aName, MouseAxis primary, JoystickInput secondary)
+    {
+        return setKey(aName, new MouseInput(primary), secondary);
+    }
+    #endregion
+
+    // ------------------------------------------------------------------------------------------------------------
+    
+    #region Level 2-3
+    public static KeyMapping setKey(string aName, MouseButton primary, KeyCode secondary)
+    {
+        return setKey(aName, new MouseInput(primary), new KeyboardInput(secondary));
+    }
+    
+    public static KeyMapping setKey(string aName, MouseButton primary, MouseAxis secondary)
+    {
+        return setKey(aName, new MouseInput(primary), new MouseInput(secondary));
+    }
+    
+    public static KeyMapping setKey(string aName, MouseButton primary, MouseButton secondary)
+    {
+        return setKey(aName, new MouseInput(primary), new MouseInput(secondary));
+    }
+    
+    public static KeyMapping setKey(string aName, MouseButton primary, JoystickInput secondary)
+    {
+        return setKey(aName, new MouseInput(primary), secondary);
+    }
+    #endregion
+
+    // ------------------------------------------------------------------------------------------------------------
+    
+    #region Level 2-4
+    public static KeyMapping setKey(string aName, JoystickInput primary, KeyCode secondary)
+    {
+        return setKey(aName, primary, new KeyboardInput(secondary));
+    }
+    
+    public static KeyMapping setKey(string aName, JoystickInput primary, MouseAxis secondary)
+    {
+        return setKey(aName, primary, new MouseInput(secondary));
+    }
+    
+    public static KeyMapping setKey(string aName, JoystickInput primary, MouseButton secondary)
+    {
+        return setKey(aName, primary, new MouseInput(secondary));
+    }
+    
+    public static KeyMapping setKey(string aName, JoystickInput primary, JoystickInput secondary)
+    {
+        return setKey(aName, primary, secondary);
+    }
+    #endregion
+
+    #endregion
+
+    // ============================================================================================================
+
+    #region Level 3
+
+    #endregion
+
     #endregion
 
     public static KeyMapping setKey(string aName, CustomInput primary=null, CustomInput secondary=null, CustomInput third=null)
@@ -132,6 +272,8 @@ public static class InputControl
     }
     #endregion
 
+    #region Properties
+
     #region Axis smooth
     public static float smoothCoefficient
     {
@@ -157,6 +299,35 @@ public static class InputControl
             }
         }
     }
+    #endregion
+
+    #region Joystick threshold
+    public static float joystickThreshold
+    {
+        get
+        {
+            return mJoystickThreshold;
+        }
+        
+        set
+        {
+            if (value<0f)
+            {
+                mJoystickThreshold=0f;
+            }
+            else
+            if (value>1f)
+            {
+                mJoystickThreshold=1f;
+            }
+            else
+            {
+                mJoystickThreshold=value;
+            }
+        }
+    }
+    #endregion
+
     #endregion
 
     // ----------------------------------------------------------------
