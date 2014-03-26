@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System;
 
 public class MouseInput : CustomInput
 {
@@ -45,7 +46,68 @@ public class MouseInput : CustomInput
         mButton = aButton;
     }
 
-    // TODO: Create from string
+    public static MouseInput FromString(string value)
+    {
+        if (!value.StartsWith("Mouse "))
+        {
+            return null;
+        }
+
+        value=value.Substring(6);
+
+        if (value.Equals("X (-)"))
+        {
+            return new MouseInput(MouseAxis.MouseLeft);
+        }
+
+        if (value.Equals("X (+)"))
+        {
+            return new MouseInput(MouseAxis.MouseRight);
+        }
+
+        if (value.Equals("Y (-)"))
+        {
+            return new MouseInput(MouseAxis.MouseDown);
+        }
+        
+        if (value.Equals("Y (+)"))
+        {
+            return new MouseInput(MouseAxis.MouseUp);
+        }
+
+        if (value.Equals("Wheel (-)"))
+        {
+            return new MouseInput(MouseAxis.WheelDown);
+        }
+        
+        if (value.Equals("Wheel (+)"))
+        {
+            return new MouseInput(MouseAxis.WheelUp);
+        }
+
+        if (!value.StartsWith("Button "))
+        {
+            return null;
+        }
+
+        value=value.Substring(7);
+
+        try
+        {
+            int button=Convert.ToInt32(value)-1;
+
+            if (button<0 || button>=(int)MouseButton.None)
+            {
+                return null;
+            }
+
+            return new MouseInput((MouseButton)button);
+        }
+        catch (Exception)
+        {
+            return null;
+        }
+    }
 
     public override string ToString()
     {

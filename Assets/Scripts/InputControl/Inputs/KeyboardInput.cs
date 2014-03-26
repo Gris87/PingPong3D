@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System;
 
 public class KeyboardInput : CustomInput
 {
@@ -16,7 +17,18 @@ public class KeyboardInput : CustomInput
         mKey=aKey;
     }
 
-    // TODO: Create from string
+    public static KeyboardInput FromString(string value)
+    {
+        try
+        {
+            KeyCode key=(KeyCode)Enum.Parse(typeof(KeyCode), value);
+            return new KeyboardInput(key);
+        }
+        catch (Exception)
+        {
+            return null;
+        }
+    }
 
     public override string ToString()
     {
