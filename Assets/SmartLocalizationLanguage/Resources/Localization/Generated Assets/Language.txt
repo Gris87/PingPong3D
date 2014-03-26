@@ -168,5 +168,4 @@
   <data name="OptionsScene.Up 2" xml:space="preserve"><value>Up 2</value></data>
   <data name="OptionsScene.Video" xml:space="preserve"><value>Video</value></data>
   <data name="SplashScene.Loading" xml:space="preserve"><value>Loading...</value></data>
-  <data name="OptionsScene.PressAnyKey" xml:space="preserve"><value>Press any key</value></data>
 </root>

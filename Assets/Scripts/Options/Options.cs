@@ -133,7 +133,7 @@ public class Options : MonoBehaviour
     #endregion
 
     #region Keys
-    public static List<InputControl.KeyMapping> keys
+    public static List<KeyMapping> keys
     {
         get
         {
@@ -821,7 +821,7 @@ public class Options : MonoBehaviour
 
         foreach (InputControl.KeyMapping key in InputControl.getKeys())
         {
-            controlSetters[cur].setKeys(key);
+            controlSetters[cur].setKeyMapping(key);
 
             ++cur;
         }
@@ -917,7 +917,7 @@ public class Options : MonoBehaviour
         
         foreach (InputControl.KeyMapping key in InputControl.getKeys())
         {
-            key.set(controlSetters[cur].getKeys());
+            key.set(controlSetters[cur].getKeyMapping());
 
             ++cur;
         }

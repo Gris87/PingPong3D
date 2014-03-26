@@ -158,7 +158,6 @@
   <data name="OptionsScene.MasterVolume" xml:space="preserve"><value>Master volume</value></data>
   <data name="OptionsScene.MusicVolume" xml:space="preserve"><value>Music volume</value></data>
   <data name="OptionsScene.OK" xml:space="preserve"><value>OK</value></data>
-  <data name="OptionsScene.PressAnyKey" xml:space="preserve"><value>Press any key</value></data>
   <data name="OptionsScene.Quality" xml:space="preserve"><value>Quality</value></data>
   <data name="OptionsScene.Resolution" xml:space="preserve"><value>Resolution</value></data>
   <data name="OptionsScene.SettingsChanged" xml:space="preserve"><value>Settings changed</value></data>

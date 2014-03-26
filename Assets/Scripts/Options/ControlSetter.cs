@@ -3,27 +3,30 @@ using System.Collections;
 
 public class ControlSetter : ModifiableObject
 {
-    private static string           localizationPressAnyKey;
-
-    private InputControl.KeyMapping mKeys;
-    private int                     mKeyPressed;
+    private KeyMapping mKeyMapping;
+    private int        mKeyPressed;
 
     public ControlSetter() : base()
     {
-        mKeys       = new InputControl.KeyMapping("", KeyCode.None, KeyCode.None);
+        mKeyMapping = new KeyMapping();
         mKeyPressed = -1;
     }
 
     public bool draw(Rect rect)
     {
-        if (GUI.Button(new Rect(rect.x,                   rect.y, rect.width*0.495f, rect.height), mKeyPressed==0 ? localizationPressAnyKey : mKeys.primaryCode.ToString()))
+        if (GUI.Button(new Rect(rect.x,                    rect.y, rect.width*0.325f, rect.height), mKeyPressed==0 ? "..." : mKeyMapping.primaryInput.ToString()))
         {
-            setKeyPressed(0);
+            mKeyPressed=0;
         }
 
-        if (GUI.Button(new Rect(rect.x+rect.width*0.505f, rect.y, rect.width*0.495f, rect.height), mKeyPressed==1 ? localizationPressAnyKey : mKeys.secondaryCode.ToString()))
+        if (GUI.Button(new Rect(rect.x+rect.width*0.3375f, rect.y, rect.width*0.325f, rect.height), mKeyPressed==1 ? "..." : mKeyMapping.secondaryInput.ToString()))
         {
-            setKeyPressed(1);
+            mKeyPressed=1;
+        }
+
+        if (GUI.Button(new Rect(rect.x+rect.width*0.675f,  rect.y, rect.width*0.325f, rect.height), mKeyPressed==2 ? "..." : mKeyMapping.thirdInput.ToString()))
+        {
+            mKeyPressed=2;
         }
 
         return mKeyPressed>=0;
@@ -31,36 +34,42 @@ public class ControlSetter : ModifiableObject
 
     public void setKeyPressed(int value)
     {
-        mKeyPressed             = value;
-        localizationPressAnyKey = LanguageManager.Instance.GetTextValue("OptionsScene.PressAnyKey");
+        mKeyPressed=value;
     }
 
-    public void setSelectedKey(KeyCode code)
+    public void setSelectedKey(CustomInput input)
     {
         if (mKeyPressed==0)
         {
-            mKeys.set(code, mKeys.secondaryCode);
+            mKeyMapping.primaryInput=input;
         }
         else
         if (mKeyPressed==1)
         {
-            mKeys.set(mKeys.primaryCode, code);
+            mKeyMapping.secondaryInput=input;
+        }
+        else
+        if (mKeyPressed==2)
+        {
+            mKeyMapping.thirdInput=input;
         }
         else
         {
             Debug.LogError("Incorrect value of mKeyPressed");
         }
 
+        modificationMade();
+
         mKeyPressed=-1;
     }
 
-    public InputControl.KeyMapping getKeys()
+    public KeyMapping getKeyMapping()
     {
-        return mKeys;
+        return mKeyMapping;
     }
 
-    public void setKeys(InputControl.KeyMapping value)
+    public void setKeyMapping(KeyMapping value)
     {
-        mKeys.set(value);
+        mKeyMapping.set(value);
     }
 }

@@ -72,7 +72,7 @@ public class GameMainScript : MonoBehaviour
         #endregion
 
         #region Get difficulty from arguments
-        Hashtable arguments=SceneManager.GetSceneArguments();
+        Hashtable arguments=SceneManager.sceneArguments;
 
         if (arguments!=null && arguments.ContainsKey("difficulty"))
         {

@@ -34,7 +34,7 @@ public class PlayerLogic : MonoBehaviour
         #region Get vertical movement
         if (playerMode==Mode.BothPlayers)
         {
-            if (InputControl.GetMouseButton(InputControl.MouseButton.Left))
+            if (InputControl.GetMouseButton(MouseButton.Left))
             {
                 Vector3 mousePos = getClickPosition(InputControl.mousePosition);
                 verticalMovement = mousePos.y-transform.position.y;

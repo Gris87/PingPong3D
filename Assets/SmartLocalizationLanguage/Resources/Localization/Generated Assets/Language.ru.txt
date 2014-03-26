@@ -158,7 +158,6 @@
   <data name="OptionsScene.MasterVolume" xml:space="preserve"><value>Общая громкость</value></data>
   <data name="OptionsScene.MusicVolume" xml:space="preserve"><value>Громкость музыки</value></data>
   <data name="OptionsScene.OK" xml:space="preserve"><value>OK</value></data>
-  <data name="OptionsScene.PressAnyKey" xml:space="preserve"><value>Нажмите кнопку</value></data>
   <data name="OptionsScene.Quality" xml:space="preserve"><value>Качество</value></data>
   <data name="OptionsScene.Resolution" xml:space="preserve"><value>Разрешение</value></data>
   <data name="OptionsScene.SettingsChanged" xml:space="preserve"><value>Настройки изменены</value></data>
