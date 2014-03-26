@@ -45,6 +45,46 @@ public class MouseInput : CustomInput
         mButton = aButton;
     }
 
+    public override string ToString()
+    {
+        string res="Mouse ";
+        
+        if (mAxis!=MouseAxis.None)
+        {
+            switch (mAxis)
+            {
+                case MouseAxis.MouseLeft:
+                    res=res+"X (-)";
+                break;
+                case MouseAxis.MouseRight:
+                    res=res+"X (+)";
+                break;
+                case MouseAxis.MouseUp:
+                    res=res+"Y (+)";
+                break;
+                case MouseAxis.MouseDown:
+                    res=res+"Y (-)";
+                break;
+                case MouseAxis.WheelUp:
+                    res=res+"Wheel (+)";
+                break;
+                case MouseAxis.WheelDown:
+                    res=res+"Wheel (-)";
+                break;
+                default:
+                    Debug.LogError("Unknown axis");
+                break;
+            }
+        }
+        
+        if (mButton!=MouseButton.None)
+        {
+            res=res+"Button "+((int)mButton+1).ToString();
+        }
+
+        return res;
+    }
+
     public override float getInput()
     {
         if (mButton!=MouseButton.None)

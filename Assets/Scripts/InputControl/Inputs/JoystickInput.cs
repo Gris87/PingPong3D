@@ -56,6 +56,46 @@ public class JoystickInput : CustomInput
         mButton = aButton;
     }
 
+    public override string ToString()
+    {
+        string res;
+
+        if (mTarget==Joystick.AllJoysticks)
+        {
+            res="Joystick ";
+        }
+        else
+        {
+            res="Joystick "+((int)mTarget).ToString()+" ";
+        }
+
+        if (mAxis!=JoystickAxis.None)
+        {
+            int axisId=(int)mAxis;
+            bool positive;
+
+            if (axisId % 2 == 0)
+            {
+                axisId=(axisId/2) + 1;
+                positive=true;
+            }
+            else
+            {
+                axisId=((axisId-1)/2) + 1;
+                positive=false;
+            }
+
+            res=res+"Axis "+axisId.ToString()+" "+(positive ? "(+)" : "(-)");
+        }
+
+        if (mButton!=JoystickButton.None)
+        {
+            res=res+"Button "+((int)mButton+1).ToString();
+        }
+
+        return res;
+    }
+
     public override float getInput()
     {
         return 0;

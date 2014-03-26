@@ -14,17 +14,20 @@ public class ControlSetter : ModifiableObject
 
     public bool draw(Rect rect)
     {
-        if (GUI.Button(new Rect(rect.x,                    rect.y, rect.width*0.325f, rect.height), mKeyPressed==0 ? "..." : mKeyMapping.primaryInput.ToString()))
+        GUIStyle buttonStyle=new GUIStyle(GUI.skin.button);
+        buttonStyle.fontSize=(int)(Screen.height*0.02);
+
+        if (GUI.Button(new Rect(rect.x,                    rect.y, rect.width*0.325f, rect.height), mKeyPressed==0 ? "..." : mKeyMapping.primaryInput.ToString(),   buttonStyle))
         {
             mKeyPressed=0;
         }
 
-        if (GUI.Button(new Rect(rect.x+rect.width*0.3375f, rect.y, rect.width*0.325f, rect.height), mKeyPressed==1 ? "..." : mKeyMapping.secondaryInput.ToString()))
+        if (GUI.Button(new Rect(rect.x+rect.width*0.3375f, rect.y, rect.width*0.325f, rect.height), mKeyPressed==1 ? "..." : mKeyMapping.secondaryInput.ToString(), buttonStyle))
         {
             mKeyPressed=1;
         }
 
-        if (GUI.Button(new Rect(rect.x+rect.width*0.675f,  rect.y, rect.width*0.325f, rect.height), mKeyPressed==2 ? "..." : mKeyMapping.thirdInput.ToString()))
+        if (GUI.Button(new Rect(rect.x+rect.width*0.675f,  rect.y, rect.width*0.325f, rect.height), mKeyPressed==2 ? "..." : mKeyMapping.thirdInput.ToString(),     buttonStyle))
         {
             mKeyPressed=2;
         }

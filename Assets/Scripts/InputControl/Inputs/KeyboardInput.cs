@@ -16,6 +16,11 @@ public class KeyboardInput : CustomInput
         mKey=aKey;
     }
 
+    public override string ToString()
+    {
+        return mKey.ToString();
+    }
+
     public override float getInput()
     {
         return Input.GetKey(mKey)     ? 1 : 0;
