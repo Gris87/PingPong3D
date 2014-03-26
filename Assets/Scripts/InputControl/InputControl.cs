@@ -19,6 +19,64 @@ public static class InputControl
     // Joystick options
     private static float                          mJoystickThreshold = 0.2f;
 
+    #region Properties
+    
+    #region Axis smooth
+    public static float smoothCoefficient
+    {
+        get
+        {
+            return mSmoothCoefficient;
+        }
+        
+        set
+        {
+            if (value<0.0001f)
+            {
+                mSmoothCoefficient=0.0001f;
+            }
+            else
+                if (value>1f)
+            {
+                mSmoothCoefficient=1f;
+            }
+            else
+            {
+                mSmoothCoefficient=value;
+            }
+        }
+    }
+    #endregion
+    
+    #region Joystick threshold
+    public static float joystickThreshold
+    {
+        get
+        {
+            return mJoystickThreshold;
+        }
+        
+        set
+        {
+            if (value<0f)
+            {
+                mJoystickThreshold=0f;
+            }
+            else
+                if (value>1f)
+            {
+                mJoystickThreshold=1f;
+            }
+            else
+            {
+                mJoystickThreshold=value;
+            }
+        }
+    }
+    #endregion
+    
+    #endregion
+
     #region Setup keys
 
     #region setKey with different arguments
@@ -974,7 +1032,7 @@ public static class InputControl
     #endregion
 
     #region Setup axes
-    public static void setAxis(string aName, string negative, string positive)
+    public static Axis setAxis(string aName, string negative, string positive)
     {
         KeyMapping negativeKey=null;
         KeyMapping positiveKey=null;
@@ -982,16 +1040,16 @@ public static class InputControl
         if (!mKeysMap.TryGetValue(negative, out negativeKey))
         {
             Debug.LogError("Negative key "+negative+" not found for axis "+aName);
-            return;
+            return null;
         }
 
         if (!mKeysMap.TryGetValue(positive, out positiveKey))
         {
             Debug.LogError("Positive key "+positive+" not found for axis "+aName);
-            return;
+            return null;
         }
 
-        setAxis(aName, negativeKey, positiveKey);
+        return setAxis(aName, negativeKey, positiveKey);
     }
 
     public static Axis setAxis(string aName, KeyMapping negative, KeyMapping positive)
@@ -1028,64 +1086,6 @@ public static class InputControl
     {
         return mAxesList;
     }
-    #endregion
-
-    #region Properties
-
-    #region Axis smooth
-    public static float smoothCoefficient
-    {
-        get
-        {
-            return mSmoothCoefficient;
-        }
-
-        set
-        {
-            if (value<0.0001f)
-            {
-                mSmoothCoefficient=0.0001f;
-            }
-            else
-            if (value>1f)
-            {
-                mSmoothCoefficient=1f;
-            }
-            else
-            {
-                mSmoothCoefficient=value;
-            }
-        }
-    }
-    #endregion
-
-    #region Joystick threshold
-    public static float joystickThreshold
-    {
-        get
-        {
-            return mJoystickThreshold;
-        }
-        
-        set
-        {
-            if (value<0f)
-            {
-                mJoystickThreshold=0f;
-            }
-            else
-            if (value>1f)
-            {
-                mJoystickThreshold=1f;
-            }
-            else
-            {
-                mJoystickThreshold=value;
-            }
-        }
-    }
-    #endregion
-
     #endregion
 
     // ----------------------------------------------------------------
