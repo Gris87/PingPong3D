@@ -100,7 +100,7 @@ public class Options : MonoBehaviour
     #endregion
 
     #region Quality
-    private static int mQuality=QualitySettings.GetQualityLevel();
+    private static int mQuality=0;
     public static int quality
     {
         get
