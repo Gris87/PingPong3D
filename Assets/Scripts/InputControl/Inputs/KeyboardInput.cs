@@ -18,16 +18,16 @@ public class KeyboardInput : CustomInput
 
     public override float getInput()
     {
-        return 0;
+        return Input.GetKey(mKey)     ? 1 : 0;
     }
 
     public override float getInputDown()
     {
-        return 0;
+        return Input.GetKeyDown(mKey) ? 1 : 0;
     }
 
     public override float getInputUp()
     {
-        return 0;
+        return Input.GetKeyUp(mKey)   ? 1 : 0;
     }
 }
