@@ -209,7 +209,7 @@ public class MouseInput : CustomInput
 
         if (positive)
         {
-            return value>0 ? value : 0;
+            return value>0 ?  value : 0;
         }
         else
         {

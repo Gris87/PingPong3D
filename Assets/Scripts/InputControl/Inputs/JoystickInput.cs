@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System;
 
 public class JoystickInput : CustomInput
 {
@@ -56,7 +57,121 @@ public class JoystickInput : CustomInput
         mTarget = aTarget;
     }
 
-    // TODO: Create from string
+    public static JoystickInput FromString(string value)
+    {
+        if (!value.StartsWith("Joystick "))
+        {
+            return null;
+        }
+        
+        value=value.Substring(9);
+
+        if (value.Length==0)
+        {
+            return null;
+        }
+
+        Joystick target;
+
+        if (value[0]>='0' && value[0]>='9')
+        {
+            int index=value.IndexOf(" ");
+
+            if (index<0)
+            {
+                return null;
+            }
+
+            try
+            {
+                int targetNumber=Convert.ToInt32(value.Substring(0, index));
+                
+                if (targetNumber<1 || targetNumber>16)
+                {
+                    return null;
+                }
+                
+                target=(Joystick)targetNumber;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+
+            value=value.Substring(index+1);
+        }
+        else
+        {
+            target=Joystick.AllJoysticks;
+        }
+
+        if (value.StartsWith("Axis "))
+        {
+            value=value.Substring(5);
+
+            bool positive;
+
+            if (value.EndsWith(" (-)"))
+            {
+                positive=false;
+            }
+            else
+            if (value.EndsWith(" (+)"))
+            {
+                positive=true;
+            }
+            else
+            {
+                return null;
+            }
+
+            value=value.Remove(value.Length-4);
+
+            try
+            {
+                int axisNumber=(Convert.ToInt32(value)-1)*2;
+
+                if (!positive)
+                {
+                    ++axisNumber;
+                }
+                
+                if (axisNumber<0 || axisNumber>=(int)JoystickAxis.None)
+                {
+                    return null;
+                }
+
+                return new JoystickInput((JoystickAxis)axisNumber, target);
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+
+        if (!value.StartsWith("Button "))
+        {
+            return null;
+        }
+        
+        value=value.Substring(7);
+        
+        try
+        {
+            int button=Convert.ToInt32(value)-1;
+            
+            if (button<0 || button>=(int)JoystickButton.None)
+            {
+                return null;
+            }
+            
+            return new JoystickInput((JoystickButton)button, target);
+        }
+        catch (Exception)
+        {
+            return null;
+        }
+    }
 
     public override string ToString()
     {

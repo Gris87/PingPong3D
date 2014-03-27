@@ -1009,6 +1009,29 @@ public class Options : MonoBehaviour
         }        
     }
 
+    private static CustomInput StringToCustomInput(string value)
+    {
+        CustomInput res=null;
+
+        res=JoystickInput.FromString(value);
+
+        if (res!=null)
+        {
+            return res;
+        }
+
+        res=MouseInput.FromString(value);
+        
+        if (res!=null)
+        {
+            return res;
+        }
+
+        res=KeyboardInput.FromString(value);
+
+        return res;
+    }
+
     public static void load()
     {
         Debug.Log("Loading settings");
@@ -1070,38 +1093,12 @@ public class Options : MonoBehaviour
         #endregion
 
         #region Controls     
-        // TODO: Implement
-        /*
         foreach (KeyMapping key in InputControl.getKeys())
         {
-            KeyCode primaryKey;
-            KeyCode secondaryKey;
-
-
-
-            try
-            {
-                primaryKey   = (KeyCode)Enum.Parse(typeof(KeyCode), iniFile.Get("Controls."+key.name+".Primary",   "None"));
-            }
-            catch(Exception)
-            {
-                primaryKey   = KeyCode.None;
-            }
-
-            try
-            {
-                secondaryKey = (KeyCode)Enum.Parse(typeof(KeyCode), iniFile.Get("Controls."+key.name+".Secondary", "None"));
-            }
-            catch(Exception)
-            {
-                secondaryKey = KeyCode.None;
-            }
-
-
-
-            key.set(primaryKey, secondaryKey);
+            key.primaryInput   = StringToCustomInput(iniFile.Get("Controls."+key.name+".Primary",   "None"));
+            key.secondaryInput = StringToCustomInput(iniFile.Get("Controls."+key.name+".Secondary", "None"));
+            key.thirdInput     = StringToCustomInput(iniFile.Get("Controls."+key.name+".Third",     "None"));
         }
-        */
         #endregion
     }
 
