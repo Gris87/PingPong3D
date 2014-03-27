@@ -73,7 +73,7 @@ public class JoystickInput : CustomInput
 
         Joystick target;
 
-        if (value[0]>='0' && value[0]>='9')
+        if (value[0]>='0' && value[0]<='9')
         {
             int index=value.IndexOf(" ");
 

@@ -1095,9 +1095,9 @@ public class Options : MonoBehaviour
         #region Controls     
         foreach (KeyMapping key in InputControl.getKeys())
         {
-            key.primaryInput   = StringToCustomInput(iniFile.Get("Controls."+key.name+".Primary",   "None"));
-            key.secondaryInput = StringToCustomInput(iniFile.Get("Controls."+key.name+".Secondary", "None"));
-            key.thirdInput     = StringToCustomInput(iniFile.Get("Controls."+key.name+".Third",     "None"));
+            key.primaryInput   = StringToCustomInput(iniFile.Get("Controls."+key.name+".Primary",   key.primaryInput.ToString()));
+            key.secondaryInput = StringToCustomInput(iniFile.Get("Controls."+key.name+".Secondary", key.secondaryInput.ToString()));
+            key.thirdInput     = StringToCustomInput(iniFile.Get("Controls."+key.name+".Third",     key.thirdInput.ToString()));
         }
         #endregion
     }
