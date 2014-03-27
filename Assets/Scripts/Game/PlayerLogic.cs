@@ -54,11 +54,20 @@ public class PlayerLogic : MonoBehaviour
             }
             else
             {
-                verticalMovement=InputControl.GetAxis("Vertical");
+                float cur;
 
-                if (verticalMovement==0)
+                cur=InputControl.GetAxis("Vertical");
+
+                if (Mathf.Abs(cur)>Mathf.Abs(verticalMovement))
                 {
-                    verticalMovement=InputControl.GetAxis("Vertical 2");
+                    verticalMovement=cur;
+                }
+
+                cur=InputControl.GetAxis("Vertical 2");
+                
+                if (Mathf.Abs(cur)>Mathf.Abs(verticalMovement))
+                {
+                    verticalMovement=cur;
                 }
             }
         }
