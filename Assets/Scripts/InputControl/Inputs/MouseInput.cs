@@ -189,12 +189,12 @@ public class MouseInput : CustomInput
     {
         switch (mAxis)
         {
-            case MouseAxis.MouseLeft:  return InputGetAxis("Mouse X",     false);
-            case MouseAxis.MouseRight: return InputGetAxis("Mouse X",     true);
-            case MouseAxis.MouseUp:    return InputGetAxis("Mouse Y",     true);
-            case MouseAxis.MouseDown:  return InputGetAxis("Mouse Y",     false);
-            case MouseAxis.WheelUp:    return InputGetAxis("Mouse Wheel", true);
-            case MouseAxis.WheelDown:  return InputGetAxis("Mouse Wheel", false);
+            case MouseAxis.MouseLeft:  return InputGetAxis("Mouse X",           false);
+            case MouseAxis.MouseRight: return InputGetAxis("Mouse X",           true);
+            case MouseAxis.MouseUp:    return InputGetAxis("Mouse Y",           true);
+            case MouseAxis.MouseDown:  return InputGetAxis("Mouse Y",           false);
+            case MouseAxis.WheelUp:    return InputGetAxis("Mouse ScrollWheel", true);
+            case MouseAxis.WheelDown:  return InputGetAxis("Mouse ScrollWheel", false);
             default:
                 Debug.LogError("Unknown axis");
             break;

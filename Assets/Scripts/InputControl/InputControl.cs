@@ -798,8 +798,8 @@ public static class InputControl
 
         #region Axes
 
-        #region Wheel
-        float mouseAxis=Input.GetAxis("Mouse Wheel");
+        #region ScrollWheel
+        float mouseAxis=Input.GetAxis("Mouse ScrollWheel");
         
         if (mouseAxis<0)
         {
@@ -812,34 +812,36 @@ public static class InputControl
         }
         #endregion
 
-        #region X
-        mouseAxis=Input.GetAxis("Mouse X");
-        
-        if (mouseAxis<0)
+        if (!ignoreMouseMovement)
         {
-            return new MouseInput(MouseAxis.MouseLeft);
+            #region X
+            mouseAxis=Input.GetAxis("Mouse X");
+            
+            if (mouseAxis<0)
+            {
+                return new MouseInput(MouseAxis.MouseLeft);
+            }
+            
+            if (mouseAxis>0)
+            {
+                return new MouseInput(MouseAxis.MouseRight);
+            }
+            #endregion
+            
+            #region Y
+            mouseAxis=Input.GetAxis("Mouse Y");
+            
+            if (mouseAxis<0)
+            {
+                return new MouseInput(MouseAxis.MouseDown);
+            }
+            
+            if (mouseAxis>0)
+            {
+                return new MouseInput(MouseAxis.MouseUp);
+            }        
+            #endregion
         }
-        
-        if (mouseAxis>0)
-        {
-            return new MouseInput(MouseAxis.MouseRight);
-        }
-        #endregion
-
-        #region Y
-        mouseAxis=Input.GetAxis("Mouse Y");
-        
-        if (mouseAxis<0)
-        {
-            return new MouseInput(MouseAxis.MouseDown);
-        }
-        
-        if (mouseAxis>0)
-        {
-            return new MouseInput(MouseAxis.MouseUp);
-        }        
-        #endregion
-
         #endregion
 
         for (int i=0; i<(int)MouseButton.None; ++i)
