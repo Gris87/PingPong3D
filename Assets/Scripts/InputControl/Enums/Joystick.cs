@@ -11,10 +11,5 @@
     Joystick8,
     Joystick9,
     Joystick10,
-    Joystick11,
-    Joystick12,
-    Joystick13,
-    Joystick14,
-    Joystick15,
-    Joystick16
+    Joystick11
 }

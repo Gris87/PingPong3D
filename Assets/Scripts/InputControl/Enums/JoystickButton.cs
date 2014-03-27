@@ -20,15 +20,5 @@
     Button18,
     Button19,
     Button20,
-    Button21,
-    Button22,
-    Button23,
-    Button24,
-    Button25,
-    Button26,
-    Button27,
-    Button28,
-    Button29,
-    Button30,
     None
 }
