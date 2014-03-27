@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -787,13 +788,85 @@ public static class InputControl
         }
     }
 
-    public static CustomInput currentInput
+    public static CustomInput currentInput(bool ignoreMouseMovement=true)
     {
-        get
+        #region Joystick
+        // TODO: Get current input
+        #endregion
+        
+        #region Mouse
+
+        #region Axes
+
+        #region Wheel
+        float mouseAxis=Input.GetAxis("Mouse Wheel");
+        
+        if (mouseAxis<0)
         {
-            // TODO: Get current input
-            return null;
+            return new MouseInput(MouseAxis.WheelDown);
         }
+        
+        if (mouseAxis>0)
+        {
+            return new MouseInput(MouseAxis.WheelUp);
+        }
+        #endregion
+
+        #region X
+        mouseAxis=Input.GetAxis("Mouse X");
+        
+        if (mouseAxis<0)
+        {
+            return new MouseInput(MouseAxis.MouseLeft);
+        }
+        
+        if (mouseAxis>0)
+        {
+            return new MouseInput(MouseAxis.MouseRight);
+        }
+        #endregion
+
+        #region Y
+        mouseAxis=Input.GetAxis("Mouse Y");
+        
+        if (mouseAxis<0)
+        {
+            return new MouseInput(MouseAxis.MouseDown);
+        }
+        
+        if (mouseAxis>0)
+        {
+            return new MouseInput(MouseAxis.MouseUp);
+        }        
+        #endregion
+
+        #endregion
+
+        for (int i=0; i<(int)MouseButton.None; ++i)
+        {
+            KeyCode key=(KeyCode)((int)KeyCode.Mouse0+i);
+            
+            if (Input.GetKey(key))
+            {
+                return new MouseInput((MouseButton)i);
+            }
+        }
+
+        #endregion
+        
+        #region Keyboard
+        foreach (var value in Enum.GetValues(typeof(KeyCode)))
+        {
+            KeyCode key=(KeyCode)value;
+            
+            if (Input.GetKey(key))
+            {
+                return new KeyboardInput(key);
+            }
+        }
+        #endregion        
+
+        return null;
     }
 
     public static DeviceOrientation deviceOrientation

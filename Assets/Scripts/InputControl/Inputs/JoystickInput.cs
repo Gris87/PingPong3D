@@ -86,7 +86,7 @@ public class JoystickInput : CustomInput
             {
                 int targetNumber=Convert.ToInt32(value.Substring(0, index));
                 
-                if (targetNumber<1 || targetNumber>16)
+                if (targetNumber<1 || targetNumber>Enum.GetValues(typeof(Joystick)).Length-1)
                 {
                     return null;
                 }

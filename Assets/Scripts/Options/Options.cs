@@ -303,6 +303,16 @@ public class Options : MonoBehaviour
                 selectedControlSetter.setSelectedKey(null);
                 selectedControlSetter=null;
             }
+            else
+            {
+                CustomInput input=InputControl.currentInput();
+
+                if (input!=null)
+                {
+                    selectedControlSetter.setSelectedKey(input);
+                    selectedControlSetter=null;
+                }
+            }
         }
         else
         {
@@ -1098,6 +1108,10 @@ public class Options : MonoBehaviour
             key.primaryInput   = StringToCustomInput(iniFile.Get("Controls."+key.name+".Primary",   key.primaryInput.ToString()));
             key.secondaryInput = StringToCustomInput(iniFile.Get("Controls."+key.name+".Secondary", key.secondaryInput.ToString()));
             key.thirdInput     = StringToCustomInput(iniFile.Get("Controls."+key.name+".Third",     key.thirdInput.ToString()));
+
+            Debug.Log("Key: "+key.name+" ; Primary   = "+key.primaryInput.ToString());
+            Debug.Log("Key: "+key.name+" ; Secondary = "+key.secondaryInput.ToString());
+            Debug.Log("Key: "+key.name+" ; Third     = "+key.thirdInput.ToString());
         }
         #endregion
     }
