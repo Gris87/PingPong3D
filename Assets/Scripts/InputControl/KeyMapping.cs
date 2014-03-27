@@ -98,69 +98,87 @@
 
     public float getValue()
     {
-        float res;
+        float res=0;
+        float cur;
 
-        res=mPrimaryInput.getInput();
+        cur=mPrimaryInput.getInput();
 
-        if (res!=0)
+        if (cur>res)
         {
-            return res;
+            res=cur;
         }
 
-        res=mSecondaryInput.getInput();
+        cur=mSecondaryInput.getInput();
         
-        if (res!=0)
+        if (cur>res)
         {
-            return res;
+            res=cur;
         }
 
-        res=mThirdInput.getInput();
+        cur=mThirdInput.getInput();
+
+        if (cur>res)
+        {
+            res=cur;
+        }
 
         return res;
     }
 
     public float getValueDown()
     {
-        float res;
+        float res=0;
+        float cur;
         
-        res=mPrimaryInput.getInputDown();
+        cur=mPrimaryInput.getInputDown();
         
-        if (res!=0)
+        if (cur>res)
         {
-            return res;
+            res=cur;
         }
         
-        res=mSecondaryInput.getInputDown();
+        cur=mSecondaryInput.getInputDown();
         
-        if (res!=0)
+        if (cur>res)
         {
-            return res;
+            res=cur;
         }
         
-        res=mThirdInput.getInputDown();
+        cur=mThirdInput.getInputDown();
+        
+        if (cur>res)
+        {
+            res=cur;
+        }
         
         return res;
     }
 
     public float getValueUp()
     {
-        float res;
+        float res=0;
+        float cur;
         
-        res=mPrimaryInput.getInputUp();
+        cur=mPrimaryInput.getInputUp();
         
-        if (res!=0)
+        if (cur>res)
         {
-            return res;
+            res=cur;
         }
         
-        res=mSecondaryInput.getInputUp();
+        cur=mSecondaryInput.getInputUp();
         
-        if (res!=0)
+        if (cur>res)
         {
-            return res;
+            res=cur;
         }
         
-        res=mThirdInput.getInputUp();
+        cur=mThirdInput.getInputUp();
+        
+        if (cur>res)
+        {
+            res=cur;
+        }
         
         return res;
     }

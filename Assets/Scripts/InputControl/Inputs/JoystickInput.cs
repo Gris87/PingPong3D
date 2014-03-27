@@ -215,16 +215,93 @@ public class JoystickInput : CustomInput
 
     public override float getInput()
     {
-        return 0;
+        if (mButton!=JoystickButton.None)
+        {
+            return Input.GetButton(getInputName())     ? 1 : 0;
+        }
+
+        return getInputByAxis();
     }
 
     public override float getInputDown()
     {
-        return 0;
+        if (mButton!=JoystickButton.None)
+        {
+            return Input.GetButtonDown(getInputName()) ? 1 : 0;
+        }
+        
+        return getInputByAxis();
     }
     
     public override float getInputUp()
     {
+        if (mButton!=JoystickButton.None)
+        {
+            return Input.GetButtonUp(getInputName())   ? 1 : 0;
+        }
+        
+        return getInputByAxis();
+    }
+
+    private float getInputByAxis()
+    {
+        float joyAxis=Input.GetAxis(getInputName());
+        
+        if (
+            ((int)mAxis) % 2 == 1
+            &&
+            joyAxis<-InputControl.joystickThreshold
+           )
+        {
+            return -joyAxis;
+        }
+
+        if (
+            ((int)mAxis) % 2 == 0
+            &&
+            joyAxis>InputControl.joystickThreshold
+           )
+        {
+            return joyAxis;
+        }
+
         return 0;
+    }
+
+    private string getInputName()
+    {
+        string res;
+        
+        if (mTarget==Joystick.AllJoysticks)
+        {
+            res="Joystick ";
+        }
+        else
+        {
+            res="Joystick "+((int)mTarget).ToString()+" ";
+        }
+        
+        if (mAxis!=JoystickAxis.None)
+        {
+            int axisId=(int)mAxis;
+            
+            if (axisId % 2 == 0)
+            {
+                axisId=(axisId/2) + 1;
+            }
+            else
+            {
+                axisId=((axisId-1)/2) + 1;
+            }
+            
+            res=res+"Axis "+axisId.ToString();
+        }
+        
+        if (mButton!=JoystickButton.None)
+        {
+            res=res+"Button "+((int)mButton+1).ToString();
+        }
+        
+        return res;
     }
 }

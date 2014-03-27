@@ -791,7 +791,39 @@ public static class InputControl
     public static CustomInput currentInput(bool ignoreMouseMovement=true)
     {
         #region Joystick
-        // TODO: Get current input
+        int joystickMax=Enum.GetValues(typeof(Joystick)).Length-1;
+
+        for (int i=(int)Joystick.Joystick1; i<=joystickMax; ++i)
+        {
+            String target="Joystick "+i.ToString()+" ";
+
+            #region Axes
+            for (int j=1; j<=((int)JoystickAxis.None-1)/2; ++j)
+            {
+                float joyAxis=Input.GetAxis(target+"Axis "+j.ToString());
+                
+                if (joyAxis<-mJoystickThreshold)
+                {
+                    return new JoystickInput((JoystickAxis)((j-1)*2+1), (Joystick)i);
+                }
+                
+                if (joyAxis>mJoystickThreshold)
+                {
+                    return new JoystickInput((JoystickAxis)((j-1)*2),   (Joystick)i);
+                }
+            }
+            #endregion
+            
+            #region Buttons
+            for (int j=0; j<(int)JoystickButton.None; ++j)
+            {
+                if (Input.GetButton(target+"Button "+(j+1).ToString()))
+                {
+                    return new JoystickInput((JoystickButton)j, (Joystick)i);
+                }
+            }            
+            #endregion
+        }
         #endregion
         
         #region Mouse
@@ -844,6 +876,7 @@ public static class InputControl
         }
         #endregion
 
+        #region Buttons
         for (int i=0; i<(int)MouseButton.None; ++i)
         {
             KeyCode key=(KeyCode)((int)KeyCode.Mouse0+i);
@@ -853,6 +886,7 @@ public static class InputControl
                 return new MouseInput((MouseButton)i);
             }
         }
+        #endregion
 
         #endregion
         
