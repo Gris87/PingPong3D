@@ -5,6 +5,7 @@ public class Axis
     private string     mName;
     private KeyMapping mNegative;
     private KeyMapping mPositive;
+    private bool       mInverted;
 
     #region Properties
     public string name
@@ -50,17 +51,32 @@ public class Axis
             mPositive=value;
         }
     }
+
+    public bool inverted
+    {
+        get
+        {
+            return mInverted;
+        }
+        
+        set
+        {
+            mInverted=value;
+        }
+    }
     #endregion
     
     public Axis(string aName, KeyMapping aNegative, KeyMapping aPositive)
     {
-        mName=aName;
+        mName     = aName;
+        mInverted = false;
         set(aNegative, aPositive);
     }
 
     public Axis(Axis another)
     {
-        mName=another.mName;
+        mName     = another.mName;
+        mInverted = another.mInverted;
         set(another);
     }
 
@@ -78,6 +94,13 @@ public class Axis
     
     public float getValue()
     {
-        return mPositive.getValue()-mNegative.getValue();
+        if (mInverted)
+        {
+            return mNegative.getValue()-mPositive.getValue();
+        }
+        else
+        {
+            return mPositive.getValue()-mNegative.getValue();
+        }
     }
 }

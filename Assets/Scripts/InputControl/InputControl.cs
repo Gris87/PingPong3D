@@ -20,6 +20,9 @@ public static class InputControl
     // Joystick options
     private static float                          mJoystickThreshold = 0.2f;
 
+    // Mouse options
+    private static float                          mMouseSensitivity  = 1f;
+
     #region Properties
     
     #region Axis smooth
@@ -71,6 +74,28 @@ public static class InputControl
             else
             {
                 mJoystickThreshold=value;
+            }
+        }
+    }
+    #endregion
+
+    #region Mouse sensitivity
+    public static float mouseSensitivity
+    {
+        get
+        {
+            return mMouseSensitivity;
+        }
+        
+        set
+        {
+            if (value<0f)
+            {
+                mMouseSensitivity=0f;
+            }
+            else
+            {
+                mMouseSensitivity=value;
             }
         }
     }
@@ -651,6 +676,18 @@ public static class InputControl
         }
     }
 
+    public static KeyMapping key(string aName)
+    {
+        KeyMapping outKey=null;
+        
+        if (mKeysMap.TryGetValue(aName, out outKey))
+        {   
+            return outKey;
+        }
+
+        return null;
+    }
+
     public static List<KeyMapping> getKeys()
     {
         return mKeysList;
@@ -706,6 +743,18 @@ public static class InputControl
             mAxesList.Remove(outAxis);
             mAxesMap.Remove (aName);
         }
+    }
+
+    public static Axis axis(string aName)
+    {
+        Axis outAxis=null;
+        
+        if (mAxesMap.TryGetValue(aName, out outAxis))
+        {
+            return outAxis;
+        }
+        
+        return null;
     }
     
     public static List<Axis> getAxes()
@@ -937,6 +986,17 @@ public static class InputControl
 
     public static float GetAxisRaw(string axisName)
     {
+        #region Standard axes
+        if (axisName.Equals("Mouse X"))
+        {
+            return Input.GetAxisRaw(axisName)*mMouseSensitivity;
+        }
+        if (axisName.Equals("Mouse Y"))
+        {
+            return Input.GetAxisRaw(axisName)*mMouseSensitivity;
+        }
+        #endregion
+
         Axis outAxis=null;
         
         if (!mAxesMap.TryGetValue(axisName, out outAxis))
