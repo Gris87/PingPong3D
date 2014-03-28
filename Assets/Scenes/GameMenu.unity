@@ -951,7 +951,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b8bcdf946f1434479f81e6ddbfbb404, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  token: GameMenu.Normal
+  localizedKey: GameMenu.Normal
 --- !u!1 &605301138
 GameObject:
   m_ObjectHideFlags: 0
@@ -1034,7 +1034,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b8bcdf946f1434479f81e6ddbfbb404, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  token: GameMenu.NewGame
+  localizedKey: GameMenu.NewGame
 --- !u!1 &697319760
 GameObject:
   m_ObjectHideFlags: 0
@@ -1719,7 +1719,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b8bcdf946f1434479f81e6ddbfbb404, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  token: GameMenu.2Players
+  localizedKey: GameMenu.2Players
 --- !u!1 &1134410434
 GameObject:
   m_ObjectHideFlags: 0
@@ -1760,7 +1760,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b8bcdf946f1434479f81e6ddbfbb404, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  token: GameMenu.Options
+  localizedKey: GameMenu.Options
 --- !u!102 &1134410437
 TextMesh:
   serializedVersion: 3
@@ -1912,7 +1912,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b8bcdf946f1434479f81e6ddbfbb404, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  token: GameMenu.Quit
+  localizedKey: GameMenu.Quit
 --- !u!1 &1212460731
 GameObject:
   m_ObjectHideFlags: 0
@@ -2206,7 +2206,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b8bcdf946f1434479f81e6ddbfbb404, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  token: GameMenu.Easy
+  localizedKey: GameMenu.Easy
 --- !u!1 &1317078570
 GameObject:
   m_ObjectHideFlags: 0
@@ -2360,7 +2360,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b8bcdf946f1434479f81e6ddbfbb404, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  token: GameMenu.Server
+  localizedKey: GameMenu.Server
 --- !u!1 &1361111636
 GameObject:
   m_ObjectHideFlags: 0
@@ -2762,7 +2762,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b8bcdf946f1434479f81e6ddbfbb404, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  token: GameMenu.Multiplayer
+  localizedKey: GameMenu.Multiplayer
 --- !u!1 &1561319494
 GameObject:
   m_ObjectHideFlags: 0
@@ -3052,7 +3052,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b8bcdf946f1434479f81e6ddbfbb404, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  token: GameMenu.Hard
+  localizedKey: GameMenu.Hard
 --- !u!1 &1967801581
 GameObject:
   m_ObjectHideFlags: 0
@@ -3245,7 +3245,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b8bcdf946f1434479f81e6ddbfbb404, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  token: GameMenu.Client
+  localizedKey: GameMenu.Client
 --- !u!1 &2019656302
 GameObject:
   m_ObjectHideFlags: 0
