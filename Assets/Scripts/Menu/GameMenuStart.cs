@@ -1,5 +1,5 @@
 using UnityEngine;
-using System.Collections;
+using System.Collections.Generic;
 
 public class GameMenuStart : MonoBehaviour
 {
@@ -7,7 +7,7 @@ public class GameMenuStart : MonoBehaviour
 
     void OnButtonPress()
     {
-        Hashtable arguments=new Hashtable();
+        Dictionary<string, object> arguments=new Dictionary<string, object>();
 
         arguments.Add("difficulty", difficulty);
 

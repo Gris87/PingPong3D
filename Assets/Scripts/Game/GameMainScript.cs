@@ -1,5 +1,5 @@
 using UnityEngine;
-using System.Collections;
+using System.Collections.Generic;
 
 public class GameMainScript : MonoBehaviour
 {
@@ -72,7 +72,7 @@ public class GameMainScript : MonoBehaviour
         #endregion
 
         #region Get difficulty from arguments
-        Hashtable arguments=SceneManager.sceneArguments;
+        Dictionary<string, object> arguments=SceneManager.sceneArguments;
 
         if (arguments!=null && arguments.ContainsKey("difficulty"))
         {
