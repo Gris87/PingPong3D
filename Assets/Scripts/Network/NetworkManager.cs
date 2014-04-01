@@ -1,6 +1,6 @@
 using UnityEngine;
 using System;
-using System.Collections.Generic;
+using System.Collections;
 
 public class NetworkManager : MonoBehaviour
 {
@@ -94,7 +94,7 @@ public class NetworkManager : MonoBehaviour
         // -----------------------------------------------------------
 
         #region Get mode from arguments
-        Dictionary<string, object> arguments=SceneManager.sceneArguments;
+        Hashtable arguments=SceneManager.sceneArguments;
 
         if (arguments!=null && arguments.ContainsKey("serverMode"))
         {
@@ -359,7 +359,7 @@ public class NetworkManager : MonoBehaviour
 
     private void startGame()
     {
-        Dictionary<string, object> arguments=new Dictionary<string, object>();
+        Hashtable arguments=new Hashtable();
 
         arguments.Add("difficulty", -1);
 
