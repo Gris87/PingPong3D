@@ -87,7 +87,7 @@ public class Options : MonoBehaviour
         }
     }
     #endregion
-    
+
     #region Show FPS
     private static bool mShowFPS=false;
     public static bool showFPS
@@ -120,7 +120,7 @@ public class Options : MonoBehaviour
         }
     }
     #endregion
-    
+
     #region Full screen
     private static bool mFullScreen=true;
     public static bool fullScreen
@@ -209,17 +209,17 @@ public class Options : MonoBehaviour
 
         Resolution[] availableResolutions=Screen.resolutions;
         string[] resolutions=new string[availableResolutions.Length];
-        
+
         for (int i=0; i<availableResolutions.Length; ++i)
         {
             Resolution resolution=availableResolutions[i];
-            
+
             resolutions[i]=resolution.width.ToString()+"x"+resolution.height.ToString()+" : "+resolution.refreshRate.ToString()+" Hz";
         }
-        
+
         resolutionScroller=new SelectionScroller(resolutions, 0, scrollerLeftTexture, scrollerRightTexture);
         resolutionScroller.setModifiedFunction(settingsModified);
-        
+
         fullScreenCheckBox=new BigCheckBox(checkboxOnTexture, checkboxOffTexture);
         fullScreenCheckBox.setModifiedFunction(settingsModified);
         #endregion
@@ -464,7 +464,7 @@ public class Options : MonoBehaviour
         if (!Utils.isTouchDevice)
         {
             ++cur;
-            
+
             if (drawButton(localizationControls, panelWidth, panelHeight, rowHeight, rowOffset, cur))
             {
                 selectItem(cur);
@@ -525,7 +525,7 @@ public class Options : MonoBehaviour
 
         GUI.Label(new Rect(0, rowOffset*cur, panelWidth*0.4f, rowHeight), localizationShowFPS,    (!Utils.isTouchDevice && currentItem==cur) ? menuSelectedItemStyle : menuItemStyle);
         showFPSCheckBox.draw(new Rect(panelWidth*0.45f, rowOffset*cur, panelWidth*0.55f, rowHeight));
-                
+
         ++cur;
 
         GUI.Label(new Rect(0, rowOffset*cur, panelWidth*0.4f, rowHeight), localizationQuality,    (!Utils.isTouchDevice && currentItem==cur) ? menuSelectedItemStyle : menuItemStyle);
@@ -534,16 +534,16 @@ public class Options : MonoBehaviour
         if (!Utils.isTouchDevice)
         {
             ++cur;
-            
+
             GUI.Label(new Rect(0, rowOffset*cur, panelWidth*0.4f, rowHeight), localizationResolution, (!Utils.isTouchDevice && currentItem==cur) ? menuSelectedItemStyle : menuItemStyle);
             resolutionScroller.draw(new Rect(panelWidth*0.45f, rowOffset*cur, panelWidth*0.55f, rowHeight));
-            
+
             ++cur;
-            
+
             GUI.Label(new Rect(0, rowOffset*cur, panelWidth*0.4f, rowHeight), localizationFullScreen, (!Utils.isTouchDevice && currentItem==cur) ? menuSelectedItemStyle : menuItemStyle);
             fullScreenCheckBox.draw(new Rect(panelWidth*0.45f, rowOffset*cur, panelWidth*0.55f, rowHeight));
         }
-        
+
         ++cur;
 
         if (drawButton(localizationBack, panelWidth, panelHeight, rowHeight, rowOffset, cur))
@@ -564,7 +564,7 @@ public class Options : MonoBehaviour
             {
                 selectedControlSetter=controlSetters[i];
             }
-            
+
             ++cur;
         }
 
@@ -633,7 +633,7 @@ public class Options : MonoBehaviour
     {
         switch(index)
         {
-            case 0: showFPSCheckBox.control();    break;            
+            case 0: showFPSCheckBox.control();    break;
             case 1: qualityScroller.control();    break;
             case 2: resolutionScroller.control(); break;
             case 3: fullScreenCheckBox.control(); break;
@@ -700,17 +700,17 @@ public class Options : MonoBehaviour
     {
         switch(index)
         {
-            case 0: 
+            case 0:
                 showFPSCheckBox.setChecked(!showFPSCheckBox.isChecked());
                 modified=true;
-            break;            
-            case 1: 
+            break;
+            case 1:
                 // Nothing
             break;
-            case 2: 
+            case 2:
                 // Nothing
             break;
-            case 3: 
+            case 3:
                 fullScreenCheckBox.setChecked(!fullScreenCheckBox.isChecked());
                 modified=true;
             break;
@@ -719,7 +719,7 @@ public class Options : MonoBehaviour
             break;
         }
     }
-    
+
     private void selectItemInControlsOptions(int index)
     {
         controlSetters[index].setKeyPressed(0);
@@ -891,7 +891,7 @@ public class Options : MonoBehaviour
     private void applyChangesInVideoOptions()
     {
         bool aShowFPS=showFPSCheckBox.isChecked();
-        
+
         if (mShowFPS!=aShowFPS)
         {
             mShowFPS=aShowFPS;
@@ -899,7 +899,7 @@ public class Options : MonoBehaviour
         }
 
         int qualityIndex=qualityScroller.getCurrentIndex();
-        
+
         if (mQuality!=qualityIndex)
         {
             mQuality=qualityIndex;
@@ -910,7 +910,7 @@ public class Options : MonoBehaviour
         {
             string resolution=resolutionScroller.getSelectedItem();
             bool aFullScreen=fullScreenCheckBox.isChecked();
-            
+
             if (!mResolution.Equals(resolution) || mFullScreen!=aFullScreen)
             {
                 mResolution = resolution;
@@ -924,7 +924,7 @@ public class Options : MonoBehaviour
     private void applyChangesInControlsOptions()
     {
         int cur=0;
-        
+
         foreach (KeyMapping key in InputControl.getKeys())
         {
             key.set(controlSetters[cur].getKeyMapping());
@@ -954,7 +954,7 @@ public class Options : MonoBehaviour
     {
         Resolution[] availableResolutions=Screen.resolutions;
         int resolutionIndex=0;
-        
+
         for (int i=0; i<availableResolutions.Length; ++i)
         {
             Resolution resolution=availableResolutions[i];
@@ -1006,7 +1006,7 @@ public class Options : MonoBehaviour
             }
 
             Screen.SetResolution(width, height, mFullScreen, rate);
-        }   
+        }
         catch (Exception)
         {
             string temp = mResolution;
@@ -1016,7 +1016,7 @@ public class Options : MonoBehaviour
 
             Screen.SetResolution(800, 600, true);
             Debug.LogError("Impossible to set resolution: "+temp);
-        }        
+        }
     }
 
     private static CustomInput StringToCustomInput(string value)
@@ -1031,7 +1031,7 @@ public class Options : MonoBehaviour
         }
 
         res=MouseInput.FromString(value);
-        
+
         if (res!=null)
         {
             return res;
@@ -1089,7 +1089,7 @@ public class Options : MonoBehaviour
 
         Debug.Log("Show FPS:       "+mShowFPS.ToString());
         FPSCounter.isOn=mShowFPS;
-        
+
         Debug.Log("Video quality:  "+mQuality.ToString());
         QualitySettings.SetQualityLevel(mQuality);
 
@@ -1102,7 +1102,7 @@ public class Options : MonoBehaviour
         }
         #endregion
 
-        #region Controls     
+        #region Controls
         foreach (KeyMapping key in InputControl.getKeys())
         {
             key.primaryInput   = StringToCustomInput(iniFile.Get("Controls."+key.name+".Primary",   key.primaryInput.ToString()));

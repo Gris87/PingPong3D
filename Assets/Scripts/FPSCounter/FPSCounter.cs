@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 public class FPSCounter : MonoBehaviour
@@ -24,7 +24,7 @@ public class FPSCounter : MonoBehaviour
         }
     }
 
-	void OnGUI()
+    void OnGUI()
     {
         if (isOn)
         {
@@ -43,5 +43,5 @@ public class FPSCounter : MonoBehaviour
 
             GUI.Label(new Rect(Screen.width*0.01f, Screen.height*0.99f, 1, 1), fpsTotal.ToString()+" FPS", textStyle);
         }
-	}
+    }
 }

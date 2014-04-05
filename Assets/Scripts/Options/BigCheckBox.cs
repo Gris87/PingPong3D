@@ -12,7 +12,7 @@ public class BigCheckBox : ModifiableObject
         mChecked  = false;
         mOnStyle  = new GUIStyle();
         mOffStyle = new GUIStyle();
-        
+
         mOnStyle.normal.background  = onTexture;
         mOffStyle.normal.background = offTexture;
     }

@@ -15,7 +15,7 @@ public class LoadingScript : MonoBehaviour
             InputControl.setKey("Down",   KeyCode.S,         new JoystickInput(JoystickAxis.Axis1Negative, Joystick.Joystick1));
             InputControl.setKey("Up 2",   KeyCode.UpArrow,   new JoystickInput(JoystickAxis.Axis1Positive, Joystick.Joystick2));
             InputControl.setKey("Down 2", KeyCode.DownArrow, new JoystickInput(JoystickAxis.Axis1Negative, Joystick.Joystick2));
-            
+
             // Setup axes
             InputControl.setAxis("Vertical",   "Down",   "Up");
             InputControl.setAxis("Vertical 2", "Down 2", "Up 2");

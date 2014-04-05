@@ -549,8 +549,8 @@ public class LanguageManager : MonoBehaviour
         Debug.LogError("LanguageManager.cs: A system language of this application is could not be found!");
         return "System Language not found!";
 #else
-		Debug.LogError("LanguageManager.cs: GetSystemLanguage() Feature is not currently available in Smart Localization for Windows Phone 8");
-		return defaultLanguage;
+        Debug.LogError("LanguageManager.cs: GetSystemLanguage() Feature is not currently available in Smart Localization for Windows Phone 8");
+        return defaultLanguage;
 #endif
     }
     /// <summary>

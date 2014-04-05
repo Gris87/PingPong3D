@@ -44,13 +44,13 @@ public class BigHorizontalSlider : ModifiableObject
         if (catchMouseEvents)
         {
             ArrayList clickPositions=new ArrayList();
-            
+
             if (Utils.isTouchDevice)
             {
                 foreach (Touch touch in InputControl.touches)
                 {
                     Vector2 touchPos=touch.position;
-                    
+
                     clickPositions.Add(new Vector2(touchPos.x, Screen.height-touchPos.y));
                 }
             }
@@ -59,33 +59,33 @@ public class BigHorizontalSlider : ModifiableObject
                 if (InputControl.GetMouseButton(MouseButton.Left))
                 {
                     Vector3 mousePos=InputControl.mousePosition;
-                    
+
                     clickPositions.Add(new Vector2(mousePos.x, Screen.height-mousePos.y));
                 }
             }
-            
-            
-            
+
+
+
             if (clickPositions.Count>0)
             {
                 rect.center      = GUIUtility.GUIToScreenPoint(rect.center);
                 rangeRect.center = GUIUtility.GUIToScreenPoint(rangeRect.center);
-                
-                
-                
+
+
+
                 float curValue=mValue;
-                
+
                 for (int i=0; i<clickPositions.Count; ++i)
                 {
                     Vector2 clickPos=(Vector2)clickPositions[i];
-                    
+
                     if (rect.Contains(clickPos))
                     {
                         setValue(mMinimum+((clickPos.x-rangeRect.x)/rangeRect.width)*(mMaximum-mMinimum));
                         break;
                     }
                 }
-                
+
                 if (mValue!=curValue)
                 {
                     modificationMade();
