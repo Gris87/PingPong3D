@@ -30,7 +30,7 @@ public class FPSCounter : MonoBehaviour
         {
             ++fpsCurrent;
 
-            float curTime=Time.time;
+			float curTime=Time.realtimeSinceStartup;
 
             if (curTime>=nextSecond)
             {
