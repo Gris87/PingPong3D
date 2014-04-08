@@ -5,7 +5,7 @@ public class FPSCounter : MonoBehaviour
 {
     public static bool isOn = false;
 
-    private GUIStyle textStyle = null;
+	private static GUIStyle textStyle = null;
 
     private static float nextSecond = 0;
     private static int   fpsCurrent = 0;
@@ -24,21 +24,28 @@ public class FPSCounter : MonoBehaviour
         }
     }
 
+	// Update is called once per frame
+	void Update()
+	{
+		if (isOn)
+		{
+			++fpsCurrent;
+			
+			float curTime=Time.realtimeSinceStartup;
+			
+			if (curTime>=nextSecond)
+			{
+				nextSecond = curTime+1;
+				fpsTotal   = fpsCurrent;
+				fpsCurrent = 0;
+			}
+		}
+	}
+
     void OnGUI()
     {
         if (isOn)
         {
-            ++fpsCurrent;
-
-			float curTime=Time.realtimeSinceStartup;
-
-            if (curTime>=nextSecond)
-            {
-                nextSecond = curTime+1;
-                fpsTotal   = fpsCurrent;
-                fpsCurrent = 0;
-            }
-
             textStyle.fontSize=(int)(Screen.height*0.025);
 
             GUI.Label(new Rect(Screen.width*0.01f, Screen.height*0.99f, 1, 1), fpsTotal.ToString()+" FPS", textStyle);
