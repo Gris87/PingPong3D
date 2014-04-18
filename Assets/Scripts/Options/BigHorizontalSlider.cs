@@ -1,21 +1,118 @@
+#region Defines
+
+#if (UNITY_IPHONE || UNITY_ANDROID || UNITY_BLACKBERRY || UNITY_WP8)
+#define TOUCH_DEVICE
+#endif
+
+#endregion
+
 using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// <see cref="BigHorizontalSlider"/> is a UI control that allow to select value between minimum and maximum.
+/// </summary>
 public class BigHorizontalSlider : ModifiableObject
 {
-    private static Texture2D mValueTexture=null;
+    private static Texture2D mValueTexture=new Texture2D(1, 1);
 
     private float mValue;
     private float mMinimum;
     private float mMaximum;
 
-    public BigHorizontalSlider(float value, float minimum, float maximum) : base()
+    #region Properties
+    /// <summary>
+    /// Gets or sets the value.
+    /// </summary>
+    /// <value>Current value.</value>
+    public float value
     {
-        if (mValueTexture==null)
+        get
         {
-            mValueTexture=new Texture2D(1, 1);
+            return mValue;
         }
 
+        set
+        {
+            if (value<mMinimum)
+            {
+                mValue=mMinimum;
+            }
+            else
+            if (value>mMaximum)
+            {
+                mValue=mMaximum;
+            }
+            else
+            {
+                mValue=value;
+            }
+        }
+    }
+
+    /// <summary>
+    /// Gets or sets the minimum.
+    /// </summary>
+    /// <value>Minimum value.</value>
+    public float minimum
+    {
+        get
+        {
+            return mMinimum;
+        }
+
+        set
+        {
+            if (mMaximum<value)
+            {
+                mMaximum=value;
+            }
+
+            if (mValue<value)
+            {
+                mValue=value;
+            }
+
+            mMinimum=value;
+        }
+    }
+
+    /// <summary>
+    /// Gets or sets the maximum.
+    /// </summary>
+    /// <value>Maximum value.</value>
+    public float maximum
+    {
+        get
+        {
+            return mMaximum;
+        }
+
+        set
+        {
+            if (mMinimum>value)
+            {
+                mMinimum=value;
+            }
+
+            if (mValue>value)
+            {
+                mValue=value;
+            }
+
+            mMaximum=value;
+        }
+    }
+    #endregion
+
+    /// <summary>
+    /// Create a new instance of <see cref="BigHorizontalSlider"/>.
+    /// </summary>
+    /// <param name="value">Current value.</param>
+    /// <param name="minimum">Minimum value.</param>
+    /// <param name="maximum">Maximum value.</param>
+    public BigHorizontalSlider(float value, float minimum, float maximum) : base()
+    {
         if (minimum<maximum)
         {
             mMinimum = minimum;
@@ -27,9 +124,14 @@ public class BigHorizontalSlider : ModifiableObject
             mMaximum = minimum;
         }
 
-        setValue(value);
+        this.value=value;
     }
 
+    /// <summary>
+    /// Draw control in specified rectangle and handles user interactions.
+    /// </summary>
+    /// <param name="rect">Control location.</param>
+    /// <param name="catchMouseEvents">Catch mouse events or not.</param>
     public void draw(Rect rect, bool catchMouseEvents)
     {
         GUI.Box(rect, "");
@@ -45,24 +147,21 @@ public class BigHorizontalSlider : ModifiableObject
         {
             ArrayList clickPositions=new ArrayList();
 
-            if (Utils.isTouchDevice)
+#if TOUCH_DEVICE
+            foreach (Touch touch in Input.touches)
             {
-                foreach (Touch touch in InputControl.touches)
-                {
-                    Vector2 touchPos=touch.position;
+                Vector2 touchPos=touch.position;
 
-                    clickPositions.Add(new Vector2(touchPos.x, Screen.height-touchPos.y));
-                }
+                clickPositions.Add(new Vector2(touchPos.x, Screen.height-touchPos.y));
             }
-            else
+#else
+            if (Input.GetMouseButton(0))
             {
-                if (InputControl.GetMouseButton(MouseButton.Left))
-                {
-                    Vector3 mousePos=InputControl.mousePosition;
+                Vector3 mousePos=Input.mousePosition;
 
-                    clickPositions.Add(new Vector2(mousePos.x, Screen.height-mousePos.y));
-                }
+                clickPositions.Add(new Vector2(mousePos.x, Screen.height-mousePos.y));
             }
+#endif
 
 
 
@@ -81,7 +180,7 @@ public class BigHorizontalSlider : ModifiableObject
 
                     if (rect.Contains(clickPos))
                     {
-                        setValue(mMinimum+((clickPos.x-rangeRect.x)/rangeRect.width)*(mMaximum-mMinimum));
+                        value = mMinimum + ((clickPos.x-rangeRect.x)/rangeRect.width) * (mMaximum-mMinimum);
                         break;
                     }
                 }
@@ -94,9 +193,12 @@ public class BigHorizontalSlider : ModifiableObject
         }
     }
 
+    /// <summary>
+    /// Handle keyboard events.
+    /// </summary>
     public void control()
     {
-        if (InputControl.GetKeyDown(KeyCode.LeftArrow))
+        if (Input.GetKeyDown(KeyCode.LeftArrow))
         {
             if (mValue>mMinimum)
             {
@@ -111,7 +213,7 @@ public class BigHorizontalSlider : ModifiableObject
             }
         }
         else
-        if (InputControl.GetKeyDown(KeyCode.RightArrow))
+        if (Input.GetKeyDown(KeyCode.RightArrow))
         {
             if (mValue<mMaximum)
             {
@@ -125,25 +227,5 @@ public class BigHorizontalSlider : ModifiableObject
                 modificationMade();
             }
         }
-    }
-
-    public float getValue()
-    {
-        return mValue;
-    }
-
-    public void setValue(float value)
-    {
-        if (value<mMinimum)
-        {
-            value=mMinimum;
-        }
-        else
-        if (value>mMaximum)
-        {
-            value=mMaximum;
-        }
-
-        mValue=value;
     }
 }
