@@ -30,11 +30,13 @@ public class LocalizedGUIText : MonoBehaviour
 {
     public string localizedKey = "INSERT_KEY_HERE";
 
+    private LanguageManager thisLanguageManager;
+
     void Start ()
     {
         //Subscribe to the change language event
-        LanguageManager thisLanguageManager = LanguageManager.Instance;
-        thisLanguageManager.OnChangeLanguage += OnChangeLanguage;
+        thisLanguageManager = LanguageManager.Instance;
+        thisLanguageManager.addLanguageChangedListener(OnChangeLanguage);
 
         //Run the method one first time
         OnChangeLanguage(thisLanguageManager);
@@ -42,7 +44,7 @@ public class LocalizedGUIText : MonoBehaviour
 
     void OnDestroy()
     {
-        LanguageManager.Instance.OnChangeLanguage -= OnChangeLanguage;
+        thisLanguageManager.removeLanguageChangedListener(OnChangeLanguage);
     }
 
     void OnChangeLanguage(LanguageManager thisLanguageManager)

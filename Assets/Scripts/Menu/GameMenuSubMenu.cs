@@ -1,3 +1,7 @@
+#if (UNITY_IPHONE || UNITY_ANDROID || UNITY_BLACKBERRY || UNITY_WP8)
+#define TOUCH_DEVICE
+#endif
+
 using UnityEngine;
 using System.Collections;
 
@@ -27,10 +31,9 @@ public class GameMenuSubMenu : MonoBehaviour
             if (lastSelectedItem!=null)
             {
                 #region Remove highlight for touch devices
-                if (Utils.isTouchDevice)
-                {
+#if TOUCH_DEVICE
                     lastSelectedItem.renderer.material.color=Color.white;
-                }
+#endif
                 #endregion
 
                 #region Hide previous selected items
@@ -40,10 +43,9 @@ public class GameMenuSubMenu : MonoBehaviour
             }
 
             #region Highlight button for touch devices
-            if (Utils.isTouchDevice)
-            {
-                renderer.material.color=Color.green;
-            }
+#if TOUCH_DEVICE
+            renderer.material.color=Color.green;
+#endif
             #endregion
 
             #region Show items

@@ -190,85 +190,103 @@
 	<data name="NetworkScene.WaitingForOpponent" xml:space="preserve">
 		<value>Ожидание соперника...</value>
 	</data>
-	<data name="OptionsScene.Back" xml:space="preserve">
+	<data name="Options.Any" xml:space="preserve">
+		<value>Любое</value>
+	</data>
+	<data name="Options.Audio" xml:space="preserve">
+		<value>Аудио</value>
+	</data>
+	<data name="Options.Back" xml:space="preserve">
 		<value>Назад</value>
 	</data>
-	<data name="OptionsScene.Beautiful" xml:space="preserve">
+	<data name="Options.Beautiful" xml:space="preserve">
 		<value>Красиво</value>
 	</data>
-	<data name="OptionsScene.Cancel" xml:space="preserve">
+	<data name="Options.Cancel" xml:space="preserve">
 		<value>Отмена</value>
 	</data>
-	<data name="OptionsScene.Controls" xml:space="preserve">
+	<data name="Options.Controls" xml:space="preserve">
 		<value>Управление</value>
 	</data>
-	<data name="OptionsScene.Down" xml:space="preserve">
+	<data name="Options.Down" xml:space="preserve">
 		<value>Вниз</value>
 	</data>
-	<data name="OptionsScene.Down 2" xml:space="preserve">
+	<data name="Options.DefineKeys" xml:space="preserve">
+		<value>Назначить клавиши</value>
+	</data>
+	<data name="Options.Down 2" xml:space="preserve">
 		<value>Вниз 2</value>
 	</data>
-	<data name="OptionsScene.DoYouWantToSaveChanges" xml:space="preserve">
+	<data name="Options.DoYouWantToSaveChanges" xml:space="preserve">
 		<value>Вы хотите сохранить изменения?</value>
 	</data>
-	<data name="OptionsScene.EffectsVolume" xml:space="preserve">
+	<data name="Options.EffectsVolume" xml:space="preserve">
 		<value>Громкость эффектов</value>
 	</data>
-	<data name="OptionsScene.Fantastic" xml:space="preserve">
+	<data name="Options.Fantastic" xml:space="preserve">
 		<value>Фантастика</value>
 	</data>
-	<data name="OptionsScene.Fast" xml:space="preserve">
+	<data name="Options.Fast" xml:space="preserve">
 		<value>Быстрое</value>
 	</data>
-	<data name="OptionsScene.Fastest" xml:space="preserve">
+	<data name="Options.Fastest" xml:space="preserve">
 		<value>Наибыстрейшее</value>
 	</data>
-	<data name="OptionsScene.FullScreen" xml:space="preserve">
+	<data name="Options.FullScreen" xml:space="preserve">
 		<value>Во весь экран</value>
 	</data>
-	<data name="OptionsScene.Game" xml:space="preserve">
+	<data name="Options.Game" xml:space="preserve">
 		<value>Игра</value>
 	</data>
-	<data name="OptionsScene.Good" xml:space="preserve">
+	<data name="Options.Good" xml:space="preserve">
 		<value>Хорошее</value>
 	</data>
-	<data name="OptionsScene.Language" xml:space="preserve">
+	<data name="Options.InputDevice" xml:space="preserve">
+		<value>Устройство ввода</value>
+	</data>
+	<data name="Options.Joystick" xml:space="preserve">
+		<value>Джойстик</value>
+	</data>
+	<data name="Options.KeyboardAndMouse" xml:space="preserve">
+		<value>Клавиатура и мышь</value>
+	</data>
+	<data name="Options.Language" xml:space="preserve">
 		<value>Язык</value>
 	</data>
-	<data name="OptionsScene.MasterVolume" xml:space="preserve">
+	<data name="Options.MasterVolume" xml:space="preserve">
 		<value>Общая громкость</value>
 	</data>
-	<data name="OptionsScene.MusicVolume" xml:space="preserve">
+	<data name="Options.MusicVolume" xml:space="preserve">
 		<value>Громкость музыки</value>
 	</data>
-	<data name="OptionsScene.OK" xml:space="preserve">
+	<data name="Options.OK" xml:space="preserve">
 		<value>OK</value>
 	</data>
-	<data name="OptionsScene.Quality" xml:space="preserve">
+	<data name="Options.Quality" xml:space="preserve">
 		<value>Качество</value>
 	</data>
-	<data name="OptionsScene.Resolution" xml:space="preserve">
+	<data name="Options.Resolution" xml:space="preserve">
 		<value>Разрешение</value>
 	</data>
-	<data name="OptionsScene.SettingsChanged" xml:space="preserve">
+	<data name="Options.SettingsChanged" xml:space="preserve">
 		<value>Настройки изменены</value>
 	</data>
-	<data name="OptionsScene.ShowFPS" xml:space="preserve">
+	<data name="Options.ShowFPS" xml:space="preserve">
 		<value>Показывать FPS</value>
 	</data>
-	<data name="OptionsScene.Simple" xml:space="preserve">
+	<data name="Options.Simple" xml:space="preserve">
 		<value>Простое</value>
 	</data>
-	<data name="OptionsScene.Sound" xml:space="preserve">
+	<data name="Options.Sound" xml:space="preserve">
 		<value>Звук</value>
 	</data>
-	<data name="OptionsScene.Up" xml:space="preserve">
+	<data name="Options.Up" xml:space="preserve">
 		<value>Вверх</value>
 	</data>
-	<data name="OptionsScene.Up 2" xml:space="preserve">
+	<data name="Options.Up 2" xml:space="preserve">
 		<value>Вверх 2</value>
 	</data>
-	<data name="OptionsScene.Video" xml:space="preserve">
+	<data name="Options.Video" xml:space="preserve">
 		<value>Видео</value>
 	</data>
 	<data name="SplashScene.Loading" xml:space="preserve">

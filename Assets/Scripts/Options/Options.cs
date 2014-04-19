@@ -36,10 +36,10 @@
 #define OPTION_LANGUAGE
 #endif
 
-#define OPTION_DIFFICULTY
-#define OPTION_BLOOD
-#define OPTION_USE_HINTS
-#define OPTION_AUTOSAVE
+//#define OPTION_DIFFICULTY
+//#define OPTION_BLOOD
+//#define OPTION_USE_HINTS
+//#define OPTION_AUTOSAVE
 
 #endif
 #endregion
@@ -49,9 +49,9 @@
 #define OPTION_SOUND
 #define OPTION_MASTER_VOLUME
 #define OPTION_MUSIC_VOLUME
-#define OPTION_VOICE_VOLUME
+//#define OPTION_VOICE_VOLUME
 #define OPTION_EFFECTS_VOLUME
-#define OPTION_SUBTITLES
+//#define OPTION_SUBTITLES
 #endif
 #endregion
 
@@ -78,10 +78,10 @@
 #define MENU_DEFINE_KEYS
 #endif
 
-#define OPTION_ALWAYS_RUN
-#define OPTION_AUTO_AIM
-#define OPTION_MOUSE_SENSITIVITY
-#define OPTION_INVERT_MOUSE_Y
+//#define OPTION_ALWAYS_RUN
+//#define OPTION_AUTO_AIM
+//#define OPTION_MOUSE_SENSITIVITY
+//#define OPTION_INVERT_MOUSE_Y
 
 #if PACKAGE_INPUT_CONTROL
 #define OPTION_INPUT_DEVICE
@@ -2470,8 +2470,6 @@ public class Options : MonoBehaviour
         {
             if (currentState==State.InOptionsList)
             {
-                Debug.Log("Go to game menu");
-
                 save();
 
                 SendMessage("OnOptionsClosed");
@@ -3568,7 +3566,7 @@ public class Options : MonoBehaviour
 
 #if OPTION_QUALITY
 #if PACKAGE_INI_FILE
-		iniFile.set       ("Video.Quality", mQuality, "Video quality: 0-"+QualitySettings.names.Length.ToString()+" ("+QualitySettings.names.Length.ToString()+" - Custom)");
+        iniFile.set       ("Video.Quality", mQuality, "Video quality: 0-"+QualitySettings.names.Length.ToString()+" ("+QualitySettings.names.Length.ToString()+" - Custom)");
 #else
         PlayerPrefs.SetInt("Video.Quality", mQuality);
 #endif

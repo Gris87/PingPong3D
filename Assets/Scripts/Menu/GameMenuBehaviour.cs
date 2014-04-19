@@ -1,23 +1,23 @@
+#if (UNITY_IPHONE || UNITY_ANDROID || UNITY_BLACKBERRY || UNITY_WP8)
+#define TOUCH_DEVICE
+#endif
+
 using UnityEngine;
 using System.Collections;
 
 public class GameMenuBehaviour : MonoBehaviour
 {
+#if !TOUCH_DEVICE
     void OnMouseEnter()
     {
-        if (!Utils.isTouchDevice)
-        {
-            renderer.material.color=Color.green;
-        }
+        renderer.material.color=Color.green;
     }
 
     void OnMouseExit()
     {
-        if (!Utils.isTouchDevice)
-        {
-            renderer.material.color=Color.white;
-        }
+        renderer.material.color=Color.white;
     }
+#endif
 
     void OnMouseDown()
     {

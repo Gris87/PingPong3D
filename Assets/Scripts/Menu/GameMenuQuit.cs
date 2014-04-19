@@ -6,10 +6,9 @@ public class GameMenuQuit : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        if (Utils.isWebPlayer)
-        {
-            Destroy(gameObject);
-        }
+#if UNITY_WEBPLAYER
+        Destroy(gameObject);
+#endif
     }
 
     // Update is called once per frame
