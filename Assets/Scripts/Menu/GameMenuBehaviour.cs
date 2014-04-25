@@ -7,6 +7,8 @@ using System.Collections;
 
 public class GameMenuBehaviour : MonoBehaviour
 {
+    public AudioClip clip;
+
 #if !TOUCH_DEVICE
     void OnMouseEnter()
     {
@@ -22,5 +24,7 @@ public class GameMenuBehaviour : MonoBehaviour
     void OnMouseDown()
     {
         animation.Play("GameMenuButtonPress");
+
+        audio.PlayOneShot(clip, Options.effectsVolume);
     }
 }
