@@ -157,6 +157,7 @@ GameObject:
   - 54: {fileID: 155243116}
   - 114: {fileID: 155243121}
   - 148: {fileID: 155243122}
+  - 82: {fileID: 155243123}
   m_Layer: 0
   m_Name: Ball
   m_TagString: Untagged
@@ -243,6 +244,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 757628216}
   enemy: {fileID: 924050850}
+  leftBoardHitClip: {fileID: 8300000, guid: feef7b60104f9d14cb16667c480da4a4, type: 3}
+  rightBoardHitClip: {fileID: 8300000, guid: 3662b14a6def59b4fa4c57b9b02ac7bd, type: 3}
+  wallBoardHitClip: {fileID: 8300000, guid: 39ac803bd8f12c24c9f1b89b9ad790ce, type: 3}
   acceleration: .100000001
   maxSpeed: 50
   boardLimit: 25
@@ -261,6 +265,64 @@ NetworkView:
   m_ViewID:
     m_ID: 2
     m_Type: 1
+--- !u!82 &155243123
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 155243115}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
 --- !u!1001 &681603565
 Prefab:
   m_ObjectHideFlags: 0
@@ -386,7 +448,7 @@ GameObject:
   - 148: {fileID: 757628219}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: LeftBoard
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -499,7 +561,7 @@ GameObject:
   - 148: {fileID: 924050857}
   m_Layer: 0
   m_Name: Enemy
-  m_TagString: Untagged
+  m_TagString: RightBoard
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -683,7 +745,7 @@ GameObject:
   - 23: {fileID: 1278218117}
   m_Layer: 0
   m_Name: UpBoard
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -780,7 +842,7 @@ GameObject:
   - 23: {fileID: 1352865296}
   m_Layer: 0
   m_Name: DownBoard
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

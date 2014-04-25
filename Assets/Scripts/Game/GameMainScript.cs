@@ -5,6 +5,9 @@ public class GameMainScript : MonoBehaviour
 {
     public Transform player;
     public Transform enemy;
+    public AudioClip leftBoardHitClip;
+    public AudioClip rightBoardHitClip;
+    public AudioClip wallBoardHitClip;
 
     public float acceleration = 0.1f;
     public float maxSpeed     = 50f;
@@ -264,6 +267,26 @@ public class GameMainScript : MonoBehaviour
             GUI.Label(new Rect(Screen.width*0.5f, Screen.height*0.5f, 1, 1), localizationGameOver, centerTextStyle);
         }
         #endregion
+    }
+
+    void OnCollisionEnter(Collision other)
+    {
+        string otherTag=other.gameObject.tag;
+
+        if (otherTag.Equals("LeftBoard"))
+        {
+            audio.PlayOneShot(leftBoardHitClip,  Options.effectsVolume);
+        }
+        else
+        if (otherTag.Equals("RightBoard"))
+        {
+            audio.PlayOneShot(rightBoardHitClip, Options.effectsVolume);
+        }
+        else
+        if (otherTag.Equals("Wall"))
+        {
+            audio.PlayOneShot(wallBoardHitClip,  Options.effectsVolume);
+        }
     }
 
     void OnSerializeNetworkView(BitStream stream, NetworkMessageInfo info)

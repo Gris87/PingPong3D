@@ -32,7 +32,7 @@ public class GameMenuSubMenu : MonoBehaviour
             {
                 #region Remove highlight for touch devices
 #if TOUCH_DEVICE
-                    lastSelectedItem.renderer.material.color=Color.white;
+                lastSelectedItem.renderer.material.color=Color.white;
 #endif
                 #endregion
 
