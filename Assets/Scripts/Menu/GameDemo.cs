@@ -61,7 +61,7 @@ public class GameDemo : MonoBehaviour
     void OnCollisionEnter(Collision other)
     {
         string otherTag=other.gameObject.tag;
-        
+
         if (otherTag.Equals("LeftBoard"))
         {
             audio.PlayOneShot(leftBoardHitClip,  Options.effectsVolume);

@@ -572,10 +572,10 @@ public class LanguageManager : MonoBehaviour
         {
             OnChangeLanguage += listener;
         }
-		else
-		{
-			OnChangeLanguage = listener;
-		}
+        else
+        {
+            OnChangeLanguage = listener;
+        }
     }
 
     /// <summary>
@@ -588,9 +588,9 @@ public class LanguageManager : MonoBehaviour
         {
             OnChangeLanguage -= listener;
         }
-		else
-		{
-			OnChangeLanguage = listener;
-		}
+        else
+        {
+            OnChangeLanguage = listener;
+        }
     }
 }
